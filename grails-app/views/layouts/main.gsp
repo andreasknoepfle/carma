@@ -6,6 +6,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
   <head>
     <title><g:layoutTitle default="Grails"/></title>
+    <r:require modules="bootstrap"/>
     <g:layoutHead/>
     <r:layoutResources />
   </head>
