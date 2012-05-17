@@ -38,11 +38,10 @@
 						<span class="icon-bar"></span>
 					</a>
 					
-					<a class="brand" href="${createLink(uri: '/')}">Grails Twitter Bootstrap</a>
+					<a class="brand" href="${createLink(uri: '/')}">CARMA</a>
 
 					<div class="nav-collapse">
-						<ul class="nav">							
-							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
+						<ul class="nav">
 							<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
 								<li<%= c.logicalPropertyName == controllerName ? ' class="active"' : '' %>><g:link controller="${c.logicalPropertyName}">${c.naturalName}</g:link></li>
 							</g:each>
@@ -58,7 +57,7 @@
 			<hr>
 
 			<footer>
-				<p>&copy; Company 2011</p>
+				<p>&copy; <g:layoutTitle default="${meta(name: 'app.name')}"/> 2011</p>
 			</footer>
 		</div>
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <meta name="layout" content="bootstrap"/>
+    <meta name="layout" content="main"/>
     <title>Carmeq GmbH | Carmob | Projekt Carma</title>
   </head>
 
@@ -9,7 +9,7 @@
   <auth:ifLoggedIn>
     Sie sind derzeit eingeloggt als: <auth:user/>
     <h2>Logout</h2>
-    <auth:form authAction="logout" success="[controller:'authentication', action:'index']" error="[controller:'authentication', action:'index']">
+    <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']">
       <g:actionSubmit value="Log out"/> 
     </auth:form>
   </auth:ifLoggedIn>
@@ -27,7 +27,7 @@
 
     <p>Sie sind nicht eingeloggt. Bitte loggen Sie sich ein:</p>
     <h2>Log in</h2>
-    <auth:form authAction="login" success="[controller:'authentication', action:'index']" error="[controller:'authentication', action:'index']">
+    <auth:form authAction="login" success="[controller:'index', action:'index']" error="[ controller:'index', action:'index']">
       Benutzername:
       <g:textField name="login" value="${flash.loginForm?.login?.encodeAsHTML()}"/><br/>
       <g:hasErrors bean="${flash.loginFormErrors}" field="login">
@@ -42,7 +42,7 @@
     </auth:form>
 
     <h2>Registrieren</h2>
-    <auth:form authAction="signup" success="[controller:'authentication', action:'index']" error="[controller:'authentication', action:'index']">
+    <auth:form authAction="signup" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']">
       Benutzername:
       <g:textField name="login" value="${flash.signupForm?.login?.encodeAsHTML()}"/><br/>
       <g:hasErrors bean="${flash.signupFormErrors}" field="login">
