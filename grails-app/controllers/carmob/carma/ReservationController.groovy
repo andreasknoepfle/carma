@@ -4,10 +4,10 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class ReservationController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+    static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
     def index() {
-        redirect(action: "list", params: params)
+        redirect action: 'list', params: params
     }
 
     def list() {
@@ -16,25 +16,28 @@ class ReservationController {
     }
 
     def create() {
-        [reservationInstance: new Reservation(params)]
-    }
+		switch (request.method) {
+		case 'GET':
+        	[reservationInstance: new Reservation(params)]
+			break
+		case 'POST':
+	        def reservationInstance = new Reservation(params)
+	        if (!reservationInstance.save(flush: true)) {
+	            render view: 'create', model: [reservationInstance: reservationInstance]
+	            return
+	        }
 
-    def save() {
-        def reservationInstance = new Reservation(params)
-        if (!reservationInstance.save(flush: true)) {
-            render(view: "create", model: [reservationInstance: reservationInstance])
-            return
-        }
-
-		flash.message = message(code: 'default.created.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
-        redirect(action: "show", id: reservationInstance.id)
+			flash.message = message(code: 'default.created.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
+	        redirect action: 'show', id: reservationInstance.id
+			break
+		}
     }
 
     def show() {
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "list")
+            redirect action: 'list'
             return
         }
 
@@ -42,62 +45,65 @@ class ReservationController {
     }
 
     def edit() {
-        def reservationInstance = Reservation.get(params.id)
-        if (!reservationInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "list")
-            return
-        }
+		switch (request.method) {
+		case 'GET':
+	        def reservationInstance = Reservation.get(params.id)
+	        if (!reservationInstance) {
+	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+	            redirect action: 'list'
+	            return
+	        }
 
-        [reservationInstance: reservationInstance]
-    }
+	        [reservationInstance: reservationInstance]
+			break
+		case 'POST':
+	        def reservationInstance = Reservation.get(params.id)
+	        if (!reservationInstance) {
+	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+	            redirect action: 'list'
+	            return
+	        }
 
-    def update() {
-        def reservationInstance = Reservation.get(params.id)
-        if (!reservationInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "list")
-            return
-        }
+	        if (params.version) {
+	            def version = params.version.toLong()
+	            if (reservationInstance.version > version) {
+	                reservationInstance.errors.rejectValue('version', 'default.optimistic.locking.failure',
+	                          [message(code: 'reservation.label', default: 'Reservation')] as Object[],
+	                          "Another user has updated this Reservation while you were editing")
+	                render view: 'edit', model: [reservationInstance: reservationInstance]
+	                return
+	            }
+	        }
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (reservationInstance.version > version) {
-                reservationInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'reservation.label', default: 'Reservation')] as Object[],
-                          "Another user has updated this Reservation while you were editing")
-                render(view: "edit", model: [reservationInstance: reservationInstance])
-                return
-            }
-        }
+	        reservationInstance.properties = params
 
-        reservationInstance.properties = params
+	        if (!reservationInstance.save(flush: true)) {
+	            render view: 'edit', model: [reservationInstance: reservationInstance]
+	            return
+	        }
 
-        if (!reservationInstance.save(flush: true)) {
-            render(view: "edit", model: [reservationInstance: reservationInstance])
-            return
-        }
-
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
-        redirect(action: "show", id: reservationInstance.id)
+			flash.message = message(code: 'default.updated.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
+	        redirect action: 'show', id: reservationInstance.id
+			break
+		}
     }
 
     def delete() {
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "list")
+            redirect action: 'list'
             return
         }
 
         try {
             reservationInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "list")
+            redirect action: 'list'
         }
         catch (DataIntegrityViolationException e) {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-            redirect(action: "show", id: params.id)
+            redirect action: 'show', id: params.id
         }
     }
 }
