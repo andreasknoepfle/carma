@@ -3,37 +3,51 @@ package carmob.carma
 import org.springframework.dao.DataIntegrityViolationException
 
 class ReservationController {
+    def authenticationService
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
     def index() {
-        redirect action: 'list', params: params
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        } else {
+            redirect action: 'list', params: params
+        }
     }
 
     def list() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
     }
 
     def create() {
-		switch (request.method) {
-		case 'GET':
-        	[reservationInstance: new Reservation(params)]
-			break
-		case 'POST':
-	        def reservationInstance = new Reservation(params)
-	        if (!reservationInstance.save(flush: true)) {
-	            render view: 'create', model: [reservationInstance: reservationInstance]
-	            return
-	        }
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
+        switch (request.method) {
+        case 'GET':
+        [reservationInstance: new Reservation(params)]
+                break
+        case 'POST':
+        def reservationInstance = new Reservation(params)
+        if (!reservationInstance.save(flush: true)) {
+            render view: 'create', model: [reservationInstance: reservationInstance]
+            return
+        }
 
-			flash.message = message(code: 'default.created.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
-	        redirect action: 'show', id: reservationInstance.id
-			break
-		}
+                flash.message = message(code: 'default.created.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
+        redirect action: 'show', id: reservationInstance.id
+                break
+        }
     }
 
     def show() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
@@ -45,6 +59,9 @@ class ReservationController {
     }
 
     def edit() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
 		switch (request.method) {
 		case 'GET':
 	        def reservationInstance = Reservation.get(params.id)
@@ -89,6 +106,9 @@ class ReservationController {
     }
 
     def delete() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
