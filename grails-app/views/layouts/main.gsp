@@ -43,7 +43,6 @@
               <ul class="nav">
                 <li><g:link controller="Reservation" action="list">Holen</g:link></li>
                 <li><g:link controller="Reservation" action="create">Abgeben</g:link></li>
-                <li><g:link controller="Index" action="Index">Profil</g:link></li>
               </ul>
             </div>
             <div class="nav pull-right">
@@ -57,13 +56,26 @@
     </nav>
 
     <div class="container-fluid">
+        <g:hasErrors bean="${flash.loginFormErrors}">
+          <div class="alert alert-block">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">Warnung</h4>
+            <g:renderErrors bean="${flash.loginFormErrors}" as="list"/>
+          </div>
+        </g:hasErrors>
+        <g:hasErrors bean="${flash.signupFormErrors}">
+          <div class="alert alert-block">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading">Warnung</h4>
+            <g:renderErrors bean="${flash.signupFormErrors}" as="list"/>
+          </div>
+        </g:hasErrors>
       <g:layoutBody/>
       <hr>
       <footer>
         <p>&copy; <g:layoutTitle default="${meta(name: 'app.name')}"/> 2012</p>
       </footer>
     </div>
-
     <r:layoutResources/>
   </body>
 </html>
