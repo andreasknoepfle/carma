@@ -71,10 +71,6 @@
           </div>
         </g:hasErrors>
       <g:layoutBody/>
-      <hr>
-      <footer>
-        <p>&copy; <g:layoutTitle default="${meta(name: 'app.name')}"/> 2012</p>
-      </footer>
     </div>
     <r:layoutResources/>
   </body>

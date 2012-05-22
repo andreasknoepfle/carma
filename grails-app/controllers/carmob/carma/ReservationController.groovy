@@ -111,7 +111,7 @@ class ReservationController {
         }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
             redirect action: 'list'
             return
         }
