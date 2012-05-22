@@ -16,6 +16,8 @@ class IndexController {
     }
     
     def signup() {
-        
+        if (authenticationService.isLoggedIn(request)) {
+            redirect(action:"index")
+        }
     }
 }
