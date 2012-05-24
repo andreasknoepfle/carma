@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 	<head>
-		<meta name="layout" content="bootstrap">
+		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'direction.label', default: 'Direction')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>

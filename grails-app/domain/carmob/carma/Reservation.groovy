@@ -7,6 +7,7 @@ class Reservation {
         String orderNumber
         Integer wagon
         Integer seat
+        Transfer transfer
     static constraints = {
     }
 }
