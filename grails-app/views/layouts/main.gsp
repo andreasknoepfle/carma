@@ -70,7 +70,6 @@
                      <li><g:message  error="${it}"/></li>
                 </g:else>
             </g:eachError>
-            <g:renderErrors bean="${flash.loginFormErrors}" as="list"/>
           </div>
         </g:hasErrors>
         <g:hasErrors bean="${flash.signupFormErrors}">
