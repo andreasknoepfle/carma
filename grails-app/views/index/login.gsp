@@ -8,8 +8,11 @@
   <body>
     <auth:ifNotLoggedIn>
       <g:if test="${flash.authenticationFailure}">
-        Ihr Login/Registrierung ist fehlgeschlagen:
-        <g:message code="authentication.failure.${flash.authenticationFailure.result}"/><br/>
+        <div class="alert alert-error">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Warnung</h4>
+          <li>Der von ihnen eingegebene Benutzer existiert nicht.</li>
+        </div>
       </g:if>
       
       <h2>Log in</h2>
@@ -34,9 +37,7 @@
           </div>
            <g:link controller="Index" action="signup">Registrieren</g:link>
         </fieldset>
-       
       </auth:form>
-      
     </auth:ifNotLoggedIn>
   </body>
 </html>

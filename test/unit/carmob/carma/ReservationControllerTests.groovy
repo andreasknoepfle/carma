@@ -1,10 +1,13 @@
 package carmob.carma
 
 
-
+import groovy.mock.interceptor.*
 import org.junit.*
 import grails.test.mixin.*
 import com.grailsrocks.authentication.*
+import org.springframework.mock.web.*
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import grails.test.GrailsUnitTestCase
 
 @TestFor(ReservationController)
 @Mock(Reservation)
@@ -12,41 +15,41 @@ class ReservationControllerTests {
      def authenticationService  = new AuthenticationService() 
      def res= new ReservationController()     
 
+    
     def populateValidParams(params) {
       assert params != null      
       // TODO: Populate valid properties like...
       //params["name"] = 'someValidName'
     }
 
-    void testIndex_logged_off() {              
-        res.authenticationService=authenticationService  
+    void testIndex_logged_off() {           
+        res.authenticationService=authenticationService       
         res.index()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "
+        
     }
     
-//     void testIndex_logged_in() {              
-//        res.authenticationService=authenticationService           
-//        def user = new AuthenticationUser( login:'someone', password:'secret'.encodeAsMD5(), email:'someone@somewhere.com', status:AuthenticationService.STATUS_VALID)
-//        assert user
-//        res.index()
-//        assert "/index/inde" == response.redirectedUrl
-//    }
+     void testIndex_logged_in() {              
+        def control=mockFor(AuthenticationService)
+        control.demand.isLoggedIn{->true}
+        res.authenticationService=control.createMock()
+        res.index()
+        assert "/reservation/list" == response.redirectedUrl
+    }
 
+        
 
-    void testList() {                 
+    void testList_logged_off() {                 
         res.authenticationService=authenticationService  
         res.list()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "
         
     }
 
-    void testCreate() {             
+    void testCreate_logged_off() {             
         res.authenticationService=authenticationService  
         res.create()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "
     }
 
 //    void testSave() {
@@ -70,11 +73,10 @@ class ReservationControllerTests {
 //        assert Reservation.count() == 1
 //    }
 
-    void testShow() {                     
+    void testShow_logged_off() {                     
         res.authenticationService=authenticationService  
         res.show()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "    
 //       controller.show()
 //        assert flash.message != null
 //        assert response.redirectedUrl == '/reservation/list'
@@ -92,11 +94,10 @@ class ReservationControllerTests {
 //        assert model.reservationInstance == reservation
     }
 
-    void testEdit() {                     
+    void testEdit_logged_off() {                     
         res.authenticationService=authenticationService  
         res.edit()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "
     
 //        controller.edit()
 //
@@ -162,11 +163,10 @@ class ReservationControllerTests {
 //        assert flash.message != null
 //    }
 
-    void testDelete() {        
+    void testDelete_logged_off() {        
         res.authenticationService=authenticationService  
         res.delete()
         assert "/index/index" == response.redirectedUrl
-        print"NOT LOGGED "    
 //        controller.delete()
 //        assert flash.message != null
 //        assert response.redirectedUrl == '/reservation/list'
@@ -188,3 +188,5 @@ class ReservationControllerTests {
 //        assert response.redirectedUrl == '/reservation/list'
     }
 }
+
+
