@@ -61,6 +61,15 @@
           <div class="alert alert-block">
             <a class="close" data-dismiss="alert" href="#">×</a>
             <h4 class="alert-heading">Warnung</h4>
+            <g:eachError bean="${flash.loginFormErrors}"> 
+              <% code="authentication.${it.field}.${it.code}.message" %>
+              <g:if test="${message(code: code, default:'')}">
+                    <% arguments = [it.field] %>
+                   <li><g:message  code="${code}" args="${arguments}"/></li>
+               </g:if><g:else>
+                     <li><g:message  error="${it}"/></li>
+                </g:else>
+            </g:eachError>
             <g:renderErrors bean="${flash.loginFormErrors}" as="list"/>
           </div>
         </g:hasErrors>
@@ -68,7 +77,15 @@
           <div class="alert alert-block">
             <a class="close" data-dismiss="alert" href="#">×</a>
             <h4 class="alert-heading">Warnung</h4>
-            <g:renderErrors bean="${flash.signupFormErrors}" as="list"/>
+             <g:eachError bean="${flash.signupFormErrors}">
+               <% code="authentication.${it.field}.${it.code}.message" %>
+              <g:if test="${message(code: code, default:'')}">
+                    <% arguments = [it.field] %>
+                   <li><g:message  code="${code}" args="${arguments}"/></li>
+               </g:if><g:else>
+                     <li><g:message  error="${it}"/></li>
+                </g:else>
+            </g:eachError>
           </div>
         </g:hasErrors>
       <g:layoutBody/>
