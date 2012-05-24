@@ -47,6 +47,7 @@ class ReservationController {
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
+            return
         }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
@@ -108,6 +109,7 @@ class ReservationController {
     def delete() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
+            return
         }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
