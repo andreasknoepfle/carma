@@ -1,70 +1,59 @@
+<% import org.codehaus.groovy.grails.orm.hibernate.support.ClosureEventTriggeringInterceptor as Events %>
 <%=packageName%>
-<!doctype html>
 <html>
-	<head>
-		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="\${message(code: '${domainClass.propertyName}.label', default: '${className}')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<div class="row-fluid">
-			
-			<div class="span3">
-				<div class="well">
-					<ul class="nav nav-list">
-						<li class="nav-header">\${entityName}</li>
-						<li>
-							<g:link class="list" action="list">
-								<i class="icon-list"></i>
-								<g:message code="default.list.label" args="[entityName]" />
-							</g:link>
-						</li>
-						<li class="active">
-							<g:link class="create" action="create">
-								<i class="icon-plus icon-white"></i>
-								<g:message code="default.create.label" args="[entityName]" />
-							</g:link>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-			<div class="span9">
-
-				<div class="page-header">
-					<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-				</div>
-
-				<g:if test="\${flash.message}">
-				<bootstrap:alert class="alert-info">\${flash.message}</bootstrap:alert>
-				</g:if>
-
-				<g:hasErrors bean="\${${propertyName}}">
-				<bootstrap:alert class="alert-error">
-				<ul>
-					<g:eachError bean="\${${propertyName}}" var="error">
-					<li <g:if test="\${error in org.springframework.validation.FieldError}">data-field-id="\${error.field}"</g:if>><g:message error="\${error}"/></li>
-					</g:eachError>
-				</ul>
-				</bootstrap:alert>
-				</g:hasErrors>
-
-				<fieldset>
-					<g:form class="form-horizontal" action="create" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
-						<fieldset>
-							<f:all bean="${propertyName}"/>
-							<div class="form-actions">
-								<button type="submit" class="btn btn-primary">
-									<i class="icon-ok icon-white"></i>
-									<g:message code="default.button.create.label" default="Create" />
-								</button>
-							</div>
-						</fieldset>
-					</g:form>
-				</fieldset>
-				
-			</div>
-
-		</div>
-	</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="layout" content="main" />
+        <title><g:message code="${domainClass.propertyName}.create" default="Create ${className}" /></title>
+    </head>
+    <body>
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="\${createLinkTo(dir: '')}"><g:message code="home" default="Home" /></a></span>
+            <span class="menuButton"><g:link class="list" action="list"><g:message code="${domainClass.propertyName}.list" default="${className} List" /></g:link></span>
+        </div>
+        <div class="body">
+            <h1><g:message code="${domainClass.propertyName}.create" default="Create ${className}" /></h1>
+            <g:if test="\${flash.message}">
+            <div class="message"><g:message code="\${flash.message}" args="\${flash.args}" default="\${flash.defaultMessage}" /></div>
+            </g:if>
+            <g:hasErrors bean="\${${propertyName}}">
+            <div class="errors">
+                <g:renderErrors bean="\${${propertyName}}" as="list" />
+            </div>
+            </g:hasErrors>
+            <g:form action="save" method="post" <%= multiPart ? " enctype=\"multipart/form-data\"" : "" %>>
+                <div class="dialog">
+                    <table>
+                        <tbody>
+                        <%  excludedProps = ["version",
+                                             "id",
+                                             Events.ONLOAD_EVENT,
+                                             Events.BEFORE_INSERT_EVENT,
+                                             Events.BEFORE_UPDATE_EVENT,
+                                             Events.BEFORE_DELETE_EVENT]
+                            props = domainClass.properties.findAll { !excludedProps.contains(it.name) }
+                            Collections.sort(props, comparator.constructors[0].newInstance([domainClass] as Object[]))
+                            props.each { p ->
+                                if (!Collection.class.isAssignableFrom(p.type)) {
+                                    cp = domainClass.constrainedProperties[p.name]
+                                    display = (cp ? cp.display : true)
+                                    if (display) { %>
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="${p.name}"><g:message code="${domainClass.propertyName}.${p.name}" default="${p.naturalName}" />:</label>
+                                </td>
+                                <td valign="top" class="value \${hasErrors(bean: ${propertyName}, field: '${p.name}', 'errors')}">
+                                    ${renderEditor(p)}
+                                </td>
+                            </tr>
+                        <%  }   }   } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="buttons">
+                    <span class="button"><g:submitButton name="create" class="save" value="\${message(code: 'create', 'default': 'Create')}" /></span>
+                </div>
+            </g:form>
+        </div>
+    </body>
 </html>

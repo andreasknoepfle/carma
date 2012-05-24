@@ -32,9 +32,11 @@
           <div class="form-actions">
             <g:actionSubmit value="Log in" class="btn btn-primary"/> 
           </div>
+           <g:link controller="Index" action="signup">Registrieren</g:link>
         </fieldset>
+       
       </auth:form>
-      <g:link controller="Index" action="signup">Registrieren</g:link>
+      
     </auth:ifNotLoggedIn>
   </body>
 </html>

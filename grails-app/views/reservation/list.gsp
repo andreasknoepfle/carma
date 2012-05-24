@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			<div class="span9">
+			<div class="span12">
 				<div class="page-header">
 					<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 				</div>
@@ -46,6 +46,7 @@
 							<td>${fieldValue(bean: reservationInstance, field: "wagon")}</td>
 						
 							<td class="link">
+                                                                ${reservationInstance.provider.login}
 								<g:link action="show" id="${reservationInstance.id}" class="btn btn-small">Show &raquo;</g:link>
 							</td>
 						</tr>

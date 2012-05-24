@@ -33,6 +33,7 @@ class ReservationController {
                 break
         case 'POST':
         def reservationInstance = new Reservation(params)
+        reservationInstance.provider = authenticationService.getUserPrincipal()
         if (!reservationInstance.save(flush: true)) {
             render view: 'create', model: [reservationInstance: reservationInstance]
             return

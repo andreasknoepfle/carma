@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			<div class="span9">
+			<div class="span12">
 				<div class="page-header">
 					<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 				</div>
