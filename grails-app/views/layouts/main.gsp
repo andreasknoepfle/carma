@@ -41,15 +41,16 @@
           <auth:ifLoggedIn>
             <div class="nav-collapse">
               <ul class="nav">
-                <li><g:link controller="Reservation" action="list">Holen</g:link></li>
-                <li><g:link controller="Reservation" action="create">Abgeben</g:link></li>
+                <li><g:link controller="Reservation" action="list"><i class="icon-share  icon-white"></i> Holen</g:link></li>
+                <li><g:link controller="Reservation" action="create"><i class="icon-edit  icon-white"></i> Abgeben</g:link></li>
               </ul>
-            </div>
-            <div class="nav pull-right">
-              <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="form-horizontal">
-                <g:actionSubmit value="Logout" class="btn btn-primary pull-right"/>
+           
+            
+              <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="navbar-form pull-right">
+                <g:actionSubmit value="Logout" class="btn"/>
               </auth:form>
-            </div>
+            
+               </div>
           </auth:ifLoggedIn>
         </div>
       </div>
