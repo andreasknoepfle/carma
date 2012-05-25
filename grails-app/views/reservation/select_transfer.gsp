@@ -47,7 +47,7 @@
 							<td>${fieldValue(bean: transferInstance, field: "weekday")}</td>
 						
 							<td class="link">
-								<g:link action="list" controller="reservation" params="[transfer: transferInstance]" class="btn btn-small">Select &raquo;</g:link>
+								<g:link action="list" controller="reservation" params="[transfer: transferInstance.id]" class="btn btn-small">Select &raquo;</g:link>
 							</td>
 						</tr>
 					</g:each>

@@ -28,11 +28,18 @@ class ReservationController {
         }
         if (!params.transfer) {
             redirect(controller: "reservation",action : "select_transfer")
-        } else {
-            params.fetch = [transfer:params.transfer]
+        } 
+          
+        
+        def query = {
+            if (params.transfer) {
+                eq('transfer' , Transfer.get(params.int('transfer')))
+            }
         }
+       
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]
+       
+        [reservationInstanceList: Reservation.list(params) , reservationInstanceTotal: Reservation.count()]
     }
 
     def create() {
