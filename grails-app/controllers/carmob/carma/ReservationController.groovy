@@ -14,10 +14,22 @@ class ReservationController {
             redirect action: 'list', params: params
         }
     }
+    
+    def select_transfer() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
+        [transferList : Transfer.list()]
+    }
 
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
+        }
+        if (!params.transfer) {
+            redirect(controller: "reservation",action : "select_transfer")
+        } else {
+            params.fetch = [transfer:params.transfer]
         }
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [reservationInstanceList: Reservation.list(params), reservationInstanceTotal: Reservation.count()]

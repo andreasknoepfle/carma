@@ -30,6 +30,8 @@
 						
 							<g:sortableColumn property="wagon" title="${message(code: 'reservation.wagon.label', default: 'Wagon')}" />
 						
+                                                        <g:sortableColumn property="provider" title="${message(code: 'reservation.provider.label', default: 'Provider')}" />
+                                                        
 							<th></th>
 						</tr>
 					</thead>
@@ -45,8 +47,9 @@
 						
 							<td>${fieldValue(bean: reservationInstance, field: "wagon")}</td>
 						
+                                                        <td>${reservationInstance.provider.login}</td>
+                                                        
 							<td class="link">
-                                                                ${reservationInstance.provider.login}
 								<g:link action="show" id="${reservationInstance.id}" class="btn btn-small">Show &raquo;</g:link>
 							</td>
 						</tr>
