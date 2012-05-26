@@ -1,0 +1,4 @@
+05-26 16:35:17 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Tabelle "CITY" nicht gefunden
+Table "CITY" not found; SQL statement:
+SELECT * FROM CITY [42102-164]

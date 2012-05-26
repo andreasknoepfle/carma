@@ -1,11 +1,12 @@
 import carmob.carma.Transfer
+import carmob.carma.City
+import carmob.carma.Direction
 
 class BootStrap {
 
-    def init = { servletContext ->
-        
+    def init = { /*servletContext ->
         def csv = new File("grails-app/conf/bahn.csv")
-
+        
         def Transfer =
         csv.splitEachLine(';') { fields -> new Transfer(
                 ice: fields[0],
@@ -15,8 +16,9 @@ class BootStrap {
                 weekday: fields[4],
                 active: fields[5]
             ).save()
-        } 
+        }*/
     }
+    
     def destroy = {
     }
 }
