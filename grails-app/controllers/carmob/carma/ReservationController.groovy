@@ -4,6 +4,7 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class ReservationController {
     def authenticationService
+    
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
@@ -16,50 +17,68 @@ class ReservationController {
     }
     
     def select_transfer() {
+         if (!params.direction) {
+            redirect(controller: "reservation",action : "select_direction")
+        } 
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
         }
-        [transferList : Transfer.list()]
+        [transferList : Transfer.findAllByDirId(Direction.get(params.int('direction')))]
+    }
+    
+    def select_direction() {
+          
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
+        [directionList : Direction.list()]
     }
 
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
+            return
         }
         if (!params.transfer) {
-            redirect(controller: "reservation",action : "select_transfer")
+            redirect(controller: "reservation",action : "select_direction")
+            return
         } 
           
         
         def query = {
             if (params.transfer) {
-                eq('transfer' , Transfer.get(params.int('transfer')))
+                eq('transfer' , )
             }
         }
        
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
        
-        [reservationInstanceList: Reservation.list(params) , reservationInstanceTotal: Reservation.count()]
+        [reservationInstanceList: Reservation.findByTransfer(Transfer.get(params.int('transfer')),params) , reservationInstanceTotal: Reservation.count()]
     }
 
     def create() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
         }
-        switch (request.method) {
-        case 'GET':
-        [reservationInstance: new Reservation(params)]
-                break
-        case 'POST':
+        if(params.transfer) {
+            params.transfer=Transfer.get(params.int("transfer"))
+        }
+        def transferList = Transfer.list()
         def reservationInstance = new Reservation(params)
         reservationInstance.provider = authenticationService.getUserPrincipal()
-        if (!reservationInstance.save(flush: true)) {
-            render view: 'create', model: [reservationInstance: reservationInstance]
-            return
-        }
+        
+        switch (request.method) {
+        case 'GET':
+                [reservationInstance: reservationInstance, transferList: transferList]
+                break
+        case 'POST':
+                if (!reservationInstance.save(flush: true)) {
+                    render view: 'create', model: [reservationInstance: reservationInstance, transferList: transferList]
+                    return
+                }
 
-                flash.message = message(code: 'default.created.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
-        redirect action: 'show', id: reservationInstance.id
+                flash.message = "Ihre Reservierung wurde erfolgreich abgegeben!"
+                redirect action: 'show', id: reservationInstance.id
                 break
         }
     }

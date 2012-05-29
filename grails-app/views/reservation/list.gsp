@@ -21,9 +21,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-						
-							<g:sortableColumn property="date" title="${message(code: 'reservation.date.label', default: 'Date')}" />
-						
+					
 							<g:sortableColumn property="orderNumber" title="${message(code: 'reservation.orderNumber.label', default: 'Order Number')}" />
 						
 							<g:sortableColumn property="seat" title="${message(code: 'reservation.seat.label', default: 'Seat')}" />
@@ -38,8 +36,6 @@
 					<tbody>
 					<g:each in="${reservationInstanceList}" var="reservationInstance">
 						<tr>
-						
-							<td><g:formatDate date="${reservationInstance.date}" /></td>
 						
 							<td>${fieldValue(bean: reservationInstance, field: "orderNumber")}</td>
 						

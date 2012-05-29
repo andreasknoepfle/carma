@@ -31,11 +31,12 @@
 					<g:form class="form-horizontal" action="create" >
 						<fieldset>
                                                         <f:with bean="reservationInstance">
-                                                          <f:field property="date"/>
+                                                          <f:field property="transfer"/>
                                                           <f:field property="orderNumber"/>
                                                           <f:field property="wagon"/>
                                                           <f:field property="seat"/>
                                                         </f:with>
+                                                       
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

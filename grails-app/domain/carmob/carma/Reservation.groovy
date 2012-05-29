@@ -4,11 +4,11 @@ import com.grailsrocks.authentication.AuthenticationUser
 class Reservation {
         AuthenticationUser provider
         AuthenticationUser user
-        Date date
         String orderNumber
         Integer wagon
         Integer seat
         Transfer transfer
     static constraints = {
+        user(nullable: true)
     }
 }

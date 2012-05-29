@@ -32,7 +32,6 @@
 						<g:hiddenField name="version" value="${reservationInstance?.version}" />
 						<fieldset>
 							<f:with bean="reservationInstance">
-                                                          <f:field property="date"/>
                                                           <f:field property="orderNumber"/>
                                                           <f:field property="wagon"/>
                                                           <f:field property="seat"/>

@@ -41,6 +41,8 @@
                                                         <td>${fieldValue(bean: transferInstance, field: "arrival")}</td>
 						
 							<td>${fieldValue(bean: transferInstance, field: "departure")}</td>
+                                                        
+                                                        <td>${fieldValue(bean: transferInstance, field: "dirId")}</td>
 						
 							<td>${fieldValue(bean: transferInstance, field: "ice")}</td>
 						

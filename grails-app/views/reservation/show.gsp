@@ -20,13 +20,6 @@
 
 				<dl>
 				
-					<g:if test="${reservationInstance?.date}">
-						<dt><g:message code="reservation.date.label" default="Date" /></dt>
-						
-							<dd><g:formatDate date="${reservationInstance?.date}" /></dd>
-						
-					</g:if>
-				
 					<g:if test="${reservationInstance?.orderNumber}">
 						<dt><g:message code="reservation.orderNumber.label" default="Order Number" /></dt>
 						
