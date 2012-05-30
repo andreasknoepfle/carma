@@ -53,7 +53,7 @@ class ReservationController {
        
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
        
-        [reservationInstanceList: Reservation.findByTransfer(Transfer.get(params.int('transfer')),params) , reservationInstanceTotal: Reservation.count()]
+        [reservationInstanceList: Reservation.findAllByTransfer(Transfer.get(params.int('transfer')),params) , reservationInstanceTotal: Reservation.count()]       
     }
 
     def create() {
