@@ -34,9 +34,10 @@
                                      
                                   <div class="accordion-group">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${transferInstance.id}">
+                                     
                                     <ul class="accordion-heading breadcrumb">
-                                      <g:if test="${transferListTomorrow.contains(transferInstance)}"> Morgen um </g:if>
-                                        <li><i class="icon-time"></i> ${transferInstance.departure()}<span class="divider"> | </span></li><li><i class="icon-arrow-right"></i> <em>${fieldValue(bean: transferInstance, field: "ice")}</em><span class="divider"> | </span></li><li><i class="icon-share"></i> ${transferInstance.numReservations()}/${transferInstance.numOpenReservations()}</li>
+                                      
+                                        <li><i class="icon-time"></i> <g:if test="${transferListTomorrow.contains(transferInstance)}"> Morgen um </g:if> ${transferInstance.departure()}<span class="divider"> | </span></li><li><i class="icon-arrow-right"></i> <em>${fieldValue(bean: transferInstance, field: "ice")}</em><span class="divider"> | </span></li><li><i class="icon-share"></i> ${transferInstance.numReservations()}/${transferInstance.numOpenReservations()}</li>
                                     </ul>
                                      </a>
 

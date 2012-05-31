@@ -50,10 +50,10 @@ class TransferController {
                     eq("dirId",direction)
                     eq("weekday",now.getDay()+1)
                     or {
-                        gt("departureHours",now.getHours()) 
+                        gt("departureHours",0) 
                         and {
-                            eq("departureHours",now.getHours())
-                            gt("departureMinutes",now.getMinutes())
+                            eq("departureHours",0)
+                            gt("departureMinutes",0)
                         }
                     }
                 }
