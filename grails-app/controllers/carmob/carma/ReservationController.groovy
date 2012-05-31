@@ -16,23 +16,7 @@ class ReservationController {
         }
     }
     
-    def select_transfer() {
-         if (!params.direction) {
-            redirect(controller: "reservation",action : "select_direction")
-        } 
-        if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
-        }
-        [transferList : Transfer.findAllByDirId(Direction.get(params.int('direction')))]
-    }
     
-    def select_direction() {
-          
-        if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
-        }
-        [directionList : Direction.list()]
-    }
 
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
@@ -44,16 +28,10 @@ class ReservationController {
             return
         } 
           
-        
-        def query = {
-            if (params.transfer) {
-                eq('transfer' , )
-            }
-        }
        
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
        
-        [reservationInstanceList: Reservation.findByTransfer(Transfer.get(params.int('transfer')),params) , reservationInstanceTotal: Reservation.count()]
+        [reservationInstanceList: Reservation.findByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
     }
 
     def create() {

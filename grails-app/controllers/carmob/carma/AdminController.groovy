@@ -25,10 +25,7 @@ class AdminController {
         Date startdatum = new Date();
         Date enddatum = new Date();
         enddatum.setTime(enddatum.getTime()+ (86400000*7));
-        String iceString;
-        String departureString;
-        String arrivalString;
-        String weekdayString;
+        
         boolean activeBoolean = true;
                 
         
@@ -49,7 +46,7 @@ class AdminController {
                 GetConnectionDetailsResult result2 = p.getConnectionDetails(item.link);
 
                 // String ice
-                System.out.print("ice: " + result2.connection.getFirstTrip().line);
+                System.out.print("ice: " + result2.connection.getFirstTrip().line.label);
 
                 // String departure
                 System.out.print("; Abfahrtszeit: " + result2.connection.getFirstDepartureTime().getHours() + ":" + result2.connection.getFirstDepartureTime().getMinutes());
@@ -70,30 +67,40 @@ class AdminController {
             for (Connection item : result.connections) {
                 GetConnectionDetailsResult result2 = p.getConnectionDetails(item.link);
                 
-                iceString = result2.connection.getFirstTrip().line;
-                departureString = result2.connection.getFirstDepartureTime().getHours() + ":" + result2.connection.getFirstDepartureTime().getMinutes();
-                arrivalString = result2.connection.getLastArrivalTime().getHours() + ":" + result2.connection.getLastArrivalTime().getMinutes();
-                weekdayString =  result2.connection.getFirstDepartureTime().getDay();
+                def iceString = result2.connection.getFirstTrip().line.label;
+                def departureHours = result2.connection.getFirstDepartureTime().getHours() 
+                def departureMinutes = result2.connection.getFirstDepartureTime().getMinutes()
                 
-                new Transfer(
+                def arrivalHours = result2.connection.getLastArrivalTime().getHours() 
+                def arrivalMinutes = result2.connection.getLastArrivalTime().getMinutes();
+                def weekday =  result2.connection.getFirstDepartureTime().getDay();
+                
+                def transfer = new Transfer(
                     // String ice
                     ice: iceString,
 
                     // Direction dirId;
                     dirId: berlinWolfsburg,
 
-                    // String departure
-                    departure: departureString,
-                
-                    // String arrival
-                    arrival: arrivalString,
+                    // departure
+                    departureHours: departureHours,
+                    departureMinutes:departureMinutes,
                     
-                    // String weekday;
-                    weekday: weekdayString,
+                    // arrival
+                    arrivalHours: arrivalHours,
+                    arrivalMinutes: arrivalMinutes,
+                    
+                    // weekday;
+                    weekday: weekday,
                     
                     // boolean active;
                     active: activeBoolean
-                ).save()
+                )
+                if(!transfer.save()) {
+                    transfer.errors.allErrors.each {
+                    println it
+                    }
+                }
                 startdatum = result2.connection.getFirstDepartureTime();
             }
         } 

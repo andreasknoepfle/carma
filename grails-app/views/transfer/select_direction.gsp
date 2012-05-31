@@ -9,30 +9,17 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			
-			
-
-			
-				
+		
 				<div class="page-header">
-					<h1>Wähle deine Richtung:</h1>
+					<h2>Wählen deine Route:</h2>
 				</div>
-
-				<g:if test="${flash.message}">
-				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
-				</g:if>
-				
-				<table class="table table-striped">
+               
+                                <g:each in="${directionList}" var="directionInstance">
+                                  <div>
+						<g:link action="list" params="[direction: directionInstance.id]" class="btn btn-small">${directionInstance}</g:link>
+                                  </div></br>
+                                </g:each>
 					
-					<tbody>
-					<g:each in="${directionList}" var="directionInstance">
-						<tr>
-                                                        <td class="link"><g:link action="select_transfer" params="[direction: directionInstance.id]" class="btn btn-small">${directionInstance}</g:link></td>
-						
-						</tr>
-					</g:each>
-					</tbody>
-				</table>
 				
 			
 
