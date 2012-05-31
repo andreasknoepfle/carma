@@ -23,31 +23,21 @@
 				<dl>
 				
 					<g:if test="${reservationInstance?.orderNumber}">
-						<dt>Buchungsnummer:</dt>
-						
-							<dd><g:fieldValue bean="${reservationInstance}" field="orderNumber"/></dd>
+						<dt>Buchungsnummer:</dt><dd><g:fieldValue bean="${reservationInstance}" field="orderNumber"/></dd>
 						
 					</g:if>
                                         <g:if test="${reservationInstance?.wagon}">
-						<dt>Wagen</dt>
-						
-							<dd><g:fieldValue bean="${reservationInstance}" field="wagon"/></dd>
+						<dt>Wagen:</dt><dd><g:fieldValue bean="${reservationInstance}" field="wagon"/></dd>
 						
 					</g:if>
 					<g:if test="${reservationInstance?.seat}">
-						<dt>Platz</dt>
-						
-							<dd><g:fieldValue bean="${reservationInstance}" field="seat"/></dd>
+						<dt>Platz:</dt><dd><g:fieldValue bean="${reservationInstance}" field="seat"/></dd>
 						
 					</g:if>
                                        
-						<dt>Ankunft</dt>
+						<dt>Ankunft:</dt><dd>${reservationInstance.transfer.arrival()}</dd>
 						
-							<dd>${reservationInstance.transfer.arrival()}</dd>
-						
-                                                <dt>Richtung</dt>
-						
-							<dd>${reservationInstance.transfer.dirId.toEmString()}</dd>
+                                                <dt>Richtung:</dt><dd>${reservationInstance.transfer.dirId.toEmString()}</dd>
 					
 				
 				</dl>

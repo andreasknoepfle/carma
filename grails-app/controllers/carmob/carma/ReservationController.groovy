@@ -26,7 +26,7 @@ class ReservationController {
         
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
        
-        [reservationInstanceList: Reservation.findByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
+        [reservationInstanceList: Reservation.findAllByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
     }
     
      def select_date() {
@@ -117,7 +117,7 @@ class ReservationController {
             return
         }
 
-        flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Du hast dafür 5 CARMA Punkte erhalten!"
+        flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Sie haben dafür 5 CARMA Punkte erhalten!"
         redirect action: 'show', id: reservationInstance.id
     }
     
