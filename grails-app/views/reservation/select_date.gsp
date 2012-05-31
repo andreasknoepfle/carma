@@ -9,6 +9,7 @@
 <body>
   <div class="row-fluid">
     <div class="span12">
+
       <div class="page-header">
         <h2>Sitzplatzreservierung abgeben</h2>
       </div>
@@ -46,8 +47,7 @@
 
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">
-                <i class="icon-ok icon-white"></i>
-                Weiter
+                Weiter <i class="icon-chevron-right icon-white"></i>
               </button>
             </div>
           </fieldset>

@@ -18,7 +18,7 @@
                                           Von <b>${direction.from}</b> nach <b>${direction.to}</b></div>
                                       </div>
                                       <div class="span3">
-                                          <g:link action="select_direction" class="btn">Ändern</g:link>
+                                          <g:link action="select_direction" class="btn"><i class="icon-repeat"></i> Ändern</g:link>
                                       </div>
                                 </div>
 				<div class="page-header">

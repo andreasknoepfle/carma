@@ -16,7 +16,7 @@
                
                                 <g:each in="${directionList}" var="directionInstance">
                                   <div>
-						<g:link action="list" params="[direction: directionInstance.id]" class="btn btn-small">${directionInstance.toEmString()}</g:link>
+						<g:link action="list" params="[direction: directionInstance.id]" class="btn btn-small"><i class="icon-arrow-right"></i> ${directionInstance.toEmString()}</g:link>
                                   </div></br>
                                 </g:each>
 					
