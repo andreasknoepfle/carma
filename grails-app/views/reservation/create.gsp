@@ -10,7 +10,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="page-header">
-					<h1>Sitzplatzreservierung abgeben</h1>
+					<h2>Sitzplatzreservierung abgeben</h2>
 				</div>
 
 				<g:if test="${flash.message}">
