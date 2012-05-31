@@ -1,5 +1,7 @@
-
-<table class="fieldcontain table table-striped">
+<br/>
+<br/>
+<div class="row"><div class="well span6">
+<table class="table table-striped table-bordered table-condensed">
   <thead>
     <tr>
       
@@ -7,7 +9,6 @@
    <th class="header">Abfahrt</th>
     <th class="header">Anknunft</th>
     <th class="header">Linie</th>
-    <th class="header">Wochentag</th>
 </tr>
 </thead>
 <tbody>
@@ -17,8 +18,8 @@
     <td>${transferInstance.departure()}</td>
     <td>${transferInstance.arrival()}</td>
     <td>${fieldValue(bean: transferInstance, field: "ice")}</td>
-     <td>${transferInstance.weekday}</td>
   </tr>
 </g:each>
 </tbody>
 </table>
+</div></div>

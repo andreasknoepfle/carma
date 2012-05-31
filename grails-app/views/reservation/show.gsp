@@ -10,36 +10,45 @@
 	<body>
 		<div class="row-fluid">
 			<div class="span12">
-				<div class="page-header">
-					<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-				</div>
+				
 
 				<g:if test="${flash.message}">
 				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
-
+                          
+                                <div class="page-header">
+					<h2>Sitzplatzreservierung</h2>
+				</div>
+                                <h3>Um ${reservationInstance.transfer.departure()} mit ${reservationInstance.transfer.ice}</h3>
 				<dl>
 				
 					<g:if test="${reservationInstance?.orderNumber}">
-						<dt><g:message code="reservation.orderNumber.label" default="Order Number" /></dt>
+						<dt>Buchungsnummer:</dt>
 						
 							<dd><g:fieldValue bean="${reservationInstance}" field="orderNumber"/></dd>
 						
 					</g:if>
-				
-					<g:if test="${reservationInstance?.seat}">
-						<dt><g:message code="reservation.seat.label" default="Seat" /></dt>
-						
-							<dd><g:fieldValue bean="${reservationInstance}" field="seat"/></dd>
-						
-					</g:if>
-				
-					<g:if test="${reservationInstance?.wagon}">
-						<dt><g:message code="reservation.wagon.label" default="Wagon" /></dt>
+                                        <g:if test="${reservationInstance?.wagon}">
+						<dt>Wagen</dt>
 						
 							<dd><g:fieldValue bean="${reservationInstance}" field="wagon"/></dd>
 						
 					</g:if>
+					<g:if test="${reservationInstance?.seat}">
+						<dt>Platz</dt>
+						
+							<dd><g:fieldValue bean="${reservationInstance}" field="seat"/></dd>
+						
+					</g:if>
+                                       
+						<dt>Ankunft</dt>
+						
+							<dd>${reservationInstance.transfer.arrival()}</dd>
+						
+                                                <dt>Richtung</dt>
+						
+							<dd>${reservationInstance.transfer.dirId.toEmString()}</dd>
+					
 				
 				</dl>
 

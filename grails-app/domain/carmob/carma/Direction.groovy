@@ -9,6 +9,15 @@ class Direction {
     
     @Override public String toString() {
         StringBuilder result = new StringBuilder()
+        result.append("Von ")
+        result.append(from)
+        result.append(" nach ")
+        result.append(to)
+        return result.toString()
+     }
+     
+     @Override public String toEmString() {
+        StringBuilder result = new StringBuilder()
         result.append("Von <b>")
         result.append(from)
         result.append("</b> nach <b>")

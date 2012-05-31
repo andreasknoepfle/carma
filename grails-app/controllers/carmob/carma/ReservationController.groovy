@@ -28,33 +28,100 @@ class ReservationController {
        
         [reservationInstanceList: Reservation.findByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
     }
-
+    
+     def select_date() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
+        if(params.direction) {
+            params.direction=Direction.get(params.int("direction"))
+        }
+        
+        def reservationInstance = new Reservation(params)
+        switch (request.method) {
+        case 'GET':
+                [reservationInstance: reservationInstance, directionList : Direction.list()]
+                break
+        case 'POST':
+                if (!reservationInstance.validate(['date'])) {
+                    render view: 'select_date', model: [reservationInstance: reservationInstance, directionList : Direction.list()]
+                    return
+                }
+                
+            redirect(action : 'create', params: [ date : reservationInstance.date.getTime(), direction:params.direction.id])
+                break
+        }
+    }
+    
     def create() {
+    
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
         }
-        def transferList = Transfer.list()
+        if(params.direction) {
+            params.direction=Direction.get(params.int("direction"))
+        }
+        if(!params.date) {
+           redirect(action: 'select_date')
+           return
+        }
+        params.date = new Date(params.long("date"))
         def reservationInstance = new Reservation(params)
+        
+        def transferList = Transfer.createCriteria().list() {
+            and {
+                eq("weekday",reservationInstance.date.getDay())
+                eq("dirId",params.direction)
+            }
+            
+            order("departureHours","asc")
+            order("departureMinutes","asc")
+             
+        }
+    
+        [reservationInstance: reservationInstance, transferList: transferList, direction : params.direction]
+          
+    }
+    
+    def submit() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+        }
+        if(params.transfer) {
+            params.transfer=Transfer.get(params.int("transfer"))
+        }
+       
+        def direction=Direction.get(params.int("direction"))
+        params.remove("direction")
+        params.date = new Date(params.long("date"))
+        
+        def reservationInstance = new Reservation(params)
+         
+        def transferList = Transfer.createCriteria().list() {
+            and {
+                eq("weekday",reservationInstance.date.getDay())
+                eq("dirId",direction)
+            }
+            
+            order("departureHours","asc")
+            order("departureMinutes","asc")
+             
+        }
         reservationInstance.provider = authenticationService.getUserPrincipal()
         
-        switch (request.method) {
-        case 'GET':
-                [reservationInstance: reservationInstance, transferList: transferList]
-                break
-        case 'POST':
-                if (!reservationInstance.save(flush: true)) {
-                    render view: 'create', model: [reservationInstance: reservationInstance, transferList: transferList]
-                    return
-                }
-
-                flash.message = "Ihre Reservierung wurde erfolgreich abgegeben!"
-                redirect action: 'show', id: reservationInstance.id
-                break
+        if (!reservationInstance.save(flush: true)) {
+            render view: 'create', model: [reservationInstance: reservationInstance, transferList: transferList, direction :direction]
+            return
         }
+
+        flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Du hast dafür 5 CARMA Punkte erhalten!"
+        redirect action: 'show', id: reservationInstance.id
     }
+    
+    
 
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
