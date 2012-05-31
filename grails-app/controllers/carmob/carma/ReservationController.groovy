@@ -23,12 +23,7 @@ class ReservationController {
             redirect(controller: "Index", action: "index")
             return
         }
-        if (!params.transfer) {
-            redirect(controller: "reservation",action : "select_direction")
-            return
-        } 
-          
-       
+        
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
        
         [reservationInstanceList: Reservation.findByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]

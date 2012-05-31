@@ -53,7 +53,7 @@
 					</tbody>
 				</table>
 				<div class="pagination">
-					<bootstrap:paginate total="${reservationInstanceTotal}" params="${[ direction : direction.id]}"/>
+					<bootstrap:paginate total="${reservationInstanceTotal}"/>
 				</div>
 			</div>
 
