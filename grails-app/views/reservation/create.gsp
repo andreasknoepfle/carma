@@ -10,7 +10,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="page-header">
-					<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+					<h2>Sitzplatzreservierung abgeben</h2>
 				</div>
 
 				<g:if test="${flash.message}">
@@ -28,19 +28,20 @@
 				</g:hasErrors>
 
 				<fieldset>
-					<g:form class="form-horizontal" action="create" >
+					<g:form class="form-horizontal" action="submit" >
 						<fieldset>
                                                         <f:with bean="reservationInstance">
-                                                          <f:field property="transfer"/>
-                                                          <f:field property="orderNumber"/>
-                                                          <f:field property="wagon"/>
-                                                          <f:field property="seat"/>
+                                                          <f:field property="transfer" label="Verbindungen"/>
+                                                          <f:field property="orderNumber" label="Buchungsnummer"/>
+                                                          <f:field property="wagon" label="Wagen"/>
+                                                          <f:field property="seat" label="Sitzplatz"/>
                                                         </f:with>
-                                                       
+                                                        <g:hiddenField name="date" value="${reservationInstance.date.getTime()}" />
+                                                        <g:hiddenField name="direction" value="${direction.id}" />
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>
-									<g:message code="default.button.create.label" default="Create" />
+									Reservierung abgeben
 								</button>
 							</div>
 						</fieldset>

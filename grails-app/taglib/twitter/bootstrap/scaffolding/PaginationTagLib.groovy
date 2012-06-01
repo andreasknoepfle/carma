@@ -32,7 +32,7 @@ class PaginationTagLib {
         linkParams.max = max
         if (params.sort) linkParams.sort = params.sort
         if (params.order) linkParams.order = params.order
-
+        if (params.direction) linkParams.direction = params.direction
         def linkTagAttrs = [action: action]
         if (attrs.controller) {
             linkTagAttrs.controller = attrs.controller

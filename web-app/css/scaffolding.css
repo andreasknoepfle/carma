@@ -109,3 +109,10 @@ pre.snippet .lineNumber {
 pre.snippet .error {
 	font-weight: bold;
 }
+
+.accordion-heading {
+    background-color: #EEE;
+    margin: 0 0 0px;
+}
+
+.accordion-heading:hover { color: black; text-decoration:none; }

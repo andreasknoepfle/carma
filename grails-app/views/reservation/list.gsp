@@ -11,7 +11,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="page-header">
-					<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+					<h1>Meine Reservierungen</h1>
 				</div>
 
 				<g:if test="${flash.message}">
@@ -53,7 +53,7 @@
 					</tbody>
 				</table>
 				<div class="pagination">
-					<bootstrap:paginate total="${reservationInstanceTotal}" />
+					<bootstrap:paginate total="${reservationInstanceTotal}"/>
 				</div>
 			</div>
 

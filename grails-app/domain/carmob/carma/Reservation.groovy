@@ -8,7 +8,11 @@ class Reservation {
         Integer wagon
         Integer seat
         Transfer transfer
+        Date date
     static constraints = {
         user(nullable: true)
+        wagon min:1
+        seat min:1
+        date min:new Date().clearTime()
     }
 }
