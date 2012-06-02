@@ -11,6 +11,15 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'avatar', 'error')} ">
+	<label for="avatar">
+		<g:message code="user.avatar.label" default="Avatar" />
+		
+	</label>
+	<input type="file" id="avatar" name="avatar" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'email', 'error')} ">
 	<label for="email">
 		<g:message code="user.email.label" default="Email" />

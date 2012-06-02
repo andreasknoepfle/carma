@@ -1,16 +1,13 @@
 package carmob.carma
 
 class UserController {
-
+    
+    def authenticationService
+    
     def index = { redirect(action: "list", params: params) }
 
     // the delete, save and update actions only accept POST requests
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
-    def list = {
-        params.max = Math.min(params.max ? params.max.toInteger() : 10,  100)
-        [userInstanceList: User.list(params), userInstanceTotal: User.count()]
-    }
 
     def create = {
         def userInstance = new User()
@@ -32,12 +29,18 @@ class UserController {
     }
 
     def show = {
-        def userInstance = User.get(params.id)
+        def userInstance
+        
+        if (params.id == null) {
+            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
+        } else {
+            userInstance = User.get(params.id)
+        }
+        
         if (!userInstance) {
             flash.message = "user.not.found"
             flash.args = [params.id]
             flash.defaultMessage = "User not found with id ${params.id}"
-            redirect(action: "list")
         }
         else {
             return [userInstance: userInstance]
@@ -50,7 +53,6 @@ class UserController {
             flash.message = "user.not.found"
             flash.args = [params.id]
             flash.defaultMessage = "User not found with id ${params.id}"
-            redirect(action: "list")
         }
         else {
             return [userInstance: userInstance]
@@ -87,29 +89,24 @@ class UserController {
             redirect(action: "edit", id: params.id)
         }
     }
-
-    def delete = {
-        def userInstance = User.get(params.id)
-        if (userInstance) {
-            try {
-                userInstance.delete()
-                flash.message = "user.deleted"
-                flash.args = [params.id]
-                flash.defaultMessage = "User ${params.id} deleted"
-                redirect(action: "list")
-            }
-            catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "user.not.deleted"
-                flash.args = [params.id]
-                flash.defaultMessage = "User ${params.id} could not be deleted"
-                redirect(action: "show", id: params.id)
-            }
+    
+    def avatar_image = {
+        def avatarUser
+        
+        if (params.id == null) {
+            avatarUser = User.get(authenticationService.getSessionUser()?.userObjectId)
+        } else {
+            avatarUser = User.get(params.id)
         }
-        else {
-            flash.message = "user.not.found"
-            flash.args = [params.id]
-            flash.defaultMessage = "User not found with id ${params.id}"
-            redirect(action: "list")
+        
+        if (!avatarUser || !avatarUser.avatar) {
+            response.sendError(404)
+            return;
         }
+        
+        response.setContentLength(avatarUser.avatar.size())
+        OutputStream out = response.getOutputStream();
+        out.write(avatarUser.avatar);
+        out.close();
     }
 }
