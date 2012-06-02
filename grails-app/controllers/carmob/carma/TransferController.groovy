@@ -87,7 +87,6 @@ class TransferController {
             redirect action: 'list'
             return
         }
-
         [transferInstance: transferInstance]
     }
 

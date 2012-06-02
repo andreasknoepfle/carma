@@ -10,6 +10,6 @@ class User {
 
     static constraints = {
         phone(nullable:true)
-        avatar(nullable:true, maxSize: 1024 * 1024 * 2)
+        avatar(nullable:true, maxSiitze: 1024 * 1024 * 2)
     }
 }

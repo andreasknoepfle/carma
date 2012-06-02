@@ -57,7 +57,7 @@
 							<dd><g:fieldValue bean="${transferInstance}" field="weekday"/></dd>
 						
 					</g:if>
-				
+                                            
 				</dl>
 
 
