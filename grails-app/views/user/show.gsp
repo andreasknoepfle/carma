@@ -34,9 +34,13 @@
           </tbody>
         </table>
       </div>
-      <div class="buttons">
-        <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" /></span>
-      </div>
+      <g:if test="${ownProfile}">
+        <div class="buttons">
+          <span class="button">
+            <g:actionSubmit class="edit" action="edit" value="${message(code: 'edit', 'default': 'Edit')}" />
+          </span>
+        </div>
+      </g:if>
     </g:form>
     </div>
   </body>

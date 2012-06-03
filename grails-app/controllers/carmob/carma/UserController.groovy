@@ -30,9 +30,11 @@ class UserController {
 
     def show = {
         def userInstance
+        def ownProfile = false
         
-        if (params.id == null) {
+        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
             userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
+            ownProfile = true
         } else {
             userInstance = User.get(params.id)
         }
@@ -43,7 +45,7 @@ class UserController {
             flash.defaultMessage = "User not found with id ${params.id}"
         }
         else {
-            return [userInstance: userInstance]
+            return [userInstance: userInstance, ownProfile: ownProfile]
         }
     }
 
