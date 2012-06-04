@@ -37,7 +37,7 @@
                                      
                                     <ul class="accordion-heading breadcrumb">
                                       
-                                        <li><i class="icon-time"></i> <g:if test="${transferListTomorrow.contains(transferInstance)}"> Morgen um </g:if> ${transferInstance.departure()}<span class="divider"> | </span></li><li><i class="icon-arrow-right"></i> <em>${fieldValue(bean: transferInstance, field: "ice")}</em><span class="divider"> | </span></li><li><i class="icon-share"></i> ${transferInstance.numReservations()}/${transferInstance.numOpenReservations()}</li>
+                                        <li><i class="icon-time"></i> <g:if test="${transferListTomorrow.contains(transferInstance)}"> Morgen um </g:if> ${transferInstance.departure()}<span class="divider"> | </span></li><li><i class="icon-arrow-right"></i> <em>${fieldValue(bean: transferInstance, field: "ice")}</em><span class="divider"> | </span></li><li><i class="icon-share"></i> ${transferInstance.numOpenReservations()}/${transferInstance.numReservations()}</li>
                                     </ul>
                                      </a>
 

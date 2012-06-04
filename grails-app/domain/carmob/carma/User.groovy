@@ -12,6 +12,14 @@ class User {
     
     static constraints = {
         phone(nullable:true)
-        avatar(nullable:true, maxSiitze: 1024 * 1024 * 2)
+        avatar(nullable:true, maxSize: 1024 * 1024 * 2)
+    }
+    
+    def hasReservationFor(Transfer transfer) {
+        int num=Reservation.countByTransferAndUser(transfer,this)
+        if(num>0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -25,4 +25,14 @@ class Direction {
         result.append("</b>")
         return result.toString()
      }
+     
+     @Override public String toItString() {
+        StringBuilder result = new StringBuilder()
+        result.append("Von <i>")
+        result.append(from)
+        result.append("</i> nach <i>")
+        result.append(to)
+        result.append("</i>")
+        return result.toString()
+     }
 }

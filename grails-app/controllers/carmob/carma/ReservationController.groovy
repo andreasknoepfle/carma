@@ -207,4 +207,40 @@ class ReservationController {
             redirect action: 'show', id: params.id
         }
     }
+    
+    def get_reservation() {
+         if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+            return
+        }
+        if(params.id) {
+            def reservationInstance = Reservation.get(params.id)
+                def user = authenticationService.getUserPrincipal()
+            if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
+                 reservationInstance.user = user
+                reservationInstance.save()
+                flash.message = "Reservierung erfolgreich geholt!"
+            }
+            redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
+        }
+        
+    }
+    
+    def return_reservation() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+            return
+        }
+        if(params.id) {
+            def reservationInstance = Reservation.get(params.id)
+                def user = authenticationService.getUserPrincipal()
+            if(reservationInstance.user==user) {
+                 reservationInstance.user = null
+                reservationInstance.save()
+                flash.message = "Reservierung erfolgreich zurückgegeben!"
+            }
+            redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
+        }
+        
+    }
 }

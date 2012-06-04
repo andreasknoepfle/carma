@@ -10,12 +10,14 @@ class UserController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def create = {
+        
         def userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]
     }
 
     def save = {
+        
         def userInstance = new User(params)
         if (!userInstance.hasErrors() && userInstance.save()) {
             flash.message = "user.created"
@@ -29,6 +31,10 @@ class UserController {
     }
 
     def show = {
+         if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+            return
+        }
         def userInstance
         def ownProfile = false
         
@@ -50,6 +56,10 @@ class UserController {
     }
 
     def edit = {
+         if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+            return
+        }
         def userInstance = User.get(params.id)
         if (!userInstance) {
             flash.message = "user.not.found"
@@ -62,6 +72,10 @@ class UserController {
     }
 
     def update = {
+         if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "index")
+            return
+        }
         def userInstance = User.get(params.id)
         if (userInstance) {
             if (params.version) {

@@ -17,7 +17,12 @@
         <table>
           <tbody>
             <tr align="center">
-              <img class="avatar" src="${createLink(controller:'user', action:'avatar_image')}" width="25%" height="25%" />
+              <g:if test="${userInstance?.avatar}">
+                <img class="avatar" src="${createLink(controller:'user', action:'avatar_image')}" width="128" height="128" />
+              </g:if>
+              <g:else>
+                <g:img  class="avatar" uri="/images/default-avatar.png"/>
+              </g:else>
             </tr>
             <tr class="prop">
               <td valign="top" class="name"><g:message code="user.login" default="Login" />:</td>

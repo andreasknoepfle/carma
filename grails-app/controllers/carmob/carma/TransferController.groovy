@@ -87,7 +87,8 @@ class TransferController {
             redirect action: 'list'
             return
         }
-        [transferInstance: transferInstance]
+        
+        [transferInstance: transferInstance,reservationsList: Reservation.findAllByTransfer(transferInstance),myReservation: Reservation.findByTransferAndUser(transferInstance,authenticationService.getUserPrincipal())]
     }
 
     
