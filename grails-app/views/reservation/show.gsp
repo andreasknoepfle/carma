@@ -62,7 +62,7 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                      <g:if test="${reservationInstance.provider.avatar}">
+                                      <g:if test="${reservationInstance.user.avatar}">
                                             <img class="avatar" src="${createLink(controller:'user', action:'avatar_image' , id: reservationInstance.user.id)}" width="70" height="70" />
                                       </g:if>
                                       <g:else>
