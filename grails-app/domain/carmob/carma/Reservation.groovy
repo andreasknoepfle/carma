@@ -2,8 +2,8 @@ package carmob.carma
 import com.grailsrocks.authentication.AuthenticationUser
 
 class Reservation {
-        AuthenticationUser provider
-        AuthenticationUser user
+        User provider
+        User user
         String orderNumber
         Integer wagon
         Integer seat
