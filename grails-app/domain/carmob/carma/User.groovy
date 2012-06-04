@@ -8,6 +8,8 @@ class User {
     byte[] avatar
     int status
 
+    def authenticationService
+    
     static constraints = {
         phone(nullable:true)
         avatar(nullable:true, maxSiitze: 1024 * 1024 * 2)

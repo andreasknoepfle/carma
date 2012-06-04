@@ -7,14 +7,7 @@
 
   <body>
     <auth:ifNotLoggedIn>
-      <g:if test="${flash.authenticationFailure}">
-        <div class="alert alert-error">
-          <a class="close" data-dismiss="alert" href="#">×</a>
-          <h4 class="alert-heading">Warnung</h4>
-          <li>Der von ihnen eingegebene Benutzer existiert nicht.</li>
-        </div>
-      </g:if>
-      
+     
       <h2>Log in</h2>
       <auth:form authAction="login" 
                  success="[controller:'index', action:'login']" 

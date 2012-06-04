@@ -58,6 +58,26 @@
     </nav>
     
     <div class="container-fluid">
+      <g:if test="${flash.authenticationFailure}">
+        <div class="alert alert-block">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Warnung</h4>
+          <g:if test="${flash.authenticationFailure.result == flash.authenticationFailure.ERROR_NO_SUCH_LOGIN}">
+            Dieser Benutzer ist nicht registriert!
+          </g:if>
+           <g:if test="${flash.authenticationFailure.result == flash.authenticationFailure.ERROR_INCORRECT_CREDENTIALS}">
+            Falscher Benutzername oder falsches Passwort!
+          </g:if>
+           <g:if test="${flash.authenticationFailure.result == flash.authenticationFailure.ERROR_LOGIN_NAME_NOT_AVAILABLE}">
+              Nutzer bereits registriert! 
+          </g:if>
+            <g:if test="${flash.authenticationFailure.result == flash.authenticationFailure.AWAITING_CONFIRMATION}">
+              Sie müssen zunächst den per Email an sie zugesendeten Bestätigungslink klicken.
+          </g:if>
+        </div>
+      </g:if>
+    </div>
+    <div class="container-fluid">
       <g:hasErrors bean="${flash.loginFormErrors}">
         <div class="alert alert-block">
           <a class="close" data-dismiss="alert" href="#">×</a>
