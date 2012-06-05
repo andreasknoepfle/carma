@@ -10,6 +10,11 @@ class User {
 
     def authenticationService
     
+    // Deployment with Heroku/Postgres doesn't allow User table
+    static mapping = {
+        table 'accounts'
+    }
+    
     static constraints = {
         phone(nullable:true)
         avatar(nullable:true, maxSize: 1024 * 1024 * 2)
