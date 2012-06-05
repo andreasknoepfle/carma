@@ -98,14 +98,14 @@
                 <g:if test="${reservation.user==null}">
 
                   <li> 
-
+                  <div align="center">  
                   <g:if test="${reservation.provider.avatar}">
                     <img class="avatar" src="${createLink(controller:'user', action:'avatar_image' , id: reservation.provider.id)}" width="70" height="70" />
                   </g:if>
                   <g:else>
                     <g:img  class="avatar" uri="/images/default-avatar.png" width="70" height="70"/>
                   </g:else>
-
+                  </div>
                   <div class="caption" align="center"> 
                     <b>${reservation.provider.login}</b><br/>
                     <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Holen</g:link>
