@@ -12,7 +12,7 @@ grails.project.dependency.resolution = {
         // uncomment to disable ehcache
         // excludes 'ehcache'
     }
-    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
 
     repositories {
@@ -32,7 +32,7 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
+        runtime 'postgresql:postgresql:8.4-702.jdbc3'
         // runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
         runtime ":resources:1.1.6"
         runtime ':twitter-bootstrap:2.0.2.25'
         runtime ':fields:1.0.1'
-        runtime 'postgresql:postgresql:8.4-702.jdbc3'
+       
         // Uncomment these (or add new ones) to enable additional resources capabilities
         //runtime ":zipped-resources:1.0"
         //runtime ":cached-resources:1.0"
