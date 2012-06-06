@@ -7,7 +7,6 @@
 
   <body>
     <auth:ifNotLoggedIn>
-     
       <h2>Log in</h2>
       <auth:form authAction="login" 
                  success="[controller:'index', action:'login']" 

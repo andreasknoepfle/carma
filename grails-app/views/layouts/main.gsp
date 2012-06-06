@@ -108,6 +108,17 @@
           </g:eachError>
         </div>
       </g:hasErrors>
+      <g:hasErrors bean="${userInstance}">
+        <div class="alert alert-block">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Warnung</h4>
+            <ul class="errors" role="alert">
+          <g:eachError bean="${userInstance}" var="error">
+            <li><g:message error="${error}"/></li>
+          </g:eachError>
+        </ul>
+        </div>
+      </g:hasErrors>
       <g:layoutBody/>
     </div>
     <r:layoutResources/>

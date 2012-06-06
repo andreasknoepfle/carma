@@ -31,10 +31,11 @@ class UserController {
     }
 
     def show = {
-         if (!authenticationService.isLoggedIn(request)) {
+        if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
             return
         }
+        
         def userInstance
         def ownProfile = false
         
@@ -56,11 +57,19 @@ class UserController {
     }
 
     def edit = {
-         if (!authenticationService.isLoggedIn(request)) {
+        if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
             return
         }
-        def userInstance = User.get(params.id)
+        
+        def userInstance
+        
+        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
+            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
+        } else {
+            userInstance = User.get(params.id)
+        }
+        
         if (!userInstance) {
             flash.message = "user.not.found"
             flash.args = [params.id]
@@ -76,32 +85,28 @@ class UserController {
             redirect(controller: "Index", action: "index")
             return
         }
+        
         def userInstance = User.get(params.id)
+        def avatar = userInstance.avatar
+        
         if (userInstance) {
-            if (params.version) {
-                def version = params.version.toLong()
-                if (userInstance.version > version) {
-                    
-                    userInstance.errors.rejectValue("version", "user.optimistic.locking.failure", "Another user has updated this User while you were editing")
-                    render(view: "edit", model: [userInstance: userInstance])
-                    return
-                }
-            }
             userInstance.properties = params
+            
             if (!userInstance.hasErrors() && userInstance.save()) {
                 flash.message = "user.updated"
                 flash.args = [params.id]
                 flash.defaultMessage = "User ${params.id} updated"
-                redirect(action: "show", id: userInstance.id)
+                redirect(action: "show")
             }
             else {
+                userInstance.avatar = avatar
                 render(view: "edit", model: [userInstance: userInstance])
             }
         }
         else {
             flash.message = "user.not.found"
             flash.args = [params.id]
-            flash.defaultMessage = "User not found with id ${params.id}"
+            flash.defaultMessage = "Benutzer mit ID ${params.id} nicht gefunden"
             redirect(action: "edit", id: params.id)
         }
     }
