@@ -14,12 +14,13 @@
       <g:if test="${ownProfile}">
         <g:if test="${carma == 0}">
         <div class="alert alert-block">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Das kann noch besser werden!</h4>
         </g:if>
         <g:if test="${carma != 0}">
           <div class="alert alert-success">
+          <h4 class="alert-heading">Herzlichen Glückwunsch!</h4>
         </g:if>
-          <a class="close" data-dismiss="alert" href="#">×</a>
-          <h4 class="alert-heading">Das kann noch besser werden!</h4>
           Du besitzt ${carma} Carma Punkte! 
         </div>
       </g:if>

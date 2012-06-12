@@ -8,9 +8,8 @@ class IndexController {
             redirect(action:"login")
         }
         
-        
-        def users = User.executeQuery("SELECT login, carma FROM User")
-        [users:users]
+        def users = User.list(max: 3, sort: "carma", order: "desc")
+        [userInstanceList:users, userInstanceTotal: User.count()]
     }
     
     def login() {
