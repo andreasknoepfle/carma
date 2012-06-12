@@ -52,7 +52,7 @@ class UserController {
             flash.defaultMessage = "User not found with id ${params.id}"
         }
         else {
-            return [userInstance: userInstance, ownProfile: ownProfile]
+            return [userInstance: userInstance, ownProfile: ownProfile, carma: userInstance.carma]
         }
     }
 

@@ -11,6 +11,18 @@
       <div class="page-header">
         <h2>Benutzerprofil:</h2>
       </div>
+      <g:if test="${ownProfile}">
+        <g:if test="${carma == 0}">
+        <div class="alert alert-block">
+        </g:if>
+        <g:if test="${carma != 0}">
+          <div class="alert alert-success">
+        </g:if>
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <h4 class="alert-heading">Das kann noch besser werden!</h4>
+          Du besitzt ${carma} Carma Punkte! 
+        </div>
+      </g:if>
       <g:form>
       <g:hiddenField name="id" value="${userInstance?.id}" />
       <div class="dialog">
@@ -38,7 +50,7 @@
             </tr>
           </tbody>
         </table>
-      </div>
+      </div><br/>
       <g:if test="${ownProfile}">
         <div class="buttons">
           <span class="button">

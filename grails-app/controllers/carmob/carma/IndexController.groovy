@@ -7,6 +7,10 @@ class IndexController {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(action:"login")
         }
+        
+        
+        def users = User.executeQuery("SELECT login, carma FROM User")
+        [users:users]
     }
     
     def login() {

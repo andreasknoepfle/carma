@@ -5,6 +5,7 @@ class User {
     String password
     String email
     String phone
+    int carma
     byte[] avatar
     int status
 
