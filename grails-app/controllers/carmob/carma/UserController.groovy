@@ -32,7 +32,7 @@ class UserController {
 
     def show = {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
@@ -58,7 +58,7 @@ class UserController {
 
     def edit = {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
@@ -82,7 +82,7 @@ class UserController {
 
     def update = {
          if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         

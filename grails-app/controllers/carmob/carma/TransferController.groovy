@@ -18,7 +18,7 @@ class TransferController {
             redirect(controller: "transfer",action : "select_direction")
         } 
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         def direction=Direction.get(params.int('direction'))
         Date now = new Date()
@@ -72,14 +72,14 @@ class TransferController {
     def select_direction() {
           
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         [directionList : Direction.list()]
     }
     
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         def transferInstance = Transfer.get(params.id)
         if (!transferInstance) {
