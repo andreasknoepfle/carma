@@ -47,59 +47,67 @@ class AdminController {
                     System.out.print("*******************newConnection*******************");
 
                     GetConnectionDetailsResult result2 = p.getConnectionDetails(item.link);
-                
-                    def iceString = result2.connection.getFirstTrip().line.label;
-                    def departureHours = result2.connection.getFirstDepartureTime().getHours() 
-                    def departureMinutes = result2.connection.getFirstDepartureTime().getMinutes()
-                
-                    def arrivalHours = result2.connection.getLastArrivalTime().getHours() 
-                    def arrivalMinutes = result2.connection.getLastArrivalTime().getMinutes();
-                    def weekday =  result2.connection.getFirstDepartureTime().getDay();
-
-                    // TESTAUSGABEN
-                    // String direction
-                    System.out.print("Von: " + dir.from);
-                    System.out.print("Nach: " + dir.to);
-                
-                    // String ice
-                    System.out.print("ice: " + iceString);
-
-                    // String departure
-                    System.out.print("Abfahrtszeit: " + departureHours + ":" + departureMinutes);
-
-                    // String arrival
-                    System.out.print("Ankunftszeit: " + arrivalHours + ":" + arrivalMinutes);
-
-                    // String weekday;
-                    System.out.print("Wochentag: " + weekday);
-
-                    def transfer = new Transfer(
-                        // String ice
-                        ice: iceString,
-
-                        // Direction dirId;
-                        dirId: dir.dir,
-
-                        // departure
-                        departureHours: departureHours,
-                        departureMinutes:departureMinutes,
                     
-                        // arrival
-                        arrivalHours: arrivalHours,
-                        arrivalMinutes: arrivalMinutes,
+                    if(result2.connection.getFirstDepartureTime()<=enddatum){
+                        if(result2.connection.parts.size()==1){
+                       
+                            
+                            def iceString = result2.connection.getFirstTrip().line.label;
+                            iceString = iceString.substring(1);
+                            def departureHours = result2.connection.getFirstDepartureTime().getHours() 
+                            def departureMinutes = result2.connection.getFirstDepartureTime().getMinutes()
+                
+                            def arrivalHours = result2.connection.getLastArrivalTime().getHours() 
+                            def arrivalMinutes = result2.connection.getLastArrivalTime().getMinutes();
+                            def weekday =  result2.connection.getFirstDepartureTime().getDay();
+
+                            // TESTAUSGABEN
+                            // String direction
+                            System.out.print("Von: " + dir.from);
+                            System.out.print("Nach: " + dir.to);
+                
+                            // String ice
+                            System.out.print("ice: " + iceString);
+
+                            // String departure
+                            System.out.print("Abfahrtszeit: " + departureHours + ":" + departureMinutes);
+
+                            // String arrival
+                            System.out.print("Ankunftszeit: " + arrivalHours + ":" + arrivalMinutes);
+
+                            // String weekday;
+                            System.out.print("Wochentag: " + weekday);
+
+                            def transfer = new Transfer(
+                                // String ice
+                                ice: iceString,
+
+                                // Direction dirId;
+                                dirId: dir.dir,
+
+                                // departure
+                                departureHours: departureHours,
+                                departureMinutes:departureMinutes,
                     
-                        // weekday;
-                        weekday: weekday,
+                                // arrival
+                                arrivalHours: arrivalHours,
+                                arrivalMinutes: arrivalMinutes,
                     
-                        // boolean active;
-                        active: activeBoolean
-                    )
-                    if(!transfer.save()) {
-                        transfer.errors.allErrors.each {
-                            println it
+                                // weekday;
+                                weekday: weekday,
+                    
+                                // boolean active;
+                                active: activeBoolean
+                            )
+                            if(!transfer.save()) {
+                                transfer.errors.allErrors.each {
+                                    println it
+                                }
+                            }
+                            //startdatum = result2.connection.getFirstDepartureTime();
+                            
                         }
                     }
-                    //startdatum = result2.connection.getFirstDepartureTime();
                     startdatum.setTime(result2.connection.getFirstDepartureTime().getTime()+360000);
                 }
             }
