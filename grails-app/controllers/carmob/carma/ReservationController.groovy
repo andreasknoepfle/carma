@@ -110,13 +110,14 @@ class ReservationController {
             order("departureMinutes","asc")
              
         }
-        reservationInstance.provider = authenticationService.getUserPrincipal()
+        reservationInstance.provider = authenticationService.getUserPrincipal() 
+        reservationInstance.provider.carma = reservationInstance.provider.carma+5
         
         if (!reservationInstance.save(flush: true)) {
             render view: 'create', model: [reservationInstance: reservationInstance, transferList: transferList, direction :direction]
             return
         }
-
+        
         flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Sie haben dafür 5 CARMA Punkte erhalten!"
         redirect action: 'show', id: reservationInstance.id
     }
@@ -134,7 +135,7 @@ class ReservationController {
             redirect action: 'list'
             return
         }
-
+        
         [reservationInstance: reservationInstance]
     }
 
@@ -216,11 +217,18 @@ class ReservationController {
         if(params.id) {
             def reservationInstance = Reservation.get(params.id)
                 def user = authenticationService.getUserPrincipal()
-            if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
-                 reservationInstance.user = user
-                reservationInstance.save()
-                flash.message = "Reservierung erfolgreich geholt!"
-            }
+            if(user.carma >1){
+                if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
+                    reservationInstance.user = user
+                    user.carma = user.carma-2
+                    reservationInstance.provider.carma = reservationInstance.provider.carma + 2
+                    reservationInstance.save()
+                    flash.message = "Reservierung erfolgreich geholt!"
+                }
+             }
+             else{
+                 flash.message = "Du hast zu wenig Carma Punkte. Gib eigene Reservierungen ab um Punkte zu erhalten."
+             }
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }
         
@@ -236,6 +244,8 @@ class ReservationController {
                 def user = authenticationService.getUserPrincipal()
             if(reservationInstance.user==user) {
                  reservationInstance.user = null
+                 user.carma = user.carma + 2
+                 reservationInstance.provider.carma = reservationInstance.provider.carma - 2
                 reservationInstance.save()
                 flash.message = "Reservierung erfolgreich zurückgegeben!"
             }
