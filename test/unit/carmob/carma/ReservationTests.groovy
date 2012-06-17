@@ -12,6 +12,6 @@ import org.junit.*
 class ReservationTests {
 
     void testSomething() {
-      // fail "Implement me"
+      
     }
 }

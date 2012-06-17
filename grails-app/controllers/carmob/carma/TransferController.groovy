@@ -14,12 +14,14 @@ class TransferController {
     }
 
     def list() {
-        if (!params.direction) {
-            redirect(controller: "transfer",action : "select_direction")
-        } 
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
+        if (!params.direction) {
+            redirect(controller: "transfer",action : "select_direction")
+            return
+        } 
         def direction=Direction.get(params.int('direction'))
         Date now = new Date()
         params.max = params.max ? params.int('max') : 10
