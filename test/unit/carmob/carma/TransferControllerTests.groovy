@@ -36,8 +36,7 @@ class TransferControllerTests {
         // The List Method -- Empty
         controller.authenticationService=login(true)
         params.direction =10
-        mockDomain(Direction, [])
-        new Direction(id:10,from:new City(name: "Berlin"),to:new City(name: "Wolfsburg")).save()
+        mockDomain(Direction, [ new Direction(id:10,from:new City(name: "Berlin"),to:new City(name: "Wolfsburg"))])
         assertEquals(1, Direction.count() )
         controller.list()
        
