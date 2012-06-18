@@ -1,7 +1,5 @@
 package carmob.carma
 
-
-
 import org.junit.*
 import grails.test.mixin.*
 import com.grailsrocks.authentication.*
@@ -38,7 +36,7 @@ class TransferControllerTests {
         params.direction =10
         mockDomain(Direction, [ new Direction(id:10,from:new City(name: "Berlin"),to:new City(name: "Wolfsburg"))])
         assertEquals(1, Direction.count() )
-        controller.list()
+        model = controller.list()
        
         assert null == response.redirectedUrl
         assert model.direction.id == 10
