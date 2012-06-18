@@ -38,9 +38,10 @@ class UserController {
         
         def userInstance
         def ownProfile = false
+        def ownUser = authenticationService.getUserPrincipal()
         
-        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
-            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
+        if (params.id == null || params.long("id") == ownUser?.id) {
+            userInstance = User.get(ownUser.id)
             ownProfile = true
         } else {
             userInstance = User.get(params.id)
@@ -63,21 +64,11 @@ class UserController {
         }
         
         def userInstance
+        def ownUser = authenticationService.getUserPrincipal()
+        userInstance = User.get(ownUser.id)
+        return [userInstance: userInstance]
         
-        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
-            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
-        } else {
-            userInstance = User.get(params.id)
-        }
         
-        if (!userInstance) {
-            flash.message = "user.not.found"
-            flash.args = [params.id]
-            flash.defaultMessage = "User not found with id ${params.id}"
-        }
-        else {
-            return [userInstance: userInstance]
-        }
     }
 
     def update = {

@@ -15,7 +15,8 @@ class ReservationControllerTests {
 
     def login(boolean doLogin = true) {
         def authentication=mockFor(AuthenticationService)
-        authentication.demand.isLoggedIn{->doLogin}
+        authentication.demand.isLoggedIn(){request -> return doLogin }
+        authentication.demand.getUserPrincipal(){ -> return new User(login: "test", email: "test@test.de") }
         return authentication.createMock()
     }
     
@@ -25,18 +26,22 @@ class ReservationControllerTests {
         controller.authenticationService=login(false)       
         controller.index()
         assert "/index/login" == response.redirectedUrl
-        
-        controller.authenticationService=login(false)       
+
+    }
+    void testIndexSession() {
+        controller.authenticationService=login(true)       
         controller.index()
         assert "/reservation/list" == response.redirectedUrl
-        
     }
+    
 
     void testList() {                 
         controller.authenticationService=login(false)       
         controller.list()
         assert "/index/login" == response.redirectedUrl
-        
+    }
+    
+    void testListSession() {
         controller.authenticationService=login(true)       
         controller.list()
         assert null == response.redirectedUrl

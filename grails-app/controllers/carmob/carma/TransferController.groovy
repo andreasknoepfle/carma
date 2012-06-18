@@ -22,7 +22,7 @@ class TransferController {
             redirect(controller: "transfer",action : "select_direction")
             return
         } 
-        def direction=Direction.get(params.int('direction'))
+        def direction=Direction.get(params.long('direction'))
         Date now = new Date()
         params.max = params.max ? params.int('max') : 10
         params.offset = params.offset ? params.int('offset') :0 
@@ -82,6 +82,7 @@ class TransferController {
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         def transferInstance = Transfer.get(params.id)
         if (!transferInstance) {
