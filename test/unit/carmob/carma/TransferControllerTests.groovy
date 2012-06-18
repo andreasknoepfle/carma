@@ -37,7 +37,7 @@ class TransferControllerTests {
         mockDomain(Direction, [ new Direction(id:10,from:new City(name: "Berlin"),to:new City(name: "Wolfsburg"))])
         assertEquals(1, Direction.count() )
         def model = controller.list()
-        print model
+        assert null == model
         assert null == response.redirectedUrl
         assert model.direction.id == 10
       
