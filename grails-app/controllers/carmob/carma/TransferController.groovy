@@ -21,9 +21,6 @@ class TransferController {
             redirect(controller: "transfer",action : "select_direction")
             return
         } 
-        if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
-        }
         def direction=Direction.get(params.int('direction'))        
         int transfer_number_by_carma= ((authenticationService.getUserPrincipal().carma)/5)+1
         Date now = new Date()
