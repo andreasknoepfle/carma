@@ -4,7 +4,6 @@
     <meta name="layout" content="main"/>
     <title>Carmeq GmbH | Carmob | Projekt Carma</title>
   </head>
-
   <body>
     <auth:ifNotLoggedIn>
       <h2>Log in</h2>

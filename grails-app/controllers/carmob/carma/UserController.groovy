@@ -10,14 +10,12 @@ class UserController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def create = {
-        
         def userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]
     }
 
     def save = {
-        
         def userInstance = new User(params)
         if (!userInstance.hasErrors() && userInstance.save()) {
             flash.message = "user.created"

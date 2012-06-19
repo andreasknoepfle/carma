@@ -38,13 +38,17 @@
               <ul class="nav">
                 <li>
                   <g:form class="navbar-form" controller="transfer" action="select_direction" >
-                    <g:actionSubmit action="select_direction" value="Holen" class="btn-danger btn"/>
+                    <button type="submit" class="btn-danger btn">
+                      <i class="icon-minus icon-white"></i> Holen
+                    </button>
                   </g:form>
                 </li>
                 <li>&nbsp;</li>
                 <li>
                   <g:form class="navbar-form" controller="reservation" action="create" >
-                    <g:actionSubmit action="create" value="Abgeben" class="btn-success btn"/>
+                    <button type="submit" class="btn-success btn">
+                      <i class="icon-plus icon-white"></i> Abgeben
+                    </button>
                   </g:form>
                 </li>
               </ul>
