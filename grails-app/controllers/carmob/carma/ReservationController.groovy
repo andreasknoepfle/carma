@@ -12,7 +12,7 @@ class ReservationController {
 
     def index() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         } else {
             redirect action: 'list', params: params
         }
@@ -22,7 +22,7 @@ class ReservationController {
 
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
@@ -33,7 +33,7 @@ class ReservationController {
     
      def select_date() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         if(params.direction) {
             params.direction=Direction.get(params.int("direction"))
@@ -58,7 +58,7 @@ class ReservationController {
     def create() {
     
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
@@ -90,7 +90,7 @@ class ReservationController {
     
     def submit() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
@@ -128,7 +128,7 @@ class ReservationController {
 
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         def reservationInstance = Reservation.get(params.id)
@@ -143,7 +143,7 @@ class ReservationController {
 
     def edit() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
 		switch (request.method) {
 		case 'GET':
@@ -190,7 +190,7 @@ class ReservationController {
 
     def delete() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         def reservationInstance = Reservation.get(params.id)
@@ -213,7 +213,7 @@ class ReservationController {
     
     def get_reservation() {
          if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         if(params.id) {
@@ -238,7 +238,7 @@ class ReservationController {
     
     def return_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         if(params.id) {

@@ -13,8 +13,13 @@ class TransferController {
     }
 
     def list() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "login")
+            return
+        }
         if (!params.direction) {
             redirect(controller: "transfer",action : "select_direction")
+            return
         } 
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
@@ -72,14 +77,15 @@ class TransferController {
     def select_direction() {
           
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
         }
         [directionList : Direction.list()]
     }
     
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
+            return
         }
         def transferInstance = Transfer.get(params.id)
         if (!transferInstance) {

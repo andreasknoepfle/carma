@@ -19,9 +19,10 @@
         </g:if>
         <g:if test="${carma != 0}">
           <div class="alert alert-success">
+          <a class="close" data-dismiss="alert" href="#">×</a>
           <h4 class="alert-heading">Herzlichen Glückwunsch!</h4>
         </g:if>
-          Du besitzt ${carma} Carma Punkte! 
+          Du besitzt ${carma} Carma Punkte! Sammle mehr Carma-Punkte um Reservierungen vor allen anderen buchen zu können.
         </div>
       </g:if>
       <g:form>
@@ -42,7 +43,7 @@
               <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>
             </tr>
             <tr class="prop">
-              <td valign="top" class="name"><g:message code="user.email" default="Email" />:</td>
+              <td valign="top" class="name"><g:message code="user.email" default="E-Mail" />:</td>
               <td valign="top" class="value">${fieldValue(bean: userInstance, field: "email")}</td>
             </tr>
             <tr class="prop">

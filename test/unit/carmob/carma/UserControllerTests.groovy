@@ -1,7 +1,7 @@
 package carmob.carma
 
 
-
+import com.grailsrocks.authentication.*
 import org.junit.*
 import grails.test.mixin.*
 
@@ -9,25 +9,13 @@ import grails.test.mixin.*
 @Mock(User)
 class UserControllerTests {
 
-
-    def populateValidParams(params) {
-      assert params != null
-      // TODO: Populate valid properties like...
-      //params["name"] = 'someValidName'
+    def login(boolean doLogin = true) {
+        def authentication=mockFor(AuthenticationService)
+        authentication.demand.isLoggedIn(){request -> return doLogin }
+        authentication.demand.getUserPrincipal(){ -> return new User(id: new Long(1),login: "testen", email: "test@test.de") }
+        return authentication.createMock()
     }
-
-    void testIndex() {
-        controller.index()
-        assert "/user/list" == response.redirectedUrl
-    }
-
-    void testList() {
-
-        def model = controller.list()
-
-        assert model.userInstanceList.size() == 0
-        assert model.userInstanceTotal == 0
-    }
+    
 
     void testCreate() {
        def model = controller.create()
@@ -42,8 +30,9 @@ class UserControllerTests {
         assert view == '/user/create'
 
         response.reset()
-
-        populateValidParams(params)
+        controller.params.login="testen"
+        controller.params.email="test@test.de"
+        controller.params.password="testen"
         controller.save()
 
         assert response.redirectedUrl == '/user/show/1'
@@ -52,108 +41,25 @@ class UserControllerTests {
     }
 
     void testShow() {
-        controller.show()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/user/list'
-
-
-        populateValidParams(params)
-        def user = new User(params)
-
-        assert user.save() != null
-
-        params.id = user.id
-
-        def model = controller.show()
-
-        assert model.userInstance == user
+        controller.authenticationService=login(true)
+        def user = new User(login:"testen",email:"test@test.de",password:"testen" )
+        mockDomain(User, [ user ])
+        controller.params.id = String.valueOf(user.id)
+        def model= controller.show()
+        
+        assert model.userInstance.login == user.login       
     }
 
     void testEdit() {
-        controller.edit()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/user/list'
-
-
-        populateValidParams(params)
-        def user = new User(params)
-
-        assert user.save() != null
-
-        params.id = user.id
-
+        controller.authenticationService=login(true)
+        def user = new User(login:"testen",email:"test@test.de",password:"testen" )
+        mockDomain(User, [ user ])
         def model = controller.edit()
-
-        assert model.userInstance == user
+       
+        assert response.redirectedUrl == null
     }
 
-    void testUpdate() {
-        controller.update()
+    
 
-        assert flash.message != null
-        assert response.redirectedUrl == '/user/list'
-
-        response.reset()
-
-
-        populateValidParams(params)
-        def user = new User(params)
-
-        assert user.save() != null
-
-        // test invalid parameters in update
-        params.id = user.id
-        //TODO: add invalid values to params object
-
-        controller.update()
-
-        assert view == "/user/edit"
-        assert model.userInstance != null
-
-        user.clearErrors()
-
-        populateValidParams(params)
-        controller.update()
-
-        assert response.redirectedUrl == "/user/show/$user.id"
-        assert flash.message != null
-
-        //test outdated version number
-        response.reset()
-        user.clearErrors()
-
-        populateValidParams(params)
-        params.id = user.id
-        params.version = -1
-        controller.update()
-
-        assert view == "/user/edit"
-        assert model.userInstance != null
-        assert model.userInstance.errors.getFieldError('version')
-        assert flash.message != null
-    }
-
-    void testDelete() {
-        controller.delete()
-        assert flash.message != null
-        assert response.redirectedUrl == '/user/list'
-
-        response.reset()
-
-        populateValidParams(params)
-        def user = new User(params)
-
-        assert user.save() != null
-        assert User.count() == 1
-
-        params.id = user.id
-
-        controller.delete()
-
-        assert User.count() == 0
-        assert User.get(user.id) == null
-        assert response.redirectedUrl == '/user/list'
-    }
+    
 }

@@ -6,59 +6,57 @@ import grails.test.mixin.*
 import org.junit.*
 import com.grailsrocks.authentication.*
 
-/**
- * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
- */
+
 @TestFor(IndexController)
+@Mock([User])
 class IndexControllerTests {
- def authenticationService  = new AuthenticationService() 
- def ind = new IndexController()
  
-    void testIndex_logged_off() {             
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->false}
-        ind.authenticationService=control.createMock()
-        ind.index()
-        assert "/index/login" == response.redirectedUrl
+    def login(boolean doLogin = true) {
+        def authentication=mockFor(AuthenticationService)
+        authentication.demand.isLoggedIn(){request -> return doLogin }
+        return authentication.createMock()
     }
     
-    void testIndex_logged_in() {    
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->true}
-        ind.authenticationService=control.createMock()
-        ind.index()
-        assert null == response.redirectedUrl
+    
+    void testIndex() {    
+        controller.authenticationService=login(false)       
+        controller.index()
+        assert "/index/login" == controller.response.redirectedUrl
+
     }
     
-    void testLogin_logged_in(){
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->true}
-        ind.authenticationService=control.createMock()
-        ind.login()
-        assert "/index/index" == response.redirectedUrl
+    void testIndexSession() {
+        controller.authenticationService=login(true)       
+        controller.index()
+        assert null == controller.response.redirectedUrl
+        
+    }
+ 
+    
+    void testLogin(){
+        controller.authenticationService=login(false)       
+        controller.login()
+        assert null == controller.response.redirectedUrl
     }
     
-    void testLogin_logged_off(){
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->false}
-        ind.authenticationService=control.createMock()
-        ind.login()
-        assert null == response.redirectedUrl
+    void testLoginSession(){
+        controller.authenticationService=login(true)       
+        controller.login()
+        assert "/index/index" == controller.response.redirectedUrl
     }
     
-    void testSingUp_logged_in(){
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->true}
-        ind.authenticationService=control.createMock()  
-        ind.signup()
-        assert "/index/index" == response.redirectedUrl
+    void testSingUp(){
+       
+        controller.authenticationService=login(true)       
+        controller.signup()
+        assert "/index/index" == controller.response.redirectedUrl
     }
     
-    void testSingUp_logged_off(){
-        def control=mockFor(AuthenticationService)
-        control.demand.isLoggedIn{->false}
-        ind.authenticationService=control.createMock()  
-        ind.signup()
-        assert null == response.redirectedUrl
+    void testSingUpSession(){  
+        controller.authenticationService=login(false) 
+        controller.signup()
+        assert null == controller.response.redirectedUrl
     }
+    
+   
 }

@@ -10,14 +10,12 @@ class UserController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def create = {
-        
         def userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]
     }
 
     def save = {
-        
         def userInstance = new User(params)
         if (!userInstance.hasErrors() && userInstance.save()) {
             flash.message = "user.created"
@@ -32,15 +30,16 @@ class UserController {
 
     def show = {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
         def userInstance
         def ownProfile = false
+        def ownUser = authenticationService.getUserPrincipal()
         
-        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
-            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
+        if (params.id == null || params.long("id") == ownUser?.id) {
+            userInstance = User.get(ownUser.id)
             ownProfile = true
         } else {
             userInstance = User.get(params.id)
@@ -58,31 +57,21 @@ class UserController {
 
     def edit = {
         if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
         def userInstance
+        def ownUser = authenticationService.getUserPrincipal()
+        userInstance = User.get(ownUser.id)
+        return [userInstance: userInstance]
         
-        if (params.id == null || params.id == authenticationService.getSessionUser()?.userObjectId) {
-            userInstance = User.get(authenticationService.getSessionUser()?.userObjectId)
-        } else {
-            userInstance = User.get(params.id)
-        }
         
-        if (!userInstance) {
-            flash.message = "user.not.found"
-            flash.args = [params.id]
-            flash.defaultMessage = "User not found with id ${params.id}"
-        }
-        else {
-            return [userInstance: userInstance]
-        }
     }
 
     def update = {
          if (!authenticationService.isLoggedIn(request)) {
-            redirect(controller: "Index", action: "index")
+            redirect(controller: "Index", action: "login")
             return
         }
         
