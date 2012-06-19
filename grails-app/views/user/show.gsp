@@ -19,6 +19,7 @@
         </g:if>
         <g:if test="${carma != 0}">
           <div class="alert alert-success">
+          <a class="close" data-dismiss="alert" href="#">×</a>
           <h4 class="alert-heading">Herzlichen Glückwunsch!</h4>
         </g:if>
           Du besitzt ${carma} Carma Punkte! Sammle mehr Carma-Punkte um Reservierungen vor allen anderen buchen zu können.

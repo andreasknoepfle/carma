@@ -20,7 +20,7 @@
       </div>
       <div class="well">
         <h2>CARMA Topliste</h2>
-        <h4>Du befindest dich derzeit auf dem x.ten Platz. Die Top 3 sind:</h4><br/>
+        <h4>Du befindest dich derzeit auf dem ${currentUserPlace}. Platz. Die Top 3 sind:</h4><br/>
         <table class="table table-striped">
           <thead>
             <tr>
