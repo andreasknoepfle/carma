@@ -35,8 +35,10 @@
             <input name="passwordConfirm" value="" type="password" class="span3"/>
           </div>
         </div>
-        <div class="form-actions">
-          <g:actionSubmit action="Sign up" value="Registrieren" class="btn btn-primary"/>
+        <div class="control-group">
+          <div class="controls">
+            <g:actionSubmit action="Sign up" value="Registrieren" class="btn btn-primary"/>
+          </div>
         </div>
       </auth:form>
     </auth:ifNotLoggedIn>

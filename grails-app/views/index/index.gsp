@@ -6,17 +6,28 @@
   </head>
   <body>
     <auth:ifLoggedIn>
-      <div class="well">
-        <h2>Hallo, <auth:user/>!</h2><br/>
-        <h4>Du willst ...</h4>
-        <fieldset>
-          <g:form class="form-horizontal" controller="transfer" action="select_direction" >
-            <g:actionSubmit action="select_direction" value="... eine Reservierung holen." class="btn-danger btn"/>
-          </g:form>
-          <g:form class="form-horizontal" controller="reservation" action="create" >
-            <g:actionSubmit action="create" value="... eine Reservierung abgeben." class="btn-success btn"/>
-          </g:form>
-        </fieldset>
+      <div class="hero-unit">
+        <h1>Hallo, <auth:user/>!</h1><br/>
+        <div class="row">
+          <div class="span6">
+            <div class="row">
+              <div class="span3">
+                <g:form class="navbar-form" controller="transfer" action="select_direction" >
+                  <button type="submit" class="btn-danger btn-large">
+                    <i class="icon-minus icon-white"></i> <br/>Möchtest du eine Reservierung holen?
+                  </button>
+                </g:form>
+              </div>
+              <div class="span3">
+                <g:form class="navbar-form" controller="reservation" action="create" >
+                  <button type="submit" class="btn-success btn-large">
+                    <i class="icon-plus icon-white"></i> <br/>Möchtest du eine Reservierung abgeben?
+                  </button>
+                </g:form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="well">
         <h2>CARMA Topliste</h2>

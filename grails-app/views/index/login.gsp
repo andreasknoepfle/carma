@@ -22,10 +22,16 @@
             <input name="password" value="" type="password" class="span3"/>
           </div>
         </div>
-        <div class="form-actions">
-          <g:actionSubmit value="Login" class="btn btn-primary"/> 
+        <div class="control-group">
+          <div class="controls">
+            <g:actionSubmit value="Login" class="btn btn-primary"/>
+          </div>
         </div>
-        <g:link controller="Index" action="signup">Registrieren</g:link>
+        <div class="control-group">
+          <div class="controls">
+            <g:link controller="Index" action="signup">Registrieren</g:link>
+          </div>
+        </div>
       </auth:form>
     </auth:ifNotLoggedIn>
   </body>
