@@ -23,7 +23,6 @@
     <g:layoutHead/>
     <r:layoutResources/>
   </head>
-
   <body>
     <nav class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -37,26 +36,36 @@
           <auth:ifLoggedIn>
             <div class="nav-collapse">
               <ul class="nav">
-                <li><g:link controller="transfer" action="select_direction"><i class="icon-share  icon-white"></i> Holen</g:link></li>
-                <li><g:link controller="Reservation" action="create"><i class="icon-edit  icon-white"></i> Abgeben</g:link></li>
+                <li>
+                  <g:form class="navbar-form" controller="transfer" action="select_direction" >
+                    <g:actionSubmit action="select_direction" value="Holen" class="btn-danger btn"/>
+                  </g:form>
+                </li>
+                <li>&nbsp;</li>
+                <li>
+                  <g:form class="navbar-form" controller="reservation" action="create" >
+                    <g:actionSubmit action="create" value="Abgeben" class="btn-success btn"/>
+                  </g:form>
+                </li>
               </ul>
-             
-              <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="navbar-form pull-right">
-                <div><g:actionSubmit value="Logout" class="btn"/></div>
-              </auth:form>
-               <auth:ifLoggedIn>
-                 <ul class="nav pull-right">
-                  <li>
-                    <g:link controller="User" action="show"><i class="icon-user icon-white"></i> Profil</g:link>
-                  </li>
-                 </ul>
-               </auth:ifLoggedIn>
+              <ul class="nav pull-right">
+                <li>
+                  <g:form class="navbar-form" controller="user" action="show" >
+                    <g:actionSubmit action="show" value="Profil" class="btn-info btn"/>
+                  </g:form>
+                </li>
+                <li>&nbsp;</li>
+                <li>
+                  <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="navbar-form pull-right">
+                    <div><g:actionSubmit value="Logout" class="btn"/></div>
+                  </auth:form>
+                </li>
+              </ul>
             </div>
           </auth:ifLoggedIn>
         </div>
       </div>
     </nav>
-    
     <div class="container-fluid">
       <g:if test="${flash.authenticationFailure}">
         <div class="alert alert-block">
