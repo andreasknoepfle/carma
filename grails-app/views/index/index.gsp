@@ -7,7 +7,7 @@
   <body>
     <auth:ifLoggedIn>
       <div class="well">
-        <h2>Hallo, <auth:user/>!</h2>
+        <h2>Hallo, <auth:user/>!</h2><br/>
         <h4>Du willst ...</h4>
         <fieldset>
           <g:form class="form-horizontal" controller="transfer" action="select_direction" >

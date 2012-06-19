@@ -21,7 +21,7 @@
           <div class="alert alert-success">
           <h4 class="alert-heading">Herzlichen Glückwunsch!</h4>
         </g:if>
-          Du besitzt ${carma} Carma Punkte! 
+          Du besitzt ${carma} Carma Punkte! Sammle mehr Carma-Punkte um Reservierungen vor allen anderen buchen zu können.
         </div>
       </g:if>
       <g:form>

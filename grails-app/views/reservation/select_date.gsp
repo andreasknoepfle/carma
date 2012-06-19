@@ -13,11 +13,9 @@
       <div class="page-header">
         <h2>Sitzplatzreservierung abgeben</h2>
       </div>
-
       <g:if test="${flash.message}">
         <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
       </g:if>
-
       <g:hasErrors bean="${reservationInstance}">
         <bootstrap:alert class="alert-error">
           <ul>
@@ -27,35 +25,23 @@
           </ul>
         </bootstrap:alert>
       </g:hasErrors>
-
-      <fieldset>
-        <g:form class="form-horizontal" action="select_date" >
-          <fieldset>
-            <f:with bean="reservationInstance">
-              <f:field property="date" label="Datum"/>
-            </f:with>
-            <div class="fieldcontain required">
-              <label for="direction">Richtung:
-                <span class="required-indicator">*</span>
-              </label>
-              <g:select name="direction"
-                        from="${directionList}"
-                        optionKey="id" id="direction"/>
-            </div>
-
-
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">
-                Weiter <i class="icon-chevron-right icon-white"></i>
-              </button>
-            </div>
-          </fieldset>
-        </g:form>
-      </fieldset>
-
+      <g:form class="form-horizontal" action="select_date" >
+          <f:with bean="reservationInstance">
+            <f:field property="date" label="Datum"/>
+          </f:with>
+          <div class="fieldcontain required">
+            <label for="direction">Richtung:
+              <span class="required-indicator">*</span>
+            </label>
+            <g:select name="direction" from="${directionList}" optionKey="id" id="direction"/>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              Weiter <i class="icon-chevron-right icon-white"></i>
+            </button>
+          </div>
+      </g:form>
     </div>
-
   </div>
 </body>
 </html>
