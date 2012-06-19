@@ -19,30 +19,34 @@
         </fieldset>
       </div>
       <div class="well">
-        <h3>CARMA Topliste</h3>
+        <h2>CARMA Topliste</h2>
         <table class="table table-striped">
           <thead>
             <tr>
               <th></th>
               <th>Benutzer</th>
               <th>Punktzahl</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
           <g:each in="${userInstanceList}" var="userInstance">
             <tr>
-              <td><g:if test="${userInstance?.avatar}">
-                <img class="avatar" src="${createLink(controller:'user', action:'avatar_image')}" width="32" height="32"/>
-              </g:if>
-              <g:else>
-                <g:img  class="avatar" uri="/images/default-avatar.png" width="32" height="32"/>
-              </g:else></td>
-              <td>${fieldValue(bean: userInstance, field: "login")}</td>
-              <td>${fieldValue(bean: userInstance, field: "carma")}</td>
-              <td class="link">
-                <g:link controller="user" action="show" id="${userInstance.id}" class="btn btn-small">Show &raquo;</g:link>
+              <td>
+                <g:link controller="user" action="show" id="${userInstance.id}">
+                  <g:if test="${userInstance?.avatar}">
+                    <img class="avatar" src="${createLink(controller:'user', action:'avatar_image')}" width="32" height="32"/>
+                  </g:if>
+                  <g:else>
+                    <g:img  class="avatar" uri="/images/default-avatar.png" width="32" height="32"/>
+                  </g:else>
+                </g:link>
               </td>
+              <td>
+                <g:link controller="user" action="show" id="${userInstance.id}">
+                  ${fieldValue(bean: userInstance, field: "login")}
+                </g:link>
+              </td>
+              <td>${fieldValue(bean: userInstance, field: "carma")}</td>
             </tr>
           </g:each>
           </tbody>
