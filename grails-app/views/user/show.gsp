@@ -42,7 +42,7 @@
               <td valign="top" class="value">${fieldValue(bean: userInstance, field: "login")}</td>
             </tr>
             <tr class="prop">
-              <td valign="top" class="name"><g:message code="user.email" default="Email" />:</td>
+              <td valign="top" class="name"><g:message code="user.email" default="E-Mail" />:</td>
               <td valign="top" class="value">${fieldValue(bean: userInstance, field: "email")}</td>
             </tr>
             <tr class="prop">

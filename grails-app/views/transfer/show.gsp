@@ -18,6 +18,11 @@
         <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
       </g:if>
       <div class="row">
+        <fieldset
+          <form><input type="button"  class="btn" value="Zurück" onClick="history.go(-1);return true;"/></form>
+          <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
+          <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
+        </fieldset>
         <div class="span6 well">
           <h3> Übersicht</h3>
           <table class="table table-condensed table-bordered">
@@ -50,7 +55,7 @@
             <h3>Meine Sitzplatzreservierung</h3>
             <table class="table table-condensed table-bordered">
               <tr>
-                <td>Buchungsnummer:</th>
+                <td>Auftragsnummer:</th>
                 <td>${myReservation?.orderNumber}</td>
               </tr>
               <tr>
