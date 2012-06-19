@@ -32,7 +32,7 @@
 						<fieldset>
                                                         <f:with bean="reservationInstance">
                                                           <f:field property="transfer" label="Verbindungen"/>
-                                                          <f:field property="orderNumber" label="Buchungsnummer"/>
+                                                          <f:field property="orderNumber" label="Auftragsnummer"/>
                                                           <f:field property="wagon" label="Wagen"/>
                                                           <f:field property="seat" label="Sitzplatz"/>
                                                         </f:with>

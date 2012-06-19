@@ -5,7 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException
 class ReservationController {
     def authenticationService
     
-
+    int _taking_reservation_cost = 2 //Aendern um Kosten fuer Reservierungen anzupassen
+    int _taked_reservation_value = 2   //Aendern um Punkte fuer das Holen einer abgegebenen Reservierung durch einen anderen User
+    
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
     def index() {
@@ -217,11 +219,11 @@ class ReservationController {
         if(params.id) {
             def reservationInstance = Reservation.get(params.id)
                 def user = authenticationService.getUserPrincipal()
-            if(user.carma >1){
+            if(user.carma >_taking_reservation_cost){
                 if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
                     reservationInstance.user = user
-                    user.carma = user.carma-2
-                    reservationInstance.provider.carma = reservationInstance.provider.carma + 2
+                    user.carma = user.carma-_taking_reservation_cost
+                    reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
                     reservationInstance.save()
                     flash.message = "Reservierung erfolgreich geholt!"
                 }

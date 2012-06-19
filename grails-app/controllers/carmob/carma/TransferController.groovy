@@ -6,7 +6,6 @@ class TransferController {
 
     def authenticationService
     
-    
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
     def index() {
@@ -20,12 +19,13 @@ class TransferController {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "index")
         }
-        def direction=Direction.get(params.int('direction'))
+        def direction=Direction.get(params.int('direction'))        
+        int transfer_number_by_carma= ((authenticationService.getUserPrincipal().carma)/5)+1
         Date now = new Date()
         params.max = params.max ? params.int('max') : 10
         params.offset = params.offset ? params.int('offset') :0 
         def transferListTomorrow = []
-        def transferList = Transfer.createCriteria().list(max: params.max, offset: params.offset) {
+        def transferList = Transfer.createCriteria().list(max: transfer_number_by_carma, offset: params.offset) {
             and {
                 eq("dirId",direction)
                 eq("weekday",now.getDay())
@@ -42,10 +42,10 @@ class TransferController {
             order("departureMinutes","asc")
              
         }
-        if(transferList.getTotalCount()<10) {
+        if(transferList.getTotalCount()<transfer_number_by_carma) {
              
             transferListTomorrow = Transfer.createCriteria().list() {
-                maxResults(10-transferList.size())
+                maxResults(transfer_number_by_carma-transferList.size())
                 and {
                     eq("dirId",direction)
                     eq("weekday",now.getDay()+1)
