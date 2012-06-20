@@ -24,7 +24,7 @@
             </ul>
           </bootstrap:alert>
         </g:hasErrors>
-        <g:form class="form-horizontal" action="select_date" >
+        <g:form class="form-inline" action="select_date" >
             <f:with bean="reservationInstance">
               <f:field property="date" label="Datum"/>
             </f:with>

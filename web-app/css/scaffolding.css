@@ -1,5 +1,6 @@
 body {
 	-webkit-text-size-adjust: none;
+       
 }
 
 @media (min-width:980px) {
@@ -7,38 +8,17 @@ body {
 		padding-top: 60px; 
 	}
 }
+	
+
 
 .btn {
 	vertical-align: middle; /* ensure buttons line up even when they are different tag types [a, button] */
 }
 
-/* index page */
-
-img#github-ribbon {
-	position: absolute; 
-	top: 0; 
-	right: 0; 
-	border: 0;
-	z-index: 1030; /* no idea where this comes from, lowest value that works */
+.navbar-form-fix {
+    margin-bottom:0px;
 }
 
-@media (max-width: 768px) {
-	/* prevent the brand name wrapping or overlapping the menu toggle */
-	.navbar .brand {
-		max-width: 75%;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	
-	.hero-unit {
-		padding: 20px;
-	}
-
-	#application-status {
-		display: none;
-	}
-}
 
 /* list pages */
 
@@ -75,23 +55,11 @@ table th.desc a:after {
 
 /* optimized display for small devices */
 
-@media (max-width:480px) {
-	table thead, table td { 
+@media (max-width:300px) {
+	thead { 
 		display: none;
 	}
 	
-	table tr:first-child td {
-		border-top: none;
-	}
-	
-	table td:first-child, table td:last-child {
-		display: table-cell;
-		vertical-align: middle;
-	}
-	
-	table td:last-child {
-		text-align: right;
-	}
 }
 
 /* error page */
@@ -116,3 +84,7 @@ pre.snippet .error {
 }
 
 .accordion-heading:hover { color: black; text-decoration:none; }
+
+div.form-actions {
+    background-color: #FFF;
+}

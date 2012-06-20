@@ -25,52 +25,40 @@
     <r:layoutResources/>
   </head>
   <body>
-    <nav class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="${createLink(uri: '/')}">CARMA</a>
           <auth:ifLoggedIn>
-            <div class="nav-collapse">
-              <ul class="nav">
-                <li>
-                  <g:form class="navbar-form" controller="transfer" action="select_direction" >
-                    <button type="submit" class="btn-danger btn">
+                  <g:link controller="transfer" action="select_direction" class="btn-danger btn" id="1">
+                    
                       <i class="icon-minus icon-white"></i> Holen
-                    </button>
-                  </g:form>
-                </li>
-                <li>&nbsp;</li>
-                <li>
-                  <g:form class="navbar-form" controller="reservation" action="create" >
-                    <button type="submit" class="btn-success btn">
+                   
+                  </g:link>
+               
+                  <g:link class="btn-success btn" controller="reservation" action="create" >
                       <i class="icon-plus icon-white"></i> Abgeben
-                    </button>
-                  </g:form>
-                </li>
-              </ul>
-              <ul class="nav pull-right">
-                <li>
-                  <g:form class="navbar-form" controller="user" action="show" >
-                    <g:actionSubmit action="show" value="Profil" class="btn-info btn"/>
-                  </g:form>
-                </li>
-                <li>&nbsp;</li>
-                <li>
-                  <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="navbar-form pull-right">
-                    <div><g:actionSubmit value="Logout" class="btn"/></div>
+                   
+                  </g:link>
+              
+              
+                
+                  <auth:form class="pull-right navbar-form-fix" authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" >
+                    <g:actionSubmit value="Logout" class="btn"/>
                   </auth:form>
-                </li>
-              </ul>
-            </div>
+                
+              
+              <div class=" pull-right">
+                
+                  <g:link class="btn-info btn" controller="user" action="show" >
+                    Profil
+                  </g:link> &nbsp;
+              </div> 
+           
           </auth:ifLoggedIn>
         </div>
       </div>
-    </nav>
+    </div>
     <div class="container-fluid">
       <g:if test="${flash.authenticationFailure}">
         <div class="alert alert-block">
