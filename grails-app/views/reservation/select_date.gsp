@@ -5,6 +5,9 @@
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'reservation.label', default: 'Reservation')}" />
     <title><g:message code="default.create.label" args="[entityName]" /></title>
+    <g:javascript library="jquery" />
+    
+   
   </head>
   <body>
     <div class="row-fluid">
@@ -14,7 +17,9 @@
         </div>
         <g:if test="${flash.message}">
           <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+         
         </g:if>
+        
         <g:hasErrors bean="${reservationInstance}">
           <bootstrap:alert class="alert-error">
             <ul>
@@ -24,6 +29,7 @@
             </ul>
           </bootstrap:alert>
         </g:hasErrors>
+         
         <g:form class="form-inline" action="select_date" >
             <f:with bean="reservationInstance">
               <f:field property="date" label="Datum"/>

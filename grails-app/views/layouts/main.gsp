@@ -15,6 +15,7 @@
     
     <r:require modules="scaffolding"/>
     <r:require modules="bootstrap"/>
+    <r:require module="jquery-ui"/>
     
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
@@ -23,6 +24,12 @@
     <!--<link rel="apple-touch-icon" sizes="114x114" href="{resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">-->
     <g:layoutHead/>
     <r:layoutResources/>
+     <script type="text/javascript">
+        $(document).ready(function()
+        {
+          $("#datepicker").datepicker({dateFormat: 'dd.mm.yy',defaultDate:"${new Date().format("dd.MM.yyyy")}",minDate:"${new Date().format("dd.MM.yyyy")}" });
+        })
+    </script>
   </head>
   <body>
     <div class="navbar navbar-fixed-top">

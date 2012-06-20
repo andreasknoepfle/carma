@@ -9,7 +9,9 @@ body {
 	}
 }
 	
-
+div.calendar {
+    width:200px;
+}
 
 .btn {
 	vertical-align: middle; /* ensure buttons line up even when they are different tag types [a, button] */
@@ -88,3 +90,4 @@ pre.snippet .error {
 div.form-actions {
     background-color: #FFF;
 }
+
