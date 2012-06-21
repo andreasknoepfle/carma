@@ -37,28 +37,28 @@
         <div class="container-fluid">
           <a class="brand" href="${createLink(uri: '/')}">CARMA</a>
           <auth:ifLoggedIn>
-                  <g:link controller="transfer" action="select_direction" class="btn-danger btn" id="1">
+                  <g:link controller="transfer" action="select_direction" class="btn-danger btn btn-large" id="1" title="Holen">
                     
-                      <i class="icon-minus icon-white"></i> Holen
+                      <i class="icon-minus icon-white"></i> 
                    
                   </g:link>
                
-                  <g:link class="btn-success btn" controller="reservation" action="create" >
-                      <i class="icon-plus icon-white"></i> Abgeben
+                  <g:link class="btn-success btn btn-large" controller="reservation" action="create" title="Abgeben">
+                      <i class="icon-plus icon-white"></i> 
                    
                   </g:link>
               
               
                 
                   <auth:form class="pull-right navbar-form-fix" authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" >
-                    <g:actionSubmit value="Logout" class="btn"/>
+                    <g:actionSubmit value="Logout" class="btn btn-large"/>
                   </auth:form>
                 
               
               <div class=" pull-right">
                 
-                  <g:link class="btn-info btn" controller="user" action="show" >
-                    Profil
+                  <g:link class="btn-info btn btn-large" controller="user" action="show" title="Mein Profil">
+                    <i class="icon-user icon-white"></i> 
                   </g:link> &nbsp;
               </div> 
            

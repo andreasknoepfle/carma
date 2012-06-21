@@ -3,11 +3,16 @@ body {
        
 }
 
-@media (min-width:980px) {
-	body { 
-		padding-top: 60px; 
-	}
+.brand {
+    margin-left: -20px !important;
 }
+
+
+ @media (max-width: 480px) {  
+     .brand {
+            display : none !important;
+        } 
+ }
 	
 div.calendar {
     width:200px;
@@ -15,6 +20,15 @@ div.calendar {
 
 .btn {
 	vertical-align: middle; /* ensure buttons line up even when they are different tag types [a, button] */
+}
+
+.navbar-fixed-top {
+    position: static;
+    margin-bottom: 18px;
+}
+
+.navbar-inner {
+     padding: 5px;
 }
 
 .navbar-form-fix {

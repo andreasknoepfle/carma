@@ -1,1 +1,1 @@
-&nbsp;<input type="text" id="datepicker" name="${property}" value="${new Date().format("dd.MM.yyyy")}" autocomplete="off" />
+&nbsp;

@@ -31,9 +31,13 @@
         </g:hasErrors>
          
         <g:form class="form-inline" action="select_date" >
-            <f:with bean="reservationInstance">
-              <f:field property="date" label="Datum"/>
-            </f:with>
+           
+            <div class="fieldcontain required">
+                <label for="date">Datum:
+                  <span class="required-indicator">*</span>
+                </label>
+              <input type="text" id="datepicker" name="date" value="${new Date().format("dd.MM.yyyy")}" autocomplete="off" />
+            </div>
             <div class="fieldcontain required">
               <label for="direction">Richtung:
                 <span class="required-indicator">*</span>
