@@ -53,7 +53,7 @@
                                   </g:each>
                                 </div>
                                 <div class="pagination">
-					<bootstrap:paginate total="${transferList.getTotalCount()}" />
+					<bootstrap:paginate total="${10}" />
 				</div>
                                
 
