@@ -8,7 +8,7 @@ body {
 }
 
 
- @media (max-width: 480px) {  
+ @media (max-width: 355px) {  
      .brand {
             display : none !important;
         } 
