@@ -6,12 +6,17 @@ body {
 .brand {
     margin-left: -20px !important;
 }
+ .home-link{
+            display : none ;
+     } 
 
-
- @media (max-width: 355px) {  
+ @media (max-width: 410px) {  
      .brand {
             display : none !important;
         } 
+     .home-link{
+            display : inline-block;;
+     } 
  }
 	
 div.calendar {

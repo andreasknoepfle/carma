@@ -37,6 +37,9 @@
         <div class="container-fluid">
           <a class="brand" href="${createLink(uri: '/')}">CARMA</a>
           <auth:ifLoggedIn>
+                  <g:link class="home-link btn-info btn btn-large" controller="index" action="index" title="Home">
+                    <i class="icon-home icon-white"></i> 
+                  </g:link>
                   <g:link controller="transfer" action="select_direction" class="btn-danger btn btn-large" id="1" title="Holen">
                     
                       <i class="icon-minus icon-white"></i> 
@@ -60,6 +63,7 @@
                   <g:link class="btn-info btn btn-large" controller="user" action="show" title="Mein Profil">
                     <i class="icon-user icon-white"></i> 
                   </g:link> &nbsp;
+                  
               </div> 
            
           </auth:ifLoggedIn>
