@@ -27,7 +27,7 @@
      <script type="text/javascript">
         $(document).ready(function()
         {
-          $("#datepicker").datepicker({dateFormat: 'dd.mm.yy',defaultDate:"${new Date().format("dd.MM.yyyy")}",minDate:"${new Date().format("dd.MM.yyyy")}" });
+          $("#datepicker").datepicker({dateFormat: 'dd.mm.yy',defaultDate:"${new Date().format("dd.MM.yyyy")}",minDate:"${new Date().format("dd.MM.yyyy")}" , showOn: 'button'});
         })
     </script>
   </head>
