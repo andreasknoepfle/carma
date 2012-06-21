@@ -38,7 +38,9 @@ class ReservationController {
         if(params.direction) {
             params.direction=Direction.get(params.int("direction"))
         }
-        
+         if(params.date) {
+            params.date = Date.parse("dd.MM.yyyy",params.date)
+         }
         def reservationInstance = new Reservation(params)
         switch (request.method) {
         case 'GET':

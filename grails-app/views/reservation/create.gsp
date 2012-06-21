@@ -24,7 +24,7 @@
             </ul>
           </bootstrap:alert>
         </g:hasErrors>
-        <g:form class="form-horizontal" action="submit" >
+        <g:form class="form-inline" action="submit" >
           <g:hiddenField name="date" value="${reservationInstance.date.getTime()}" />
           <g:hiddenField name="direction" value="${direction.id}" />
           <f:with bean="reservationInstance">

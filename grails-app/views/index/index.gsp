@@ -6,28 +6,24 @@
   </head>
   <body>
     <auth:ifLoggedIn>
-      <div class="hero-unit">
-        <h1>Hallo, <auth:user/>!</h1><br/>
-        <div class="row">
-          <div class="span6">
-            <div class="row">
-              <div class="span3">
-                <g:form class="navbar-form" controller="transfer" action="select_direction" >
-                  <button type="submit" class="btn-danger btn-large">
-                    <i class="icon-minus icon-white"></i> <br/>Möchtest du eine Reservierung holen?
-                  </button>
-                </g:form>
-              </div>
-              <div class="span3">
-                <g:form class="navbar-form" controller="reservation" action="create" >
-                  <button type="submit" class="btn-success btn-large">
-                    <i class="icon-plus icon-white"></i> <br/>Möchtest du eine Reservierung abgeben?
-                  </button>
-                </g:form>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="well">
+        <h2>Hallo, <auth:user/>!</h2><br/>
+      
+               <g:link controller="transfer" action="select_direction" class="btn-danger btn btn-large">
+                    
+                      <i class="icon-minus icon-white"></i> <br/>Möchtest du eine Reservierung holen?
+                   
+                 </g:link>
+     &nbsp;
+       
+                <g:link class="btn-success btn btn-large" controller="reservation" action="create" >
+                      <i class="icon-plus icon-white"></i> <br/>Möchtest du eine Reservierung abgeben?
+                   
+                </g:link><hr/>
+     <p class="alert alert-info">Für abgegebene Reservierungen bekommst du <b>CARMA</b>-Punkte. Mit steigendem <b>CARMA</b> kannst du auch mehr Züge sehen.<br/> <i>Dabei werden dir immer zuerst die aktuellsten Verbindungen angezeigt. </i>
+       
+     
+     </p>
       </div>
       <div class="well">
         <h2>CARMA Topliste</h2>

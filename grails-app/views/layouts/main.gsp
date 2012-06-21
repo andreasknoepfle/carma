@@ -15,6 +15,7 @@
     
     <r:require modules="scaffolding"/>
     <r:require modules="bootstrap"/>
+    <r:require module="jquery-ui"/>
     
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
@@ -23,54 +24,52 @@
     <!--<link rel="apple-touch-icon" sizes="114x114" href="{resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">-->
     <g:layoutHead/>
     <r:layoutResources/>
+     <script type="text/javascript">
+        $(document).ready(function()
+        {
+          $("#datepicker").datepicker({dateFormat: 'dd.mm.yy',defaultDate:"${new Date().format("dd.MM.yyyy")}",minDate:"${new Date().format("dd.MM.yyyy")}" , showOn: 'button'});
+        })
+    </script>
   </head>
   <body>
-    <nav class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="${createLink(uri: '/')}">CARMA</a>
           <auth:ifLoggedIn>
-            <div class="nav-collapse">
-              <ul class="nav">
-                <li>
-                  <g:form class="navbar-form" controller="transfer" action="select_direction" >
-                    <button type="submit" class="btn-danger btn">
-                      <i class="icon-minus icon-white"></i> Holen
-                    </button>
-                  </g:form>
-                </li>
-                <li>&nbsp;</li>
-                <li>
-                  <g:form class="navbar-form" controller="reservation" action="create" >
-                    <button type="submit" class="btn-success btn">
-                      <i class="icon-plus icon-white"></i> Abgeben
-                    </button>
-                  </g:form>
-                </li>
-              </ul>
-              <ul class="nav pull-right">
-                <li>
-                  <g:form class="navbar-form" controller="user" action="show" >
-                    <g:actionSubmit action="show" value="Profil" class="btn-info btn"/>
-                  </g:form>
-                </li>
-                <li>&nbsp;</li>
-                <li>
-                  <auth:form authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" class="navbar-form pull-right">
-                    <div><g:actionSubmit value="Logout" class="btn"/></div>
+                  <g:link class="home-link btn-info btn btn-large" controller="index" action="index" title="Home">
+                    <i class="icon-home icon-white"></i> 
+                  </g:link>
+                  <g:link controller="transfer" action="select_direction" class="btn-danger btn btn-large" id="1" title="Holen">
+                    
+                      <i class="icon-minus icon-white"></i> 
+                   
+                  </g:link>
+               
+                  <g:link class="btn-success btn btn-large" controller="reservation" action="create" title="Abgeben">
+                      <i class="icon-plus icon-white"></i> 
+                   
+                  </g:link>
+              
+              
+                
+                  <auth:form class="pull-right navbar-form-fix" authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" >
+                    <g:actionSubmit value="Logout" class="btn btn-large"/>
                   </auth:form>
-                </li>
-              </ul>
-            </div>
+                
+              
+              <div class=" pull-right">
+                
+                  <g:link class="btn-info btn btn-large" controller="user" action="show" title="Mein Profil">
+                    <i class="icon-user icon-white"></i> 
+                  </g:link> &nbsp;
+                  
+              </div> 
+           
           </auth:ifLoggedIn>
         </div>
       </div>
-    </nav>
+    </div>
     <div class="container-fluid">
       <g:if test="${flash.authenticationFailure}">
         <div class="alert alert-block">
