@@ -42,7 +42,7 @@
               <td>
                 <g:link controller="user" action="show" id="${userInstance.id}">
                   <g:if test="${userInstance?.avatar}">
-                    <img class="avatar" src="${createLink(controller:'user', action:'avatar_image')}" width="32" height="32"/>
+                    <img class="avatar" src="${createLink(controller:'user', action:'avatar_image', id: userInstance.id)}" width="32" height="32"/>
                   </g:if>
                   <g:else>
                     <g:img  class="avatar" uri="/images/default-avatar.png" width="32" height="32"/>

@@ -75,8 +75,7 @@ class UserController {
             return
         }
         
-        def ownUser = authenticationService.getUserPrincipal()
-        def userInstance = User.get(ownUser.id)
+        def userInstance = User.get(params.id)
         def avatar = userInstance.avatar
         
         if (userInstance) {
@@ -105,7 +104,7 @@ class UserController {
         def avatarUser
         
         if (params.id == null) {
-            avatarUser = User.get(authenticationService.getSessionUser()?.userObjectId)
+            avatarUser = authenticationService.getUserPrincipal()
         } else {
             avatarUser = User.get(params.id)
         }
