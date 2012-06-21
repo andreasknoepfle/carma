@@ -250,7 +250,7 @@ class ReservationController {
                  reservationInstance.user = null
                  user.carma = user.carma + _taking_reservation_cost
                  if(reservationInstance.provider.carma >_taked_reservation_cost){
-                    reservationInstance.provider.carma = reservationInstance.provider.carma - _taked_reservation_cost
+                    reservationInstance.provider.carma = reservationInstance.provider.carma - _taked_reservation_value
                  }
                  else{
                      reservationInstance.provider.carma = 0
