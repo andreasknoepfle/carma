@@ -17,7 +17,6 @@
         </g:link>
       </div>
       <div class="well">
-        
         <h2><g:img dir="images" file="podium.png" alt="Podium"/> CARMA Topliste</h2>
         <h4>Du befindest dich derzeit auf dem ${currentUserPlace}. Platz. Die Top 3 sind:</h4><br/>
         <table class="table table-striped">
