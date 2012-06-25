@@ -75,7 +75,7 @@
   <tbody>
   <g:each in="${historyInstanceList}" var="historyInstance">
     <tr>
-      <td>${fieldValue(bean: historyInstance, field: "date").substring(0, 10);}</td>
+      <td><g:formatDate format="dd.MM.yyyy" date="${historyInstance.date}"/></td>
       <td><a href="${createLink(controller:'reservation', action:'show', id: historyInstance.reservation.id)}">${fieldValue(bean: historyInstance, field: "type")}</a></td>
       <td>${fieldValue(bean: historyInstance, field: "carma")} (${fieldValue(bean: historyInstance, field: "carmachange")})</td>
     </tr>
