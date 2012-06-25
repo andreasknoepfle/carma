@@ -4,7 +4,10 @@ class UserController {
     
     def authenticationService
     
-    def index = { redirect(action: "list", params: params) }
+    def index = { 
+        redirect(action: "list", params: params) 
+    }
+
 
     // the delete, save and update actions only accept POST requests
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -38,6 +41,13 @@ class UserController {
         def ownProfile = false
         def ownUser = authenticationService.getUserPrincipal()
         
+        def historys = History.createCriteria().list(max: 3) {
+            and {
+                eq("user", ownUser)
+            } 
+            order("date","desc")
+        }
+        
         if (params.id == null || params.long("id") == ownUser?.id) {
             userInstance = User.get(ownUser.id)
             ownProfile = true
@@ -51,7 +61,7 @@ class UserController {
             flash.defaultMessage = "User not found with id ${params.id}"
         }
         else {
-            return [userInstance: userInstance, ownProfile: ownProfile, carma: userInstance.carma]
+            return [userInstance: userInstance, ownProfile: ownProfile, carma: userInstance.carma, historyInstanceList:historys]
         }
     }
 
@@ -70,7 +80,7 @@ class UserController {
     }
 
     def update = {
-         if (!authenticationService.isLoggedIn(request)) {
+        if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
             return
         }
