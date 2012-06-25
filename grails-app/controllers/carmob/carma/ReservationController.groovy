@@ -34,6 +34,7 @@ class ReservationController {
      def select_date() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.direction) {
             params.direction=Direction.get(params.int("direction"))
@@ -61,6 +62,7 @@ class ReservationController {
     
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
@@ -93,6 +95,7 @@ class ReservationController {
     def submit() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))

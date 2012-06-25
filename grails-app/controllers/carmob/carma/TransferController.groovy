@@ -80,6 +80,7 @@ class TransferController {
           
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         [directionList : Direction.list()]
     }
