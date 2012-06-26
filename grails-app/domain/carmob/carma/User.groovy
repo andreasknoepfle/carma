@@ -5,6 +5,7 @@ class User {
     String password
     String email
     String phone
+    Date last_login
     int carma = 5
     byte[] avatar
     int status
@@ -18,6 +19,7 @@ class User {
     
     static constraints = {
         phone(nullable:true)
+        last_login(nullable:true)
         avatar(nullable:true, maxSize: 1000000)
     }
     

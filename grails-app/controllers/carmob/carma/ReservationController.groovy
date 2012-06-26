@@ -31,29 +31,30 @@ class ReservationController {
         [reservationInstanceList: Reservation.findAllByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
     }
     
-     def select_date() {
+    def select_date() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.direction) {
             params.direction=Direction.get(params.int("direction"))
         }
-         if(params.date) {
+        if(params.date) {
             params.date = Date.parse("dd.MM.yyyy",params.date)
-         }
+        }
         def reservationInstance = new Reservation(params)
         switch (request.method) {
-        case 'GET':
-                [reservationInstance: reservationInstance, directionList : Direction.list()]
-                break
-        case 'POST':
-                if (!reservationInstance.validate(['date'])) {
-                    render view: 'select_date', model: [reservationInstance: reservationInstance, directionList : Direction.list()]
-                    return
-                }
+            case 'GET':
+            [reservationInstance: reservationInstance, directionList : Direction.list()]
+            break
+            case 'POST':
+            if (!reservationInstance.validate(['date'])) {
+                render view: 'select_date', model: [reservationInstance: reservationInstance, directionList : Direction.list()]
+                return
+            }
                 
             redirect(action : 'create', params: [ date : reservationInstance.date.getTime(), direction:params.direction.id])
-                break
+            break
         }
     }
     
@@ -61,6 +62,7 @@ class ReservationController {
     
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
@@ -69,8 +71,8 @@ class ReservationController {
             params.direction=Direction.get(params.int("direction"))
         }
         if(!params.date) {
-           redirect(action: 'select_date')
-           return
+            redirect(action: 'select_date')
+            return
         }
         params.date = new Date(params.long("date"))
         def reservationInstance = new Reservation(params)
@@ -93,6 +95,7 @@ class ReservationController {
     def submit() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
+            return
         }
         if(params.transfer) {
             params.transfer=Transfer.get(params.int("transfer"))
@@ -122,6 +125,32 @@ class ReservationController {
             return
         }
         
+        Date today = new Date();
+        def history = new History(
+            // User user
+            user: authenticationService.getUserPrincipal(),
+
+            // Date date
+            date: today,
+
+            // String type
+            type: "abgegeben",
+                    
+            // Reservation reservation
+            reservation: reservationInstance,
+                    
+            // Integer carmachange
+            carmachange: "5",
+                    
+            // Integer carma
+            carma: reservationInstance.provider.carma
+        )
+        if(!history.save()) {
+            history.errors.allErrors.each {
+                println it
+            }
+        }
+        
         flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Sie haben dafür 5 CARMA Punkte erhalten!"
         redirect action: 'show', id: reservationInstance.id
     }
@@ -135,7 +164,7 @@ class ReservationController {
         }
         def reservationInstance = Reservation.get(params.id)
         if (!reservationInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
             redirect action: 'list'
             return
         }
@@ -147,47 +176,47 @@ class ReservationController {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
         }
-		switch (request.method) {
-		case 'GET':
-	        def reservationInstance = Reservation.get(params.id)
-	        if (!reservationInstance) {
-	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-	            redirect action: 'list'
-	            return
-	        }
+        switch (request.method) {
+            case 'GET':
+            def reservationInstance = Reservation.get(params.id)
+            if (!reservationInstance) {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+                redirect action: 'list'
+                return
+            }
 
-	        [reservationInstance: reservationInstance]
-			break
-		case 'POST':
-	        def reservationInstance = Reservation.get(params.id)
-	        if (!reservationInstance) {
-	            flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
-	            redirect action: 'list'
-	            return
-	        }
+            [reservationInstance: reservationInstance]
+            break
+            case 'POST':
+            def reservationInstance = Reservation.get(params.id)
+            if (!reservationInstance) {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+                redirect action: 'list'
+                return
+            }
 
-	        if (params.version) {
-	            def version = params.version.toLong()
-	            if (reservationInstance.version > version) {
-	                reservationInstance.errors.rejectValue('version', 'default.optimistic.locking.failure',
-	                          [message(code: 'reservation.label', default: 'Reservation')] as Object[],
+            if (params.version) {
+                def version = params.version.toLong()
+                if (reservationInstance.version > version) {
+                    reservationInstance.errors.rejectValue('version', 'default.optimistic.locking.failure',
+                        [message(code: 'reservation.label', default: 'Reservation')] as Object[],
 	                          "Another user has updated this Reservation while you were editing")
-	                render view: 'edit', model: [reservationInstance: reservationInstance]
-	                return
-	            }
-	        }
+                    render view: 'edit', model: [reservationInstance: reservationInstance]
+                    return
+                }
+            }
 
-	        reservationInstance.properties = params
+            reservationInstance.properties = params
 
-	        if (!reservationInstance.save(flush: true)) {
-	            render view: 'edit', model: [reservationInstance: reservationInstance]
-	            return
-	        }
+            if (!reservationInstance.save(flush: true)) {
+                render view: 'edit', model: [reservationInstance: reservationInstance]
+                return
+            }
 
-			flash.message = message(code: 'default.updated.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
-	        redirect action: 'show', id: reservationInstance.id
-			break
-		}
+            flash.message = message(code: 'default.updated.message', args: [message(code: 'reservation.label', default: 'Reservation'), reservationInstance.id])
+            redirect action: 'show', id: reservationInstance.id
+            break
+        }
     }
 
     def delete() {
@@ -204,23 +233,23 @@ class ReservationController {
 
         try {
             reservationInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
             redirect action: 'list'
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'reservation.label', default: 'Reservation'), params.id])
             redirect action: 'show', id: params.id
         }
     }
     
     def get_reservation() {
-         if (!authenticationService.isLoggedIn(request)) {
+        if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
             return
         }
         if(params.id) {
             def reservationInstance = Reservation.get(params.id)
-                def user = authenticationService.getUserPrincipal()
+            def user = authenticationService.getUserPrincipal()
             if(user.carma >=_taking_reservation_cost){
                 if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
                     reservationInstance.user = user
@@ -228,11 +257,42 @@ class ReservationController {
                     reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
                     reservationInstance.save(flush:true)
                     flash.message = "Reservierung erfolgreich geholt!"
+                    
+                    // Reservierung geholt
+                    Date today = new Date();
+                    def history = new History(
+                        user: user,
+                        date: today,
+                        type: "geholt von " + reservationInstance.provider.login,
+                        reservation: reservationInstance,
+                        carmachange: "-" + _taking_reservation_cost,
+                        carma: user.carma
+                    )
+                    if(!history.save()) {
+                        history.errors.allErrors.each {
+                            println it
+                        }
+                    }
+        
+                    // Reservierung übertragen
+                    def history2 = new History(
+                        user: reservationInstance.provider,
+                        date: today,
+                        type: "übertragen an " + user.login,
+                        reservation: reservationInstance,
+                        carmachange: _taking_reservation_cost,
+                        carma: reservationInstance.provider.carma
+                    )
+                    if(!history2.save()) {
+                        history2.errors.allErrors.each {
+                            println it
+                        }
+                    }
                 }
-             }
-             else{
-                 flash.message = "Du hast zu wenig Carma Punkte. Gib eigene Reservierungen ab um Punkte zu erhalten."
-             }
+            }
+            else{
+                flash.message = "Du hast zu wenig Carma Punkte. Gib eigene Reservierungen ab um Punkte zu erhalten."
+            }
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }
         
@@ -245,7 +305,7 @@ class ReservationController {
         }
         if(params.id) {
             def reservationInstance = Reservation.get(params.id)
-                def user = authenticationService.getUserPrincipal()
+            def user = authenticationService.getUserPrincipal()
             if(reservationInstance.user==user) {
                  reservationInstance.user = null
                  if(reservationInstance.provider.carma >=_taked_reservation_value){

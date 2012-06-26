@@ -9,9 +9,27 @@ import de.schildbach.pte.dto.LocationType;
 import de.schildbach.pte.dto.QueryConnectionsResult;
 import de.schildbach.pte.dto.GetConnectionDetailsResult;
 
+
+
 class AdminController {
     BahnProvider p = new BahnProvider(); 
     Date startdatum = new Date();
+    
+    def delete() {
+       
+        for (Reservation reservation : Reservation.findAll()) {
+            reservation.delete(flush:true)
+        }
+        
+         for (Transfer trans : Transfer.findAll()) {
+            trans.delete(flush:true)
+        }
+         for (Direction dir : Direction.findAll()) {
+            dir.delete(flush:true)
+        }
+        
+    }
+    
     def index() {
         // add cities
         City berlin = new City(name: "Berlin").save()
@@ -127,28 +145,7 @@ class AdminController {
             de.schildbach.pte.NetworkProvider.Accessibility.NEUTRAL);
         return result;
     }
+    
+
 }
 
-private class Dir {
-    private String from;
-    private String to;
-    private Direction dir;
-    
-    public Dir(String f, String t, Direction d){
-        from = f;
-        to = t;
-        dir = d;
-    }
-    
-    public String getfrom(){
-        return from;
-    }
-    
-    public String getto(){
-        return to;
-    }
-    
-    public Direction getdir(){
-        return dir;
-    }
-}

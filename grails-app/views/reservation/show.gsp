@@ -19,7 +19,6 @@
         </g:if>
         <div class="row">
           <fieldset>
-            
             <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
             <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
           </fieldset>
