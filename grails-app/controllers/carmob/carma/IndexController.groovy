@@ -31,6 +31,7 @@ class IndexController {
             user.last_login = new Date()
             user.carma+=1
             user.save()
+            // Commented because of Heroku Migration Problems. Uncomment this for getting login events in profile
 //             def history = new History(
 //            // User user
 //            user: user,
