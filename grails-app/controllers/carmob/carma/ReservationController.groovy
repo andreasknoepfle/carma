@@ -250,10 +250,15 @@ class ReservationController {
         if(params.id) {
             def reservationInstance = Reservation.get(params.id)
             def user = authenticationService.getUserPrincipal()
-            if(user.carma >=_taking_reservation_cost){
+            
                 if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
+                    if(user.carma >=_taking_reservation_cost){
+                        user.carma=user.carma-2
+                     }
+                    else{
+                        user.carma=0
+                    }
                     reservationInstance.user = user
-                    user.carma = user.carma-_taking_reservation_cost
                     reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
                     reservationInstance.save(flush:true)
                     flash.message = "Reservierung erfolgreich geholt!"
@@ -287,11 +292,7 @@ class ReservationController {
                         history2.errors.allErrors.each {
                             println it
                         }
-                    }
-                }
-            }
-            else{
-                flash.message = "Du hast zu wenig Carma Punkte. Gib eigene Reservierungen ab um Punkte zu erhalten."
+                    }                
             }
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }

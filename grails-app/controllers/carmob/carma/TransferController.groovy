@@ -91,7 +91,7 @@ class TransferController {
             return
         }
         Date now =new Date()
-        int carma_hours =now.getHours()+(authenticationService.getUserPrincipal().carma/5)+1      
+        int carma_hours =now.getHours()+((authenticationService.getUserPrincipal().carma)/5)+1      
          int carma_day= now.getDay()    
         [transferInstance: transferInstance,reservationsList: Reservation.findAllByTransfer(transferInstance),myReservation: Reservation.findByTransferAndUser(transferInstance,authenticationService.getUserPrincipal()),carma_hours:carma_hours,carma_day:carma_day]
     }

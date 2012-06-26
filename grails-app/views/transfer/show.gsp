@@ -1,4 +1,3 @@
-<%@ page import="carmob.carma.Transfer" %>
 <!doctype html>
 <html>
   <head>
@@ -21,7 +20,7 @@
           <form><input type="button"  class="btn" value="Zurück" onClick="history.go(-1);return true;"/></form>
           <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
           <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
-          <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>(carma_hours)%24))||(transferInstance.departureHours >carma_hours  && transferInstance.weekday == carma_day)}">                      
+            <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
             <p class="alert alert-info">Du hast zu wenig <b>CARMA</b>-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. <br/>Sammle mehr <b>Carma</b>-Punkte um dir früher eine Reservierung holen zu können
 
               </p>
@@ -108,12 +107,11 @@
                     </div>
                     <div class="caption" align="center"> 
                       <b>${reservation.provider.login}</b><br/>
-                      <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>(carma_hours)%24))||(transferInstance.departureHours >carma_hours  && transferInstance.weekday == carma_day)}"> 
-                 <!--     <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
-                    
-                 -->  </g:if>
+                      <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">    
+                         <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small" disabled=" disabled">Beobachten</g:link>
+                      </g:if>
                       <g:else>   
-                      <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Holen</g:link>
+                         <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Holen</g:link>
                       </g:else>
                     </div>
                   </li>
