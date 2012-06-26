@@ -15,7 +15,7 @@
         <g:if test="${carma == 0}">
           <div class="alert alert-block">
             <a class="close" data-dismiss="alert" href="#">×</a>
-            <h4 class="alert-heading">Das kann noch besser werden!</h4>
+            <h4 class="alert-heading">Das kann noch besser werden! Sammle mehr Carma Punkte!</h4>
         </g:if>
         <g:if test="${carma != 0}">
           <div class="alert alert-success">
@@ -76,7 +76,13 @@
   <g:each in="${historyInstanceList}" var="historyInstance">
     <tr>
       <td><g:formatDate format="dd.MM.yyyy" date="${historyInstance.date}"/></td>
-      <td><a href="${createLink(controller:'reservation', action:'show', id: historyInstance.reservation.id)}">${fieldValue(bean: historyInstance, field: "type")}</a></td>
+      <td> <g:if test="${historyInstance.reservation}">
+        <a href="${createLink(controller:'reservation', action:'show', id: historyInstance.reservation.id)}">${fieldValue(bean: historyInstance, field: "type")}</a>
+         </g:if>
+          <g:else>
+            ${fieldValue(bean: historyInstance, field: "type")}
+          </g:else>
+      </td>
       <td>${fieldValue(bean: historyInstance, field: "carma")} (${fieldValue(bean: historyInstance, field: "carmachange")})</td>
     </tr>
   </g:each>

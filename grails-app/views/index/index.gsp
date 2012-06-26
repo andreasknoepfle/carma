@@ -8,6 +8,9 @@
     <auth:ifLoggedIn>
       <div class="well">
         <h2>Hallo, <auth:user/>!</h2><br/>
+         <g:if test="${flash.message}">
+          <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+        </g:if>
         <g:link controller="transfer" action="select_direction" class="btn-danger btn btn-large">
           <img src="images/holen01_w.png" alt="Reservierung holen"/><br/>Möchtest du eine Reservierung holen?
         </g:link>

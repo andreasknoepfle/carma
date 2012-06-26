@@ -9,6 +9,6 @@ class History {
     Integer carmachange
     Integer carma
     static constraints = {
-        
+        reservation(nullable: true)
     }
 }
