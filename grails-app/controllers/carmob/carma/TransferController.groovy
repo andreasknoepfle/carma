@@ -22,17 +22,11 @@ class TransferController {
             return
         } 
         def direction=Direction.get(params.int('direction'))        
-        int transfer_number_by_carma= ((authenticationService.getUserPrincipal().carma)/5)+1  
-        int carma_max=10
-        if (transfer_number_by_carma<10){
-          carma_max = transfer_number_by_carma
-        }
         Date now = new Date()
         params.max = params.max ? params.int('max') : 10
         params.offset = params.offset ? params.int('offset') :0 
         def transferListTomorrow = []
-        def transferList = Transfer.createCriteria().list() {
-            maxResults(carma_max)
+        def transferList = Transfer.createCriteria().list(max:params.max, offset:params.offset) {
             and {
                 eq("dirId",direction)
                 eq("weekday",now.getDay())
@@ -49,10 +43,10 @@ class TransferController {
             order("departureMinutes","asc")
              
         }
-        if(transferList.size()<carma_max) {
+        if(transferList.size()<params.max) {
              
             transferListTomorrow = Transfer.createCriteria().list() {
-                maxResults(carma_max-transferList.size())
+                maxResults(params.max-transferList.size())
                 and {
                     eq("dirId",direction)
                     eq("weekday",now.getDay()+1)
@@ -95,8 +89,10 @@ class TransferController {
             redirect action: 'list'
             return
         }
-        
-        [transferInstance: transferInstance,reservationsList: Reservation.findAllByTransfer(transferInstance),myReservation: Reservation.findByTransferAndUser(transferInstance,authenticationService.getUserPrincipal())]
+        Date now =new Date()
+        int carma_hours =now.getHours()+(authenticationService.getUserPrincipal().carma/5)+1      
+         int carma_day= now.getDay()    
+        [transferInstance: transferInstance,reservationsList: Reservation.findAllByTransfer(transferInstance),myReservation: Reservation.findByTransferAndUser(transferInstance,authenticationService.getUserPrincipal()),carma_hours:carma_hours,carma_day:carma_day]
     }
 
     

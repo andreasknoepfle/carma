@@ -53,7 +53,7 @@
                                   </g:each>
                                 </div>
                                 <div class="pagination">
-					<bootstrap:paginate total="${10}" />
+					<bootstrap:paginate total="${params.max}" />
 				</div>
                                
 

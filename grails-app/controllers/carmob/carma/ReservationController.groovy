@@ -226,7 +226,7 @@ class ReservationController {
                     reservationInstance.user = user
                     user.carma = user.carma-_taking_reservation_cost
                     reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
-                    reservationInstance.save()
+                    reservationInstance.save(flush:true)
                     flash.message = "Reservierung erfolgreich geholt!"
                 }
              }
@@ -248,14 +248,13 @@ class ReservationController {
                 def user = authenticationService.getUserPrincipal()
             if(reservationInstance.user==user) {
                  reservationInstance.user = null
-                 user.carma = user.carma + _taking_reservation_cost
-                 if(reservationInstance.provider.carma >_taked_reservation_cost){
-                    reservationInstance.provider.carma = reservationInstance.provider.carma - _taked_reservation_cost
+                 if(reservationInstance.provider.carma >=_taked_reservation_value){
+                    reservationInstance.provider.carma = reservationInstance.provider.carma - _taked_reservation_value
                  }
                  else{
                      reservationInstance.provider.carma = 0
                  }
-                reservationInstance.save()
+                reservationInstance.save(flush:true)
                 flash.message = "Reservierung erfolgreich zurückgegeben!"
             }
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
