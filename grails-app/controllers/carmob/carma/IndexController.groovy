@@ -31,23 +31,23 @@ class IndexController {
             user.last_login = new Date()
             user.carma+=1
             user.save()
-             def history = new History(
-            // User user
-            user: user,
-
-            // Date date
-            date: new Date(),
-
-            // String type
-            type: "eingeloggt",
-                               
-            // Integer carmachange
-            carmachange: "1",
-                    
-            // Integer carma
-            carma: user.carma)
-            
-            history.save()
+//             def history = new History(
+//            // User user
+//            user: user,
+//
+//            // Date date
+//            date: new Date(),
+//
+//            // String type
+//            type: "eingeloggt",
+//                               
+//            // Integer carmachange
+//            carmachange: "1",
+//                    
+//            // Integer carma
+//            carma: user.carma)
+//            
+//            history.save()
             
              flash.message = "Für deinen heutigen Login bekommst du einen CARMA Punkt geschenkt!"
         }
