@@ -3,14 +3,30 @@ body {
        
 }
 
-.brand {
-    margin-left: -20px !important;
+.logout-btn {
+     padding-top : 11px;
+     padding-bottom : 11px;
+    
 }
+.user-spacing-fix {
+      margin-right: -5px !important;
+}
+
+.navbar-top-fix {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.brand {
+    margin-left: 0px !important;
+}
+
  .home-link{
+            padding : 11px;
             display : none ;
      } 
 
- @media (max-width: 410px) {  
+ @media (max-width: 450px) {  
      .brand {
             display : none !important;
         } 
@@ -38,6 +54,7 @@ div.calendar {
 
 .navbar-form-fix {
     margin-bottom:0px;
+   
 }
 
 

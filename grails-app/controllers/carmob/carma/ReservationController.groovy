@@ -77,16 +77,55 @@ class ReservationController {
         params.date = new Date(params.long("date"))
         def reservationInstance = new Reservation(params)
         
-        def transferList = Transfer.createCriteria().list() {
+        def transferList_0_10 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
                 eq("dirId",params.direction)
+                lt("departureHours",10)
             }
             
             order("departureHours","asc")
             order("departureMinutes","asc")
              
         }
+         def transferList_10_14 = Transfer.createCriteria().list() {
+            and {
+                eq("weekday",reservationInstance.date.getDay())
+                eq("dirId",params.direction)
+                ge("departureHours",10)
+                lt("departureHours",14)
+                
+            }
+            
+            order("departureHours","asc")
+            order("departureMinutes","asc")
+             
+        }
+         def transferList_14_18 = Transfer.createCriteria().list() {
+            and {
+                eq("weekday",reservationInstance.date.getDay())
+                eq("dirId",params.direction)
+                 ge("departureHours",14)
+                lt("departureHours",18)
+            }
+            
+            order("departureHours","asc")
+            order("departureMinutes","asc")
+             
+        }
+         def transferList_18_24 = Transfer.createCriteria().list() {
+            and {
+                eq("weekday",reservationInstance.date.getDay())
+                eq("dirId",params.direction)
+                ge("departureHours",18)
+                
+            }
+            
+            order("departureHours","asc")
+            order("departureMinutes","asc")
+             
+        }
+        def transferList = [transferList_0_10,transferList_10_14,transferList_14_18,transferList_18_24]
     
         [reservationInstance: reservationInstance, transferList: transferList, direction : params.direction]
           
