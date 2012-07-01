@@ -1,7 +1,9 @@
 
 package carmob.carma
 
-
+/**
+* Hildsklasse fuer den Importer
+*/ 
 class Dir {
     private String from;
     private String to;

@@ -6,7 +6,7 @@ import org.junit.*
 import grails.test.mixin.*
 
 @TestFor(UserController)
-@Mock(User)
+@Mock([User,History])
 class UserControllerTests {
 
     def login(boolean doLogin = true) {

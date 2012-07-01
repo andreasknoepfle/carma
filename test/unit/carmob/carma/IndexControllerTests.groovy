@@ -14,6 +14,7 @@ class IndexControllerTests {
     def login(boolean doLogin = true) {
         def authentication=mockFor(AuthenticationService)
         authentication.demand.isLoggedIn(){request -> return doLogin }
+          authentication.demand.getUserPrincipal(){ -> return new User(login: "test", email: "test@test.de") }
         return authentication.createMock()
     }
     

@@ -5,7 +5,9 @@ grails.project.test.reports.dir = "target/test-reports"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
-
+coverage {
+	exclusions = ["**/DirectionController*", "**/HistoryController*","**/CityController*"]
+}
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
