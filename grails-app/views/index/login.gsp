@@ -16,10 +16,10 @@
                 Wenn Sie mal eine Reservierung nicht wahrnehmen können, so verfällt
                 diese nicht mehr. Sie stellen die Reservierung anderen zur Verfügung
                 ohne dabei viel Zeit zu verlieren.</p>
-                <p class="lead">Alles ganz einfach.<br/>Mit dem neuen CARMA-System von Team 3.</p>
+                <p class="lead">Alles ganz einfach!<br/>Mit dem neuen CARMA-System von Team 3</p>
               </div>
               <div class="well">
-                <h1>Log in</h1>
+                <h1>Log in</h1><br/>
                 <auth:form authAction="login" 
                   success="[controller:'index', action:'login']" 
                   error="[ controller:'index', action:'login']" class="form-horizontal">
@@ -56,21 +56,21 @@
                       <g:img dir="images" file="res_holen.jpg" alt="Reservierung holen"/>
                       <div class="carousel-caption">
                         <h4>Jederzeit Reservierungen holen</h4>
-                        <p>Sie haben keine Reservierung? Greifen Sie zu!</p>
+                        <p>Sie haben keine Reservierung? Greifen Sie zu. Mit wenigen Klicks erhalten Sie eine Reservierung!</p>
                       </div>
                     </div>
                     <div class="item">
                       <g:img dir="images" file="res_abgeben.jpg" alt="Reservierung abgeben"/>
                       <div class="carousel-caption">
                         <h4>Sie brauchen Ihre Reservierung nicht mehr?</h4>
-                        <p>Geben Sie die Reservierung an Kollegen ab.</p>
+                        <p>Geben Sie die Reservierung an Kollegen ab und gewinnen Sie CARMA!</p>
                       </div>
                     </div>
                     <div class="item">
                       <g:img dir="images" file="carma_sammeln.jpg" alt="Reservierung holen"/>
                       <div class="carousel-caption">
                         <h4>CARMA-Punkte</h4>
-                        <p>Sammeln Sie CARMA und sichern Sie sich einen Platz ganz oben.<p>
+                        <p>Sammeln Sie CARMA und sichern Sie sich einen Platz ganz oben in der Topliste.<p>
                       </div>
                     </div>
                   </div>
