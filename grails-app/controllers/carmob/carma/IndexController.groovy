@@ -1,9 +1,15 @@
 package carmob.carma
 import java.util.Calendar
 
+/**
+* Controller fuer den Startbildschirm und den Login
+*/
 class IndexController {
     def authenticationService
     
+    /**
+    * Erzeugt Carma Topliste und verteilt Carma-Punkte´fuer Logins
+    */
     def index() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(action:"login")
@@ -56,12 +62,18 @@ class IndexController {
         [userInstanceList:users, userInstanceTotal: User.count(), currentUserPlace: i+1]
     }
     
+    /**
+    * Erzeigt das Login-Formular
+    */ 
     def login() {
         if (authenticationService.isLoggedIn(request)) {
             redirect(action:"index")
         }
     }
     
+    /**
+    * Erzeugt das Registrierungsformular
+    */ 
     def signup() {
         if (authenticationService.isLoggedIn(request)) {
             redirect(action:"index")

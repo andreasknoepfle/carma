@@ -1,13 +1,40 @@
 package carmob.carma
 
+/**
+* Modelliert eine Zug-Verbindung 
+*/
 class Transfer {
+    /**
+    * Linier
+    */
     String ice;
+     /**
+    * Richtung
+    */
     Direction dirId;
+     /**
+    * Abfahrt Uhrzeit Minute
+    */
     Integer departureMinutes;
+      /**
+    * Abfahrt Uhrzeit Stunde
+    */
     Integer departureHours;
+      /**
+    * Ankunft Uhrzeit Minute
+    */
     Integer arrivalMinutes;
+      /**
+    * Ankunft Uhrzeit Stunde
+    */
     Integer arrivalHours;
+    /**
+    * Wochentag So==0
+    */
     Integer weekday;
+    /**
+    * Nicht mehr verwendet
+    */
     boolean active;
     static hasMany = [reservations: Reservation]
     static constraints = {
@@ -18,24 +45,38 @@ class Transfer {
         arrivalHours min:0,max:23
         weekday min:0,max:6
     }
+    /**
+    * Sortierung
+    */
     static mapping = {
         sort:"departureHours,departureMinutes asc" 
     }
 
+     /**
+    * Gesamtanzahl Reservierungen dieser Verbindung
+    */
     def numReservations() {
         return Reservation.countByTransfer(this)
         
     }
+    /**
+    * Anzahl offnener Reservierungen dieser Verbindung
+    */
     def numOpenReservations() {
          return Reservation.countByTransferAndUserIsNull(this)
     }
-    
+    /**
+    * Uhrzeit Formatierung Ankunft
+    */
     def arrival() {
         def date=new Date() 
         date.setHours(arrivalHours)
         date.setMinutes(arrivalMinutes)
         date.format("H:mm")
     }
+     /**
+    * Uhrzeit Formatierung Abfahrt
+    */
      def departure() {
         def date=new Date() 
         date.setHours(departureHours)

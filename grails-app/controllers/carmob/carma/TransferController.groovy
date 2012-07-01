@@ -2,6 +2,10 @@ package carmob.carma
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.orm.PagedResultList
+
+/**
+* Zeigt verfuegbare Verbindungen und deren Reservierungen an ("Ticket holen")
+*/
 class TransferController {
 
     def authenticationService
@@ -12,6 +16,9 @@ class TransferController {
         redirect action: 'list', params: params
     }
 
+    /**
+    * Listet Verbindungen einer bestimmten Richtung auf
+    */
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -70,6 +77,9 @@ class TransferController {
         [transferList : transferList, direction: direction,transferListTomorrow:transferListTomorrow]
     }
 
+    /**
+    * Auswahl der Richtung verwendet
+    */ 
     def select_direction() {
           
         if (!authenticationService.isLoggedIn(request)) {
@@ -79,6 +89,9 @@ class TransferController {
         [directionList : Direction.list()]
     }
     
+    /**
+    * Anzeigen einer Zugverbindung und den darin enthaltenen Reservierungen 
+    */
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")

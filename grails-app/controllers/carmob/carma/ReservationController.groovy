@@ -2,6 +2,11 @@ package carmob.carma
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+*  Dieser Controller verwaltet die Reservierungen
+*
+*
+*/
 class ReservationController {
     def authenticationService
     
@@ -10,6 +15,9 @@ class ReservationController {
     
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
+    /**
+    *  Nicht verwendet
+    */
     def index() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -19,7 +27,9 @@ class ReservationController {
     }
     
     
-
+    /**
+    *  Nicht verwendet - Zeigt eigene Reservierungen
+    */
     def list() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -31,6 +41,9 @@ class ReservationController {
         [reservationInstanceList: Reservation.findAllByProvider(authenticationService.getUserPrincipal()) , reservationInstanceTotal: Reservation.count()]
     }
     
+    /**
+    *  Generiert das Formular fuer Richtung und Datum beim abgeben eines Tickets
+    */
     def select_date() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -58,6 +71,10 @@ class ReservationController {
         }
     }
     
+    /**
+    * Generiert das Formular fuer Verbindungen, Platz und Bestellnummer fuer Ticket abgeben
+    * 
+    */
     def create() {
     
         if (!authenticationService.isLoggedIn(request)) {
@@ -131,6 +148,10 @@ class ReservationController {
           
     }
     
+    
+    /**
+    * Erstellt eine Reservierung
+    */
     def submit() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -195,7 +216,9 @@ class ReservationController {
     }
     
     
-
+    /**
+    * Zeigt die erstellte Reservierungen an
+    */
     def show() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -211,6 +234,9 @@ class ReservationController {
         [reservationInstance: reservationInstance]
     }
 
+    /**
+    * Nicht verwendet - Reservierungen editieren
+    */ 
     def edit() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -257,7 +283,9 @@ class ReservationController {
             break
         }
     }
-
+    /**
+    * Nicht verwendet -- Reservierung loeschen
+    */
     def delete() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -280,6 +308,10 @@ class ReservationController {
             redirect action: 'show', id: params.id
         }
     }
+    
+    /**
+    *  Mit dieser Methode kann ein Nutzer eine Reservierung fuer sich beanspruchen
+    */
     
     def get_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
@@ -338,6 +370,9 @@ class ReservationController {
         
     }
     
+    /**
+    * Erlaubt dem Bnutzer reservierungen zurueckzugeben
+    */ 
     def return_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")

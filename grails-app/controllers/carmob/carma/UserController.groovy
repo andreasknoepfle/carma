@@ -1,9 +1,16 @@
 package carmob.carma
 
+
+/**
+* Controller zur Anzeige der User-Profile und zum verwalten des User-Domain Models
+*/ 
 class UserController {
     
     def authenticationService
     
+    /**
+    * Nicht verwendet
+    */ 
     def index = { 
         redirect(action: "list", params: params) 
     }
@@ -12,12 +19,18 @@ class UserController {
     // the delete, save and update actions only accept POST requests
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+    /**
+    * Nicht verwendet
+    */ 
     def create = {
         def userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]
     }
 
+     /**
+    * Nicht verwendet
+    */ 
     def save = {
         def userInstance = new User(params)
         if (!userInstance.hasErrors() && userInstance.save()) {
@@ -30,7 +43,9 @@ class UserController {
             render(view: "create", model: [userInstance: userInstance])
         }
     }
-
+    /**
+    * Anzeige eines Nutzerprofils
+    */
     def show = {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -65,6 +80,9 @@ class UserController {
         }
     }
 
+     /**
+    * Rendert das Formular zum editieren des eigenen Nutzerprofils
+    */ 
     def edit = {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -79,6 +97,9 @@ class UserController {
         
     }
 
+    /** 
+    * Aktualisiert ein Nutzerprofil
+    */
     def update = {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
@@ -110,6 +131,9 @@ class UserController {
         }
     }
     
+    /**
+    * Anzeige eines Bildavatars aus der Datenbank
+    */
     def avatar_image = {
         def avatarUser
         

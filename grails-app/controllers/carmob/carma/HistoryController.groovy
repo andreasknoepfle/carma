@@ -1,5 +1,8 @@
 package carmob.carma
 
+/**
+* Achtung - Dieser Controller wird nur zu Administrativen Zwecken während der Programmierung verwendet !
+*/
 class HistoryController {
 
     def index = { redirect(action: "list", params: params) }

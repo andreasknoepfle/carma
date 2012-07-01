@@ -10,11 +10,16 @@ import de.schildbach.pte.dto.QueryConnectionsResult;
 import de.schildbach.pte.dto.GetConnectionDetailsResult;
 
 
-
+/**
+* Import von Banhverbindungen
+*/
 class AdminController {
     BahnProvider p = new BahnProvider(); 
     Date startdatum = new Date();
     
+    /** 
+    *  Löschen der alten Bahnverbindungen
+    */ 
     def delete() {
        
         for (Reservation reservation : Reservation.findAll()) {
@@ -30,6 +35,9 @@ class AdminController {
         
     }
     
+    /**
+    * Importieren von neuen Bahnverbindungen
+    */
     def index() {
         // add cities
         City berlin = new City(name: "Berlin").save()
@@ -132,6 +140,9 @@ class AdminController {
         } 
     }
     
+    /** 
+    * Hilfsmethode fuer den Importer
+    */ 
     public QueryConnectionsResult getQuery(String from, String to){
         final QueryConnectionsResult result = p.queryConnections(
             new Location(LocationType.ANY, 0, null, from), 
