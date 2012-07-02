@@ -94,7 +94,15 @@ class ReservationController {
         params.date = new Date(params.long("date"))
         def reservationInstance = new Reservation(params)
         
-        def transferList_0_10 = Transfer.createCriteria().list() {
+       
+        def transferList = createTransferList(reservationInstance)
+    
+        [reservationInstance: reservationInstance, transferList: transferList, direction : params.direction]
+          
+    }
+    
+    def createTransferList(reservationInstance) {
+         def transferList_0_10 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
                 eq("dirId",params.direction)
@@ -142,10 +150,8 @@ class ReservationController {
             order("departureMinutes","asc")
              
         }
-        def transferList = [transferList_0_10,transferList_10_14,transferList_14_18,transferList_18_24]
-    
-        [reservationInstance: reservationInstance, transferList: transferList, direction : params.direction]
-          
+        return [transferList_0_10,transferList_10_14,transferList_14_18,transferList_18_24]
+        
     }
     
     
@@ -167,16 +173,7 @@ class ReservationController {
         
         def reservationInstance = new Reservation(params)
          
-        def transferList = Transfer.createCriteria().list() {
-            and {
-                eq("weekday",reservationInstance.date.getDay())
-                eq("dirId",direction)
-            }
-            
-            order("departureHours","asc")
-            order("departureMinutes","asc")
-             
-        }
+        def transferList = createTransferList(reservationInstance)
         reservationInstance.provider = authenticationService.getUserPrincipal() 
         reservationInstance.provider.carma = reservationInstance.provider.carma+5
         

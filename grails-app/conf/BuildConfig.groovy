@@ -6,7 +6,8 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 coverage {
-	exclusions = ["**/DirectionController*", "**/HistoryController*","**/CityController*"]
+        // Exclude Coverage from Importer and Scaffolded internals
+	exclusions = ["**/DirectionController*", "**/HistoryController*","**/CityController*","**/AdminController*","**/Dir*"]
 }
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
