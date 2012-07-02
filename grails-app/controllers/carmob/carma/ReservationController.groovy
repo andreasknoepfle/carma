@@ -95,17 +95,17 @@ class ReservationController {
         def reservationInstance = new Reservation(params)
         
        
-        def transferList = createTransferList(reservationInstance)
+        def transferList = createTransferList(reservationInstance,params.direction)
     
         [reservationInstance: reservationInstance, transferList: transferList, direction : params.direction]
           
     }
     
-    def createTransferList(reservationInstance) {
+    def createTransferList(reservationInstance,direction) {
          def transferList_0_10 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
-                eq("dirId",params.direction)
+                eq("dirId",direction)
                 lt("departureHours",10)
             }
             
@@ -116,7 +116,7 @@ class ReservationController {
          def transferList_10_14 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
-                eq("dirId",params.direction)
+                eq("dirId",direction)
                 ge("departureHours",10)
                 lt("departureHours",14)
                 
@@ -129,7 +129,7 @@ class ReservationController {
          def transferList_14_18 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
-                eq("dirId",params.direction)
+                eq("dirId",direction)
                  ge("departureHours",14)
                 lt("departureHours",18)
             }
@@ -141,7 +141,7 @@ class ReservationController {
          def transferList_18_24 = Transfer.createCriteria().list() {
             and {
                 eq("weekday",reservationInstance.date.getDay())
-                eq("dirId",params.direction)
+                eq("dirId",direction)
                 ge("departureHours",18)
                 
             }
@@ -173,7 +173,7 @@ class ReservationController {
         
         def reservationInstance = new Reservation(params)
          
-        def transferList = createTransferList(reservationInstance)
+        def transferList = createTransferList(reservationInstance,direction)
         reservationInstance.provider = authenticationService.getUserPrincipal() 
         reservationInstance.provider.carma = reservationInstance.provider.carma+5
         
