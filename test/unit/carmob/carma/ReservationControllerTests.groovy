@@ -20,20 +20,17 @@ class ReservationControllerTests {
         return authentication.createMock()
     }
     
-    
-    
     void testIndex() {           
         controller.authenticationService=login(false)       
         controller.index()
         assert "/index/login" == response.redirectedUrl
-
     }
+    
     void testIndexSession() {
         controller.authenticationService=login(true)       
         controller.index()
         assert "/reservation/list" == response.redirectedUrl
     }
-    
 
     void testList() {                 
         controller.authenticationService=login(false)       
@@ -45,8 +42,8 @@ class ReservationControllerTests {
         controller.authenticationService=login(true)       
         controller.list()
         assert null == response.redirectedUrl
-        
     }
+
     
     void testSelectDate() {
         controller.authenticationService=login(false)  
@@ -190,6 +187,7 @@ class ReservationControllerTests {
     }
     
    
+
 }
 
 
