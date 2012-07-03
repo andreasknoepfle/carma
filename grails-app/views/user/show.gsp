@@ -88,6 +88,9 @@
   </g:each>
 </tbody>
 </table>
+        <div class="pagination">
+          <bootstrap:paginate total="${historyInstanceTotal}"/>
+        </div>
 </g:if>
 </body>
 </html>

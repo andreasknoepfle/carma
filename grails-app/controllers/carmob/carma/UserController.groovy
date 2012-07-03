@@ -56,7 +56,10 @@ class UserController {
         def ownProfile = false
         def ownUser = authenticationService.getUserPrincipal()
         
-        def historys = History.createCriteria().list(max: 3) {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        def userHistorys = History.createCriteria()
+        
+        def historys = userHistorys.list(params) {
             and {
                 eq("user", ownUser)
             } 
@@ -76,7 +79,8 @@ class UserController {
             flash.defaultMessage = "User not found with id ${params.id}"
         }
         else {
-            return [userInstance: userInstance, ownProfile: ownProfile, carma: userInstance.carma, historyInstanceList:historys]
+            params.max = Math.min(params.max ? params.int('max') : 5, 100)
+            return [userInstance: userInstance, ownProfile: ownProfile, carma: userInstance.carma, historyInstanceList:historys, historyInstanceTotal:historys.totalCount]
         }
     }
 
