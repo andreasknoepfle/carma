@@ -370,7 +370,7 @@ class ReservationController {
     }
     
     /**
-    * Erlaubt dem Benutzer E-Mail Benachrichtigung für eine Reservierung zu aktivieren
+    * Erlaubt dem Benutzer reservierungen zurück zugeben
     */ 
     def return_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
@@ -394,10 +394,10 @@ class ReservationController {
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }
         
-    }
-    
+    }    
+   
     /**
-    * Erlaubt dem Benutzer reservierungen zu beobachten
+    * Erlaubt dem Benutzer E-Mail Benachrichtigung für eine Reservierung zu aktivieren
     */ 
     def observe_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
