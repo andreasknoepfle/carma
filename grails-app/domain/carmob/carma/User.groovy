@@ -25,9 +25,9 @@ class User {
     */
     Date last_login
      /**
-    * Carma Punkte (Default: 5)
+    * Carma Punkte (Default: 6)
     */
-    int carma = 5
+    int carma = 6
      /**
     * Benutzer Avatar
     */
