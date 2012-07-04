@@ -34,7 +34,7 @@
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container-fluid navbar-top-fix">
           <a class="brand" href="${createLink(uri: '/')}">CARMA</a>
           <auth:ifLoggedIn>
             <g:link class="home-link btn-info btn btn-large" controller="index" action="index" title="Home">
@@ -47,9 +47,9 @@
               <g:img dir="images" file="abgeben02_w.png" alt="Reservierung abgeben"/>
             </g:link>
             <auth:form class="pull-right navbar-form-fix" authAction="logout" success="[controller:'index', action:'index']" error="[controller:'index', action:'index']" >
-              <g:actionSubmit value="Logout" class="btn btn-large"/>
+              <g:actionSubmit value="Logout" class="btn btn-large logout-btn"/>
             </auth:form>
-            <div class=" pull-right">
+            <div class="pull-right user-spacing-fix">
               <g:link class="btn-info btn btn-large" controller="user" action="show" title="Mein Profil">
                 <g:img dir="images" file="user.png" alt="Benutzerprofil"/>
               </g:link> &nbsp;

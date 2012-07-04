@@ -1,12 +1,24 @@
 package carmob.carma
 
+/**
+* Modellirung einer Richtung (z.B. Berlin - Wolfsburg) 
+*/ 
 class Direction {
+    /**
+    * Stadt Startpunkt 
+    */ 
     City from
+    /**
+    *Stadt Endpunkt 
+    */
     City to
     
     static constraints = {
     }
     
+    /**
+    * Standarddarstellung einer Richtung
+    */ 
     @Override public String toString() {
         StringBuilder result = new StringBuilder()
         result.append("Von ")
@@ -15,7 +27,9 @@ class Direction {
         result.append(to)
         return result.toString()
      }
-     
+    /**
+    * Hervorgehobene Darstellung einer Richtung (Fett)
+    */ 
      @Override public String toEmString() {
         StringBuilder result = new StringBuilder()
         result.append("Von <b>")
@@ -25,7 +39,9 @@ class Direction {
         result.append("</b>")
         return result.toString()
      }
-     
+    /**
+    * Hervorgehobene Darstellung einer Richtung (Kursiv)
+    */ 
      @Override public String toItString() {
         StringBuilder result = new StringBuilder()
         result.append("Von <i>")

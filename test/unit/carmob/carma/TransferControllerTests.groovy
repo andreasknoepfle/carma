@@ -7,16 +7,14 @@ import com.grailsrocks.authentication.*
 @TestFor(TransferController)
 @Mock([Transfer,Reservation,Direction])
 class TransferControllerTests {
-
     
     def login(boolean doLogin = true) {
         def authentication=mockFor(AuthenticationService)
         authentication.demand.isLoggedIn(){request -> return doLogin }
-        authentication.demand.getUserPrincipal(){ -> return new User(login: "test", email: "test@test.de") }
+        authentication.demand.getUserPrincipal(2){ -> return new User(login: "test", email: "test@test.de") }
         return authentication.createMock()
     }
     
- 
     void testList() {
         controller.authenticationService=login(false)
         // If user is not logged in
@@ -28,10 +26,10 @@ class TransferControllerTests {
         // If no direction is selected
         controller.authenticationService=login(true)
         controller.list()
-        
         assert "/transfer/select_direction" == response.redirectedUrl
     }
-     void testListSessionDirection() {    
+    
+    void testListSessionDirection() {
         // The List Method -- Empty
         controller.authenticationService=login(true)
         
@@ -71,8 +69,7 @@ class TransferControllerTests {
         assert model.directionList.size() == 1
     }
     
-    
-     void testShowSession() {    
+    void testShowSession() {    
         // The List Method -- Empty
         controller.authenticationService=login(true)
          def dir = new Direction(from:new City(name: "Berlin"),to:new City(name: "Wolfsburg"))
@@ -83,7 +80,5 @@ class TransferControllerTests {
         def model = controller.show()
         assert null == response.redirectedUrl
         assert model.transferInstance.id == 1
-      
     }
-    
 }

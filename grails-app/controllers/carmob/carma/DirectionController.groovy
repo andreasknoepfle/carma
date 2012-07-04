@@ -2,6 +2,9 @@ package carmob.carma
 
 import org.springframework.dao.DataIntegrityViolationException
 
+/**
+* Achtung - Dieser Controller wird nur zu Administrativen Zwecken während der Programmierung verwendet !
+*/
 class DirectionController {
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']

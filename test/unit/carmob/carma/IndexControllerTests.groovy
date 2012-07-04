@@ -1,19 +1,17 @@
 package carmob.carma
 
-
-
 import grails.test.mixin.*
 import org.junit.*
 import com.grailsrocks.authentication.*
 
-
 @TestFor(IndexController)
 @Mock([User])
 class IndexControllerTests {
- 
+    
     def login(boolean doLogin = true) {
         def authentication=mockFor(AuthenticationService)
         authentication.demand.isLoggedIn(){request -> return doLogin }
+        authentication.demand.getUserPrincipal(){ -> return new User(login: "test", email: "test@test.de") }
         return authentication.createMock()
     }
     
@@ -22,7 +20,6 @@ class IndexControllerTests {
         controller.authenticationService=login(false)       
         controller.index()
         assert "/index/login" == controller.response.redirectedUrl
-
     }
     
     void testIndexSession() {
@@ -31,7 +28,6 @@ class IndexControllerTests {
         assert null == controller.response.redirectedUrl
         
     }
- 
     
     void testLogin(){
         controller.authenticationService=login(false)       
@@ -46,7 +42,6 @@ class IndexControllerTests {
     }
     
     void testSingUp(){
-       
         controller.authenticationService=login(true)       
         controller.signup()
         assert "/index/index" == controller.response.redirectedUrl
