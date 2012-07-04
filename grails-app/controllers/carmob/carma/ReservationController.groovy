@@ -2,11 +2,14 @@ package carmob.carma
 
 import org.springframework.dao.DataIntegrityViolationException
 
-class ReservationController {
+
+class ReservationController {    
     def authenticationService
-    
+    def asyncMailService
+    String reservation_link = "localhost:8080/carma/transfer/show/"
     int _taking_reservation_cost = 2 //Aendern um Kosten fuer Reservierungen anzupassen
     int _taked_reservation_value = 2   //Aendern um Punkte fuer das Holen einer abgegebenen Reservierung durch einen anderen User
+    int submit_reservation = 4 //Aendern um Punkte fuer Abgeben von Reservierungen anzupassen
     
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
@@ -118,7 +121,7 @@ class ReservationController {
              
         }
         reservationInstance.provider = authenticationService.getUserPrincipal() 
-        reservationInstance.provider.carma = reservationInstance.provider.carma+5
+        reservationInstance.provider.carma = reservationInstance.provider.carma+submit_reservation
         
         if (!reservationInstance.save(flush: true)) {
             render view: 'create', model: [reservationInstance: reservationInstance, transferList: transferList, direction :direction]
@@ -151,7 +154,7 @@ class ReservationController {
             }
         }
         
-        flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Sie haben dafür 5 CARMA Punkte erhalten!"
+        flash.message = "Ihre Reservierung wurde erfolgreich abgegeben! Sie haben dafür "+submit_reservation+" CARMA Punkte erhalten!"
         redirect action: 'show', id: reservationInstance.id
     }
     
@@ -253,7 +256,7 @@ class ReservationController {
             
                 if(reservationInstance.user== null && !user.hasReservationFor(reservationInstance.transfer)) {
                     if(user.carma >=_taking_reservation_cost){
-                        user.carma=user.carma-2
+                        user.carma=user.carma-_taking_reservation_cost
                      }
                     else{
                         user.carma=0
@@ -321,5 +324,38 @@ class ReservationController {
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }
         
+    }
+    
+    def observe_reservation() {
+        if (!authenticationService.isLoggedIn(request)) {
+            redirect(controller: "Index", action: "login")
+            return
+        }
+        if(params.id) {
+            def user =authenticationService.getUserPrincipal()
+            def reservationInstance = Reservation.get(params.id)    
+            def transferInstance = reservationInstance.transfer
+            Date now = new Date()
+            int carma_time
+            if(transferInstance.weekday!=now.getDay()){
+                carma_time=((transferInstance.departureHours+24)-(now.getHours()+((authenticationService.getUserPrincipal().carma)/5)+1))*60*60*1000
+            }
+            else{
+                carma_time=(transferInstance.departureHours-(now.getHours()+((authenticationService.getUserPrincipal().carma)/5)+1))*60*60*1000
+            }
+             asyncMailService.sendMail{
+                to    user.email
+                subject "Deine Zugreservierung ist jetzt verfügbar";
+                html '<body>Hallo ' +user.login +'<br/>Du kannst dir nun eine Reservierung unter folgendem link holen:<a href="'+reservation_link+transferInstance.id+'">'+reservation_link+transferInstance.id+'</a></body>';
+                 // Additional asynchronous parameters (optional)
+                beginDate new Date(System.currentTimeMillis()+carma_time)    // Starts after one minute, default current date               
+                endDate new Date(System.currentTimeMillis()+carma_time+1200000)   // Must be sent in twenty minutes, default infinity
+                maxAttemptsCount 3;   // Max 3 attempts to send, default 1
+                attemptInterval 300000;    // Minimum five minutes between attempts, default 300000 ms
+                delete true;    // Mark message for delete after sent
+             }
+            flash.message= "Du erhälst eine E-Mail sobald du die Reservierung holen kannst."
+            redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
+        }
     }
 }

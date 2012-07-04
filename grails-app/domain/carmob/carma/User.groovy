@@ -6,7 +6,7 @@ class User {
     String email
     String phone
     Date last_login
-    int carma = 5
+    int carma = 6
     byte[] avatar
     int status
 

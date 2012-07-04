@@ -11,6 +11,7 @@
 // }
 
 authenticationUserClass = carmob.carma.User
+asynchronous.mail.override=true
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
@@ -56,6 +57,20 @@ grails.web.disable.multipart=false
 
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
+
+grails {
+   mail {
+     host = "smtp.gmail.com"
+     port = 465
+     username = "reservationnotification@gmail.com"
+     password = "carmareservation"
+     props = ["mail.smtp.auth":"true",
+              "mail.smtp.socketFactory.port":"465",
+              "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+              "mail.smtp.socketFactory.fallback":"false"]
+   }
+}
+
 
 // enable query caching by default
 grails.hibernate.cache.queries = true

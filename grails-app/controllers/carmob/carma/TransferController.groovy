@@ -3,7 +3,7 @@ package carmob.carma
 import org.springframework.dao.DataIntegrityViolationException
 import grails.orm.PagedResultList
 class TransferController {
-
+Date now = new Date()
     def authenticationService
     
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
@@ -95,6 +95,8 @@ class TransferController {
          int carma_day= now.getDay()    
         [transferInstance: transferInstance,reservationsList: Reservation.findAllByTransfer(transferInstance),myReservation: Reservation.findByTransferAndUser(transferInstance,authenticationService.getUserPrincipal()),carma_hours:carma_hours,carma_day:carma_day]
     }
+    
+   
 
     
 }
