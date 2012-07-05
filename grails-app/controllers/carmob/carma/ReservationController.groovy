@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class ReservationController {
     def authenticationService
     def asyncMailService
-    String reservation_link = "localhost:8080/carma/transfer/show/"
+    String reservation_link = "http://carmadeploy.herokuapp.com/transfer/show/"
     int _taking_reservation_cost = 2 //Aendern um Kosten fuer Reservierungen anzupassen
     int _taked_reservation_value = 2   //Aendern um Punkte fuer das Holen einer abgegebenen Reservierung durch einen anderen User
     int submit_reservation = 4 //Aendern um Punkte fuer Abgeben von Reservierungen anzupassen
