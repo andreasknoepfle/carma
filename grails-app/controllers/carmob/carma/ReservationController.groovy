@@ -330,9 +330,12 @@ class ReservationController {
                     }
                     reservationInstance.user = user
                     reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
-                    reservationInstance.save(flush:true)
-                    flash.message = "Reservierung erfolgreich geholt!"
-                    
+                    if(reservationInstance.save(flush:true)) {
+                        flash.message = "Reservierung erfolgreich geholt!"
+                    }  
+                    else {
+                        flash.message = reservationInstance.errors
+                    }
                     // Reservierung geholt
                     Date today = new Date();
                     def history = new History(
