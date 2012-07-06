@@ -56,14 +56,34 @@ class Transfer {
     * Gesamtanzahl Reservierungen dieser Verbindung
     */
     def numReservations() {
-        return Reservation.countByTransfer(this)
+        def reservations= Reservation.createCriteria().count() {
+               
+                and {
+                    eq("transfer",this)
+                   
+                     between("date",new Date().clearTime(),new Date().clearTime().plus(2))
+                }
+            
+             
+            }
+        return reservations
         
     }
     /**
     * Anzahl offnener Reservierungen dieser Verbindung
     */
     def numOpenReservations() {
-         return Reservation.countByTransferAndUserIsNull(this)
+        def reservations= Reservation.createCriteria().count() {
+               
+                and {
+                    eq("transfer",this)
+                    isNull("user")
+                    between("date",new Date().clearTime(),new Date().clearTime().plus(2))
+                }
+            
+             
+            }
+        return reservations
     }
     /**
     * Uhrzeit Formatierung Ankunft

@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class ReservationController {
     def authenticationService
     def asyncMailService
-    String reservation_link = "localhost:8080/carma/transfer/show/"
+    String reservation_link = "http://carmadeploy.herokuapp.com/transfer/show/"
     int _taking_reservation_cost = 2 //Aendern um Kosten fuer Reservierungen anzupassen
     int _taked_reservation_value = 2   //Aendern um Punkte fuer das Holen einer abgegebenen Reservierung durch einen anderen User
     int submit_reservation = 4 //Aendern um Punkte fuer Abgeben von Reservierungen anzupassen
@@ -330,9 +330,12 @@ class ReservationController {
                     }
                     reservationInstance.user = user
                     reservationInstance.provider.carma = reservationInstance.provider.carma + _taked_reservation_value
-                    reservationInstance.save(flush:true)
-                    flash.message = "Reservierung erfolgreich geholt!"
-                    
+                    if(reservationInstance.save(flush:true)) {
+                        flash.message = "Reservierung erfolgreich geholt!"
+                    }  
+                    else {
+                        flash.message = reservationInstance.errors
+                    }
                     // Reservierung geholt
                     Date today = new Date();
                     def history = new History(
@@ -370,7 +373,7 @@ class ReservationController {
     }
     
     /**
-    * Erlaubt dem Bnutzer reservierungen zurueckzugeben
+    * Erlaubt dem Benutzer reservierungen zurück zugeben
     */ 
     def return_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
@@ -394,8 +397,11 @@ class ReservationController {
             redirect(controller: "transfer", action: "show", id: reservationInstance.transfer.id)
         }
         
-    }
-    
+    }    
+   
+    /**
+    * Erlaubt dem Benutzer E-Mail Benachrichtigung für eine Reservierung zu aktivieren
+    */ 
     def observe_reservation() {
         if (!authenticationService.isLoggedIn(request)) {
             redirect(controller: "Index", action: "login")
