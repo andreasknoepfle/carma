@@ -199,7 +199,7 @@ class ReservationController {
             reservation: reservationInstance,
                     
             // Integer carmachange
-            carmachange: "5",
+            carmachange: submit_reservation,
                     
             // Integer carma
             carma: reservationInstance.provider.carma
@@ -358,7 +358,7 @@ class ReservationController {
                         date: today,
                         type: "übertragen an " + user.login,
                         reservation: reservationInstance,
-                        carmachange: _taking_reservation_cost,
+                        carmachange: _taked_reservation_value,
                         carma: reservationInstance.provider.carma
                     )
                     if(!history2.save()) {
