@@ -19,13 +19,7 @@
         <fieldset
           <form><input type="button"  class="btn" value="Zurück" onClick="history.go(-1);return true;"/></form>
           <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
-          <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
-            <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
-            <p class="alert alert-info">Du hast zu wenig <b>CARMA</b>-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. <br/>Sammle mehr <b>Carma</b>-Punkte um dir früher eine Reservierung holen zu können
-
-              </p>
-         </g:if>         
-
+          <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>     
         </fieldset>
         <div class="span6 well">
           <h3> Übersicht</h3>
@@ -121,6 +115,16 @@
           </div>
         </div>
       </g:else>
+      <div class="row">
+        <div class="span6">
+          <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
+                <p class="alert alert-error">Du hast zu wenig CARMA-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. Sammle mehr CARMA-Punkte um dir früher eine Reservierung holen zu können 
+                    oder warte noch <b><g:formatDate format="HH:mm" date="${remaining_time}"/></b>.Aktiviere die <b>Beobachtung</b> um eine <b>E-Mail</b> zu erhalten,sobald du eine Reservierung holen kannst.
+                
+                  </p>
+            </g:if>  
+        </div>
+      </div>
       <div class="row">
         <div class="span6 well">
           <h3>Mitfahrer</h3>
