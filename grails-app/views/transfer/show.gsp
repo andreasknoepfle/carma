@@ -102,7 +102,12 @@
                     <div class="caption" align="center"> 
                       <b>${reservation.provider.login}</b><br/>
                       <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">    
-                         <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
+                        <g:if test="${flash.message}">
+                          <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small"  disabled="true">Beobachten</g:link>
+                        </g:if>
+                        <g:else>
+                            <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
+                       </g:else>
                       </g:if>
                       <g:else>   
                          <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Holen</g:link>
