@@ -11,12 +11,12 @@
           <div class="row-fluid">
             <div class="span6">
               <div class="well hidden-phone">
-                <h1>Herzlichen Willkommen bei CARMA</h1><br/>
-                <p class="lead">Holen Sie sich in sekundenschnelle eine neue Reservierung.
-                Wenn Sie mal eine Reservierung nicht wahrnehmen können, so verfällt
-                diese nicht mehr. Sie stellen die Reservierung anderen zur Verfügung
-                ohne dabei viel Zeit zu verlieren.</p>
-                <p class="lead">Alles ganz einfach!<br/>Mit dem neuen CARMA-System von Team 3</p>
+                <h1>Herzlich Willkommen bei CARMA</h1><br/>
+                <p class="lead">
+                  Reservierungen in Sekundenschnelle holen!<br/>
+                  Schenken Sie Kollegen Ihre Reservierungen!<br/>
+                  Verlieren Sie keine Zeit!</p>
+                <p class="lead">Alles ganz einfach!<br/>Mit dem neuen CARMA-System</p>
               </div>
               <div class="well">
                 <h1>Log in</h1><br/>
