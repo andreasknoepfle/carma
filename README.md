@@ -13,10 +13,10 @@ Vorraussetzungen:
 Installation:
 =============
 Applikation mit git clonen:
-git clone https://github.com/andreasknoepfle/carma.git
+- git clone https://github.com/andreasknoepfle/carma.git
 
 Applikation starten: 
-grails run-app 
+- grails run-app 
 
 Deployment auf Heroku:
 ======================
@@ -25,7 +25,7 @@ Deployment auf Heroku:
 
 jetzt kann mit einem git push zum heroku repository ein deploy erreicht werden:
 
-git push heroku master
+- git push heroku master
 
 Verbindungen importieren
 =========================
