@@ -19,13 +19,6 @@
         <fieldset
           <form><input type="button"  class="btn" value="Zurück" onClick="history.go(-1);return true;"/></form>
           <a href="javascript:window.print()" class="btn" >Drucken</a>
-  
-            <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
-            <p class="alert alert-info">Du hast zu wenig <b>CARMA</b>-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. <br/>Sammle mehr <b>Carma</b>-Punkte um dir früher eine Reservierung holen zu können
-
-              </p>
-         </g:if>         
-
         </fieldset>
         <div class="span6 well">
           <h3> Übersicht</h3>
@@ -93,6 +86,13 @@
         <div class="row">
           <div class="span6 well">
             <h3>Verfügbare Reservierungen</h3>
+              <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
+                <div class="alert alert-error "><h5>Achtung:</h5> Du hast zu wenig CARMA-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. Sammle mehr CARMA-Punkte um dir früher eine Reservierung holen zu können 
+                    oder warte noch <b><g:formatDate format="HH" date="${remaining_time}"/></b> Stunden und <b><g:formatDate format="mm" date="${remaining_time}"/></b> Minuten.  
+                
+                  </div>
+                <div class="alert alter-block"> <h5>Tipp:</h5> Aktiviere die <b>Beobachtung</b> um eine <b>E-Mail</b> zu erhalten, sobald du eine Reservierung holen kannst. </div>
+            </g:if> 
             <ul class="thumbnails">
               <g:each in="${openReservations}" var="reservation">
                   <li> 
@@ -108,7 +108,12 @@
                       <b>${reservation.provider.login}</b><br/>
                       <small>Wagen: ${reservation.wagon}</small><br/>
                       <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">    
-                         <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
+                        <g:if test="${flash.message}">
+                          <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small"  disabled="true">Beobachten</g:link>
+                        </g:if>
+                        <g:else>
+                            <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
+                       </g:else>
                       </g:if>
                       <g:else>   
                          <g:link controller="reservation" action="get_reservation" id="${reservation.id}" class="btn btn-small">Holen</g:link>
@@ -121,7 +126,11 @@
           </div>
         </div>
       </g:else>
+   
+       
+      
       <g:if test="${passengers.size()>0}">
+     
       <div class="row">
         <div class="span6 well">
           <h3>Mitfahrer</h3>
