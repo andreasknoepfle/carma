@@ -11,7 +11,7 @@ class TransferControllerTests {
     def login(boolean doLogin = true) {
         def authentication=mockFor(AuthenticationService)
         authentication.demand.isLoggedIn(){request -> return doLogin }
-        authentication.demand.getUserPrincipal(2){ -> return new User(login: "test", email: "test@test.de") }
+        authentication.demand.getUserPrincipal(3){ -> return new User(login: "test", email: "test@test.de") }
         return authentication.createMock()
     }
     

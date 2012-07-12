@@ -106,11 +106,24 @@ Date now = new Date()
         Date now =new Date()
         int carma_hours =now.getHours()+((authenticationService.getUserPrincipal().carma)/5)+1      
          int carma_day= now.getDay()  
-         def reservations= Reservation.createCriteria().list() {
+         def passengers= Reservation.createCriteria().list() {
                
                 and {
                     eq("transfer",transferInstance)
                     between("date",now.clearTime(),now.clearTime().plus(2))
+                    ne("user",authenticationService.getUserPrincipal())
+                    isNotNull("user")
+                    
+                }
+            
+             
+            }
+             def openReservations= Reservation.createCriteria().list() {
+               
+                and {
+                    eq("transfer",transferInstance)
+                    between("date",now.clearTime(),now.clearTime().plus(2))
+                    isNull("user")
                     
                 }
             
@@ -125,7 +138,7 @@ Date now = new Date()
                 }
                
             }
-        [transferInstance: transferInstance,reservationsList: reservations,myReservation:myreservation[0] ,carma_hours:carma_hours,carma_day:carma_day]
+        [transferInstance: transferInstance,passengers: passengers,myReservation:myreservation[0] ,carma_hours:carma_hours,carma_day:carma_day,openReservations:openReservations]
     }
     
    

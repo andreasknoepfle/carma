@@ -30,7 +30,7 @@
           <g:each in="${transferList}" var="transferInstance">
           <div class="accordion-group">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse${transferInstance.id}">
-              <ul class="accordion-heading breadcrumb">
+              <ul class="accordion-heading breadcrumb ${transferInstance.numOpenReservations()==0?"noreservation":"reservation"} ">
                 <li>
                   <i class="icon-time"></i> <g:if test="${transferListTomorrow.contains(transferInstance)}"> Morgen um </g:if> ${transferInstance.departure()}<span class="divider"> | </span></li><li><i class="icon-arrow-right"></i> <em>${fieldValue(bean: transferInstance, field: "ice")}</em><span class="divider"> | </span></li><li><i class="icon-share"></i> ${transferInstance.numOpenReservations()}/${transferInstance.numReservations()}
                 </li>
@@ -41,7 +41,12 @@
                 <dl>
                   <dt>Ankunft: </dt><dd><i class="icon-time"></i> ${transferInstance.arrival()}</dd>
                 </dl>
-                <g:link action="show" id="${transferInstance.id}" class="btn btn-small">Auswählen</g:link>
+                <g:if test="${transferInstance.numOpenReservations()>0}">
+                  <g:link action="show" id="${transferInstance.id}" class="btn btn-small">Auswählen</g:link>
+                </g:if>
+                 <g:else>
+                   <div class="alert alert-block">Leider sind im Moment keine Reservierungen für diese Verbindung verfügbar!</div>
+                </g:else>   
               </div>
             </div>
           </div>

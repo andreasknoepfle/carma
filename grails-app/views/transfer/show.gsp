@@ -18,8 +18,8 @@
       <div class="row">
         <fieldset
           <form><input type="button"  class="btn" value="Zurück" onClick="history.go(-1);return true;"/></form>
-          <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
-          <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
+          <a href="javascript:window.print()" class="btn" >Drucken</a>
+  
             <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">                      
             <p class="alert alert-info">Du hast zu wenig <b>CARMA</b>-Punkte um dir jetzt schon eine Reservierung für diesen Zug zu holen. <br/>Sammle mehr <b>Carma</b>-Punkte um dir früher eine Reservierung holen zu können
 
@@ -94,8 +94,7 @@
           <div class="span6 well">
             <h3>Verfügbare Reservierungen</h3>
             <ul class="thumbnails">
-              <g:each in="${reservationsList}" var="reservation">
-                <g:if test="${reservation.user==null}">
+              <g:each in="${openReservations}" var="reservation">
                   <li> 
                     <div align="center">  
                     <g:if test="${reservation.provider.avatar}">
@@ -107,6 +106,7 @@
                     </div>
                     <div class="caption" align="center"> 
                       <b>${reservation.provider.login}</b><br/>
+                      <small>Wagen: ${reservation.wagon}</small><br/>
                       <g:if test="${((transferInstance.weekday==(carma_day+1)%7)&&(transferInstance.departureHours>=(carma_hours-24)))||((transferInstance.departureHours >carma_hours) && (transferInstance.weekday == carma_day))}">    
                          <g:link controller="reservation" action="observe_reservation" id="${reservation.id}" class="btn btn-small">Beobachten</g:link>
                       </g:if>
@@ -115,34 +115,37 @@
                       </g:else>
                     </div>
                   </li>
-                </g:if>
+          
               </g:each>
             </ul>
           </div>
         </div>
       </g:else>
+      <g:if test="${passengers.size()>0}">
       <div class="row">
         <div class="span6 well">
           <h3>Mitfahrer</h3>
           <ul class="thumbnails">
-            <g:each in="${reservationsList}" var="reservation">
-              <g:if test="${reservation.user!=null && reservation!=myReservation}">
+            <g:each in="${passengers}" var="passenger">
+             
                 <li>
-                  <g:if test="${reservation.user.avatar}">
-                    <img class="avatar" src="${createLink(controller:'user', action:'avatar_image' , id: reservation.user.id)}" width="70" height="70" />
+                  <g:if test="${passenger.user.avatar}">
+                    <img class="avatar" src="${createLink(controller:'user', action:'avatar_image' , id: passenger.user.id)}" width="70" height="70" />
                   </g:if>
                   <g:else>
                     <g:img  class="avatar" uri="/images/default-avatar.png" width="70" height="70"/>
                   </g:else>
-                  <div class="caption"> 
-                    <b>${reservation.user.login}</b><br/>
+                  <div class="caption" align="center"> 
+                    <b>${passenger.user.login}</b><br/>
+                         <small>Wagen: ${passenger.wagon}</small><br/>
                   </div>
                 </li>
-              </g:if>
+             
             </g:each>
           </ul>
         </div>
       </div>
+        </g:if>
     </div>
   </body>
 </html>

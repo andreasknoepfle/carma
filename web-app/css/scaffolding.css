@@ -21,6 +21,7 @@ body {
     margin-left: 0px !important;
 }
 
+
  .home-link{
             padding : 11px;
             display : none ;
@@ -117,9 +118,21 @@ pre.snippet .error {
 }
 
 .accordion-heading {
-    background-color: #EEE;
+    background-image: none !important;
     margin: 0 0 0px;
+    -webkit-box-shadow:  0 0 0 white !important;
+    border:0px;
+    
 }
+
+.reservation {
+    background-color: #dff0d8;
+}
+
+.noreservation {
+    background-color:  whiteSmoke !important;
+}
+
 
 .accordion-heading:hover { color: black; text-decoration:none; }
 

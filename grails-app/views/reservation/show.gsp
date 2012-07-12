@@ -14,15 +14,16 @@
           <h2>Sitzplatzreservierung</h2>
           <h3>Um ${reservationInstance.transfer.departure()} mit ${reservationInstance.transfer.ice}</h3>
         </div>
-        <g:if test="${flash.message}">
+        <p>
+          <a href="javascript:window.print()" class="btn" >Drucken</a>
+          <g:if test="${flash.message}">
+        </p>
           <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
         </g:if>
         <div class="row">
-          <fieldset>
-            <g:actionSubmit action="print" value="Drucken" class="btn" disabled=" disabled"/>
-            <g:actionSubmit action="sms" value="SMS" class="btn" disabled=" disabled"/>
-          </fieldset>
+         
           <div class="span6 well">
+            
             <h3> Übersicht</h3>
             <table class="table table-condensed table-bordered">
               <tr>
