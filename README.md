@@ -6,9 +6,9 @@ Carmob Team 3
 Installationsanleitung: 
 ========================
 Vorraussetzungen:
-# Groovy 
-# Grails 2.0 oder 2.1 www.grails.org
-(# Heroku Toolbelt https://toolbelt.heroku.com/) 
+- Groovy 
+- Grails 2.0 oder 2.1 www.grails.org
+(- Heroku Toolbelt https://toolbelt.heroku.com/) 
 
 Installation:
 =============
@@ -20,8 +20,8 @@ grails run-app
 
 Deployment auf Heroku:
 ======================
-# In heroku einloggen
-# heroku create
+- In heroku einloggen
+- heroku create
 
 jetzt kann mit einem git push zum heroku repository ein deploy erreicht werden:
 
